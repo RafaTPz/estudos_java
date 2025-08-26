@@ -1,0 +1,21 @@
+package aula1508;
+
+import javax.swing.JOptionPane;
+
+public class For03 {
+
+	public static void main(String[] args) {
+		String[] nomes = new String[10];
+
+		for(int i = 0; i<nomes.length;i++) {
+			nomes[i] = JOptionPane.showInputDialog("Digite um nome: ");
+			System.out.println(nomes[i]);
+		}
+	}
+
+
+	//laço iterator
+	for(String s:nomes) {
+		System.out.println(s);
+	}
+}

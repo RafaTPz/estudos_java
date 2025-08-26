@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="479"/>
+		<item key="DIALOG_Y_ORIGIN" value="416"/>
+	</section>
+	<section name="java.lang.Class">
+		<item key="selection" value="package lista01;"/>
+		<list key="findhistory">
+			<item value="package lista01;"/>
+		</list>
+	</section>
+</section>

@@ -1,0 +1,16 @@
+package aula2208;
+
+import javax.swing.JOptionPane;
+
+public class Math02 {
+
+	public static void main(String[] args) {
+		final int PASSAGEIROS_POR_ONIBUS = 40;
+		float numeroAlunos = Float.parseFloat(JOptionPane.showInputDialog("QUantos alunos vão ao passeio? "));
+		System.out.println(numeroAlunos/PASSAGEIROS_POR_ONIBUS);
+		System.out.println((int)Math.ceil(numeroAlunos/PASSAGEIROS_POR_ONIBUS));
+		System.out.println((int)Math.floor(numeroAlunos/PASSAGEIROS_POR_ONIBUS));
+		//ceil arredonda um numero para cima, floor arredonda para baixo
+	}
+
+}

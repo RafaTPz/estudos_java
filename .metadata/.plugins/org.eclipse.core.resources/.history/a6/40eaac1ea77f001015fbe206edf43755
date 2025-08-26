@@ -1,0 +1,20 @@
+classes ->
+metodos -> possui entrada, processamento e saída... em java todo método está obrigatóriamente em uma classe.
+funções -> 
+
+qual a diferença de métodos e funções? 
+- a diferença é que uma função é genérica não necessariamente a ver com o objeto, manipula coisas de fora.
+- ja um método tem a ver com o conteúdo de um objeto, manipula o contéudo de um objeto.
+
+
+
+a classe String tem mais a ver com métodos.
+a classe Math utiliza funções.
+tentar identificar a diferença.
+
+sempre o identificador ao lado de uma classe é um objeto
+por exemplo String greeting = "Hello"; greeting é um objeto.
+
+método recebe um contéudo, função retorna;
+
+println recebe um contéudo e printa no log, o toUpperCase retorna um conteudo;

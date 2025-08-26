@@ -1,0 +1,16 @@
+package aula2208;
+
+public class Math01 {
+
+	public static void main(String[] args) {
+		String s = "ola";
+		s.charAt(0);
+		int a = Math.abs(-10);
+		System.out.println(a);
+		int maior = Math.max(5, 6);
+		int menor = Math.min(5, 6);
+		System.out.println(maior);
+		System.out.println(menor);
+	}
+
+}

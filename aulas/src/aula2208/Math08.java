@@ -1,0 +1,12 @@
+package aula2208;
+
+public class Math08 {
+
+	public static void main(String[] args) {
+		int a = 2;
+		int b = 16;
+		System.out.println(Math.sqrt(b));//raiz quadrada
+		System.out.println(Math.pow(a, b));//elevado a=2 b=16 fica tipo 2**16 ou 2^16 na calculadora
+	}
+
+}

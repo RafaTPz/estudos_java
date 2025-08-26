@@ -1,0 +1,19 @@
+package lista01;
+
+import javax.swing.JOptionPane;
+
+public class MediaBimestral {
+
+	public static void main(String[] args) {
+		float media,numero = 0;
+		String inputt;
+		int QTD_LACO = 3;
+		for(int n = 1;n<=QTD_LACO;n++) {
+			inputt = JOptionPane.showInputDialog("Digite um número: ");
+			numero += Float.parseFloat(inputt);
+		}
+		media = numero/3;
+		JOptionPane.showMessageDialog(null,"A media foi: "+media);
+	}
+
+}

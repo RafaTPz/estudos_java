@@ -1,0 +1,42 @@
+package lista01;
+
+import javax.swing.JOptionPane;
+
+public class Casamento {
+
+	public static void main(String[] args) {
+		int anosCasamento, BODAS_PRATA = 25, BODAS_OURO = 50, BODAS_DIAMANTE = 75, restante;
+		String input = JOptionPane.showInputDialog("Digite a quanto tempo vocês estão casados: ");
+		anosCasamento = Integer.parseInt(input);
+		
+		if(anosCasamento < BODAS_PRATA)
+		{
+			restante = BODAS_PRATA - anosCasamento;
+			JOptionPane.showMessageDialog(null, "Faltam "+restante+" anos para "+BODAS_PRATA );
+		}
+		else if(anosCasamento == BODAS_PRATA) 
+		{
+			JOptionPane.showMessageDialog(null, "Bodas de Prata");
+		}
+		else if(anosCasamento < BODAS_OURO)
+		{
+			restante = BODAS_OURO - anosCasamento;
+			JOptionPane.showMessageDialog(null, "Faltam "+restante+" anos para "+BODAS_OURO );
+		}
+		else if(anosCasamento == BODAS_OURO) 
+		{
+			JOptionPane.showMessageDialog(null, "Bodas de Ouro");
+		}
+		else if(anosCasamento < BODAS_DIAMANTE)
+		{
+			restante = BODAS_DIAMANTE - anosCasamento;
+			JOptionPane.showMessageDialog(null, "Faltam "+restante+" anos para "+BODAS_DIAMANTE );
+		}
+		else if(anosCasamento == BODAS_DIAMANTE) 
+		{
+			JOptionPane.showMessageDialog(null, "Bodas de Diamante");
+		}
+		
+	}
+
+}
