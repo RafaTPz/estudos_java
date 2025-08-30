@@ -11,11 +11,12 @@ public class For03 {
 			nomes[i] = JOptionPane.showInputDialog("Digite um nome: ");
 			System.out.println(nomes[i]);
 		}
-	}
 
 
-	//laço iterator
-	for(String s:nomes) {
-		System.out.println(s);
+
+		//laço iterator
+		for(String s:nomes) {
+			System.out.println(s);
+		}
 	}
 }

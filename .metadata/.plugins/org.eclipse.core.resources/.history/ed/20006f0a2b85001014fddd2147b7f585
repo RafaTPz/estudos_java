@@ -1,0 +1,31 @@
+package aula2908;
+
+import javax.swing.JOptionPane;
+
+public class Excecao03 {
+
+	public static void main(String[] args) {
+		//exception checked -> em tempo de compilação
+		//exception unchecked -> "runtime", em tempo de execucao
+		while(true) {
+			try {
+				int n = Integer.parseInt(JOptionPane.showInputDialog("Mês? ")); //exception unchecked sendo tratada
+				if(n<1 || n>12) {
+					JOptionPane.showMessageDialog(null, "Mês inválido!");
+					//lançar excesao de mês invalido
+				}else {
+					JOptionPane.showMessageDialog(null, "Mês é válido");
+					break;
+				}
+			}catch(NumberFormatException erro) {
+				System.out.println("Erro: " + erro);
+			}
+			finally {//a execucao sempre passa por aqui
+				//liberar recursos
+				JOptionPane.showMessageDialog(null, "Passou aqui.");
+			}
+		}
+
+	}
+
+}

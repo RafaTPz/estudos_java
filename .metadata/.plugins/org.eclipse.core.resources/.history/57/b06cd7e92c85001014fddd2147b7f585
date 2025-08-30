@@ -1,0 +1,52 @@
+package aula2908;
+
+import javax.swing.JOptionPane;
+
+public class Excecao03 {
+
+	public static void main(String[] args) {
+		//exception checked -> em tempo de compilação
+		//exception unchecked -> "runtime", em tempo de execucao
+		while(true) {
+			try {
+				String s = JOptionPane.showInputDialog("Mês? ");
+				if(s==null) break;
+				int n = Integer.parseInt(s); //exception unchecked sendo tratada
+				int a = 30 / n;
+				if(n<1 || n>12) {
+					JOptionPane.showMessageDialog(null, "Mês inválido!");
+					//lançar exceção de mês invalido
+				}else {
+					JOptionPane.showMessageDialog(null, "Mês é válido");
+					break;
+				}
+
+			//Exception direto, retorna qualquer tipo de exceção, mas não é recomendado, se recomenda catchs especificos.
+			}catch(Exception erro) {
+				//Tratamento a exceção especifica, funciona tipo catch(NumberFormatException erro)
+				if(erro.toString().contains("Number")) {
+					JOptionPane.showMessageDialog(null, "Digite inteiro");
+				}
+
+				JOptionPane.showMessageDialog(null, erro);
+			}
+
+			/* 
+			 * catch(NumberFormatException erro) {
+				JOptionPane.showMessageDialog(null,"Erro1: " + erro);
+				//exceção de erro de valor diferente de número para um valor int
+			}catch(ArithmeticException erro) {
+				JOptionPane.showMessageDialog(null,"Erro2: " + erro);
+				//exceção de erro de aitmética exemplo 30/0
+			}
+			 *
+			 */
+			finally {//a execucao sempre passa por aqui
+				//liberar recursos
+				JOptionPane.showMessageDialog(null, "Passou aqui.");
+			}
+		}
+
+	}
+
+}

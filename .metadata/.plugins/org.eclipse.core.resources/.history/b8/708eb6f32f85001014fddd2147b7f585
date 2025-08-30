@@ -1,0 +1,28 @@
+package aula2908;
+
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
+import javax.swing.JOptionPane;
+
+public class Excecao05 {
+
+	public static void main(String[] args) {
+		PrintWriter printWriter = null;
+		try {
+			printWriter = new PrintWriter("c:/Desktop/log.txt");
+			printWriter.write("Inicio da gravação...\n");
+
+			while(true) {
+				String s = JOptionPane.showInputDialog("Digite qualquer coisa: ");			
+				if(s==null || s.equals(""))break;
+				printWriter.write(s);
+
+			} 
+		}catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "Falha: "+ e);
+		}finally {
+			printWriter.close();
+		}
+	}
+}
