@@ -5,17 +5,17 @@
 2. [Estrutura Básica](#estrutura-básica)
 3. [Tipos de Dados](#tipos-de-dados)
 4. [Variáveis e Constantes](#variáveis-e-constantes)
-5. [Arrays](#arrays)
-6. [Entrada e Saída de Dados](#entrada-e-saída-de-dados)
-7. [Estruturas Condicionais](#estruturas-condicionais)
-8. [Estruturas de Repetição](#estruturas-de-repetição)
-9. [Interface Gráfica (Swing)](#interface-gráfica-swing)
+5. [Operadores](#operadores)
+6. [Arrays](#arrays)
+7. [Entrada e Saída de Dados](#entrada-e-saída-de-dados)
+8. [Estruturas Condicionais](#estruturas-condicionais)
+9. [Estruturas de Repetição](#estruturas-de-repetição)
 10. [Métodos em Java](#métodos-em-java)
 11. [Classe Math](#classe-math)
 12. [Classe Random](#classe-random)
 13. [Manipulação de Strings](#manipulação-de-strings)
 14. [Tratamento de Exceções](#tratamento-de-exceções)
-15. [Operadores](#operadores)
+15. [Interface Gráfica (Swing)](#interface-gráfica-swing)
 16. [Exemplos Práticos Completos](#exemplos-práticos-completos)
 17. [Boas Práticas](#boas-práticas)
 
@@ -23,7 +23,16 @@
 
 ## Introdução
 
-Java é uma linguagem de programação orientada a objetos, multiplataforma e amplamente utilizada no desenvolvimento de aplicações. Este guia apresenta os conceitos fundamentais através de exemplos práticos.
+Java é uma linguagem de programação orientada a objetos, multiplataforma e amplamente utilizada no desenvolvimento de aplicações empresariais e desktop. Este guia apresenta os conceitos fundamentais através de exemplos práticos e exercícios.
+
+**Características principais do Java:**
+- **Orientada a Objetos**: Tudo é baseado em classes e objetos
+- **Multiplataforma**: "Write once, run anywhere" (WORA)
+- **Fortemente tipada**: Tipos de dados devem ser declarados explicitamente
+- **Gerenciamento automático de memória**: Garbage Collection
+- **Rica biblioteca padrão**: APIs extensas para diversas funcionalidades
+
+---
 
 ## Estrutura Básica
 
@@ -47,470 +56,102 @@ public class OlaPessoal {
 ### Pacotes
 ```java
 package aula0808;  // Organização de classes em pacotes
+
+import java.util.Scanner;  // Importação de classes externas
+import javax.swing.JOptionPane;
 ```
+
+**Convenções de nomenclatura:**
+- **Classes**: PascalCase (`MinhaClasse`)
+- **Métodos e variáveis**: camelCase (`meuMetodo`)
+- **Constantes**: MAIÚSCULO (`MINHA_CONSTANTE`)
+- **Pacotes**: minúsculo (`com.empresa.projeto`)
+
+---
 
 ## Tipos de Dados
 
 ### Tipos Primitivos
+
+#### Números Inteiros
 ```java
-// Números inteiros
-byte idade = 127;           // -128 a 127
-int i = 10;                 // -2,147,483,648 a 2,147,483,647
-
-// Números decimais
-float myFloat = 5.99f;      // Precisão simples (usar 'f')
-double myDouble = 5.99;     // Precisão dupla
-
-// Caractere
-char myChar = 'D';          // Um único caractere
-
-// Booleano
-boolean verdadeiro = true;
+byte idade = 127;           // -128 a 127 (8 bits)
+short ano = 2024;           // -32,768 a 32,767 (16 bits)
+int populacao = 210000000;  // -2,147,483,648 a 2,147,483,647 (32 bits)
+long distancia = 9460730472580800L; // -9.223... a 9.223... (64 bits)
 ```
 
-### Tipos Não-Primitivos
+#### Números Decimais
 ```java
-// String - sequência de caracteres
-String myString = "olaaaaa";
+float altura = 1.75f;       // Precisão simples (32 bits) - usar 'f'
+double salario = 3500.50;   // Precisão dupla (64 bits)
 ```
 
-**Diferença entre primitivos e não-primitivos:**
-- **Primitivos**: Armazenam apenas valores
-- **Não-primitivos**: Possuem métodos e funcionalidades adicionais
+#### Outros Tipos
+```java
+char letra = 'A';           // Um único caractere Unicode (16 bits)
+boolean ativo = true;       // true ou false
+```
+
+### Tipos Não-Primitivos (Referência)
+```java
+String nome = "Rafael";  // Sequência de caracteres
+String sobrenome = new String("Silva");  // Forma alternativa
+```
+
+**Diferenças importantes:**
+- **Primitivos**: Armazenam valores diretamente na memória
+- **Não-primitivos**: Armazenam referências para objetos na memória
+- **Não-primitivos**: Possuem métodos e propriedades
+
+---
 
 ## Variáveis e Constantes
 
 ### Variáveis
 ```java
-int mesUsuario = 6;  // Valor pode ser alterado
+int idade = 25;              // Valor pode ser alterado
+String nome = "João";        // Referência pode ser alterada
+idade = 26;                  // Alteração válida
+nome = "Maria";              // Nova referência válida
 ```
 
 ### Constantes
 ```java
-final int MESES_DO_ANO = 12;  // Valor fixo, não pode ser alterado
+final int MESES_DO_ANO = 12;          // Valor fixo, não pode ser alterado
+final double PI = 3.14159;            // Constante matemática
+final String EMPRESA = "Tech Corp";   // String constante
+```
 
-// Classe específica para constantes
+### Classe de Constantes Organizadas
+```java
 public class Constantes {
+    // Validações gerais
+    public static final class Validacao {
+        public static final int IDADE_MINIMA = 0;
+        public static final int IDADE_MAXIMA = 120;
+        public static final int TAMANHO_CPF = 11;
+    }
+    
+    // Mensagens do sistema
+    public static final class Mensagens {
+        public static final String ERRO_NUMERO = "Digite apenas números";
+        public static final String ERRO_IDADE = "Idade deve estar entre 0 e 120";
+        public static final String SUCESSO = "Operação realizada com sucesso!";
+    }
+    
+    // Configurações de meses
     public static final byte MES_MINIMO = 1;
     public static final byte MES_MAXIMO = 12;
 }
 ```
 
-**Convenções:**
-- Constantes em **MAIÚSCULO**
+**Convenções para constantes:**
 - Usar `final` para tornar imutável
+- Nomenclatura em **MAIÚSCULO** com underscore
 - `static` permite acesso sem instanciar a classe
 
-## Arrays
-
-### Declaração e Inicialização
-```java
-// Forma 1: Declaração com valores
-String[] vetor = {"10", "20"};
-int[] x = {1, 2};
-
-// Forma 2: Declaração com tamanho
-String[] v = new String[2];
-v[0] = "30";
-v[1] = "40";
-
-// Array de objetos
-String[] nomes = new String[10];
-```
-
-### Percorrendo Arrays
-```java
-// Loop tradicional
-for(int i = 0; i < nomes.length; i++) {
-    System.out.println(nomes[i]);
-}
-
-// Enhanced for (Iterator)
-for(String s : nomes) {
-    System.out.println(s);
-}
-```
-
-## Entrada e Saída de Dados
-
-### Console
-```java
-System.out.println("Mensagem");  // Saída no console
-```
-
-### Interface Gráfica com JOptionPane
-```java
-import javax.swing.JOptionPane;
-
-// Entrada de dados
-String entrada = JOptionPane.showInputDialog("Digite um valor:");
-
-// Saída de dados
-JOptionPane.showMessageDialog(null, "Resultado: " + valor);
-```
-
-### Conversão de Tipos
-```java
-// String para números
-int numero = Integer.parseInt(stringNumero);
-float decimal = Float.parseFloat(stringDecimal);
-double precisao = Double.parseDouble(stringPrecisao);
-```
-
-## Estruturas Condicionais
-
-### If-Else
-```java
-if (mes >= Constantes.MES_MINIMO && mes <= Constantes.MES_MAXIMO) {
-    System.out.println("Mês válido");
-} else {
-    System.out.println("Mês inválido");
-}
-```
-
-### Switch-Case
-```java
-String mesExtenso = "";
-switch(mes) {
-    case 1: mesExtenso = "Janeiro"; break;
-    case 2: mesExtenso = "Fevereiro"; break;
-    case 3: mesExtenso = "Março"; break;
-    default: mesExtenso = "Desconhecido";
-}
-```
-
-### Validações de String
-```java
-String s = JOptionPane.showInputDialog("Digite algo:");
-
-// Verificar se é null
-if (s != null) {
-    // Verificar se está vazio
-    if (!s.equals("")) {
-        // String válida para processamento
-    }
-}
-```
-
-## Estruturas de Repetição
-
-### For Tradicional
-```java
-for(int i = 0; i < 10; i++) {
-    System.out.println(i);
-}
-```
-
-### For com Caracteres
-```java
-for(char a = 'A'; a <= 'z'; a++) {
-    System.out.println(a + " = " + (int)a);  // Casting para ASCII
-}
-```
-
-### Enhanced For (For-Each)
-```java
-for(String nome : arrayNomes) {
-    System.out.println(nome);
-}
-```
-
-## Interface Gráfica (Swing)
-
-### Componentes Básicos
-```java
-import javax.swing.*;
-import java.awt.event.*;
-
-public class GuiMes extends JFrame {
-    private JButton btMostrar, btSair;
-    private JTextField tfMes, tfResultado;
-    
-    public GuiMes() {
-        // Configurações da janela
-        setTitle("Código de meses");
-        setBounds(200, 200, 600, 400);
-        setResizable(false);
-        setLayout(null);
-        
-        // Criação dos componentes
-        btMostrar = new JButton("Mostrar");
-        tfMes = new JTextField();
-        tfResultado = new JTextField();
-        tfResultado.setEditable(false);
-        
-        // Posicionamento
-        btMostrar.setBounds(180, 100, 200, 25);
-        tfMes.setBounds(90, 50, 400, 25);
-        
-        // Adicionar à janela
-        add(btMostrar);
-        add(tfMes);
-        
-        // Event Listeners
-        btMostrar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String texto = tfMes.getText();
-                // Processar entrada
-            }
-        });
-    }
-}
-```
-
-## Métodos em Java
-
-### Conceitos Fundamentais
-
-**Definição**: Métodos são blocos de código que executam tarefas específicas. Podem receber dados de entrada (parâmetros), processá-los e retornar um resultado.
-
-```
-Entrada (argumentos) → Método() → Saída (retorno)
-```
-
-### Anatomia de um Método
-```java
-public static float somar(float a, float b) {
-    return a + b;
-}
-```
-
-**Componentes:**
-- `public`: **Modificador de acesso**
-- `static`: **Modificador de escopo** (pertence à classe)
-- `float`: **Tipo de retorno**
-- `somar`: **Nome do método**
-- `(float a, float b)`: **Assinatura/Parâmetros**
-- `{ return a + b; }`: **Corpo/Implementação**
-
-### Modificadores de Acesso
-
-#### UML - Unified Modeling Language
-```
-+ public    → Acessível de qualquer lugar
-- private   → Acessível apenas na mesma classe  
-# protected → Acessível no pacote e subclasses
-```
-
-```java
-public class ExemplosAcesso {
-    public void metodoPublico() {
-        // Pode ser chamado de qualquer classe
-    }
-    
-    private void metodoPrivado() {
-        // Só pode ser chamado dentro desta classe
-    }
-}
-```
-
-### Escopo: Static vs Não-Static
-
-#### Métodos Estáticos (Escopo de Classe)
-```java
-// Pertencem à CLASSE
-public static void somar(float a, float b) {
-    System.out.println(a + b);
-}
-
-// Chamada: NomeClasse.nomeMetodo()
-Calculadora.somar(10, 20);
-```
-
-#### Métodos de Instância (Escopo de Objeto)
-```java
-// Pertencem ao OBJETO
-public void somase(float a, float b) {
-    System.out.println(a + b);
-}
-
-// Chamada: objeto.nomeMetodo()
-Calculadora c = new Calculadora();
-c.somase(10, 20);
-```
-
-**Diferença prática:**
-- **Static**: Uma função genérica da classe
-- **Não-static**: Um método específico do objeto
-
-### Tipos de Retorno
-
-```java
-// void - Não retorna nada
-public static void imprimir(String texto) {
-    System.out.println(texto);
-}
-
-// Retorna um valor específico
-public static String espelhar(String texto) {
-    String resultado = "";
-    for(int i = texto.length()-1; i >= 0; i--) {
-        resultado += texto.charAt(i);
-    }
-    return resultado;  // DEVE retornar uma String
-}
-
-// Retorna boolean para indicar sucesso/falha
-public static boolean salvar(String conteudo, String arquivo) {
-    try {
-        PrintWriter pw = new PrintWriter(arquivo);
-        pw.print(conteudo);
-        pw.close();
-        return true;  // Sucesso
-    } catch (Exception e) {
-        return false; // Falha
-    }
-}
-```
-
-### Parâmetros vs Argumentos
-
-```java
-// Parâmetros = variáveis do método (a, b)
-public static void somar(float a, float b) {
-    System.out.println(a + b);
-}
-
-// Argumentos = valores passados (10, 20)
-somar(10, 20);
-```
-
-**Características dos parâmetros:**
-- São **variáveis locais** (existem apenas durante a execução)
-- **Tempo de vida**: apenas durante a execução do método
-- **Escopo**: visíveis apenas dentro do método
-
-### Sobrecarga de Métodos (Overloading)
-
-**Definição**: Métodos com o **mesmo nome** mas **assinaturas diferentes** na mesma classe.
-
-```java
-public class Calculadora {
-    // Assinatura: somar(float, float)
-    public static void somar(float a, float b) {
-        System.out.println(a + b);
-    }
-    
-    // Assinatura: somar(int, float) - DIFERENTE!
-    public static void somar(int a, float b) {
-        System.out.println(a + b);
-    }
-    
-    // Assinatura: somar(float, float, float) - DIFERENTE!
-    public static void somar(float a, float b, float c) {
-        System.out.println(a + b + c);
-    }
-}
-```
-
-#### Exemplo Prático - Classe Impressora
-```java
-public class Impressora {
-    // Versão básica
-    public static void imprimir() {
-        System.out.println("Apostila de Java");
-    }
-    
-    // Com texto personalizado
-    public static void imprimir(String texto) {
-        System.out.println(texto);
-    }
-    
-    // Com repetição
-    public static void imprimir(String texto, int quantidadeVezes) {
-        for(int i = 1; i <= quantidadeVezes; i++) {
-            System.out.println(texto);
-        }
-    }
-    
-    // Com formatação
-    public static void imprimir(String texto, String caixa) {
-        if(caixa.equalsIgnoreCase("alta")) {
-            System.out.println(texto.toUpperCase());
-        } else {
-        JOptionPane.showMessageDialog(null, "Erro inesperado: " + erro);
-    }
-}
-```
-
-### Manipulação de Arquivos
-```java
-import java.io.*;
-
-PrintWriter arquivo = null;
-try {
-    // Criar/sobrescrever arquivo
-    arquivo = new PrintWriter("caminho/arquivo.txt");
-    
-    // Ou anexar ao arquivo existente
-    arquivo = new PrintWriter(new FileWriter("caminho/arquivo.txt", true));
-    
-    arquivo.write("Conteúdo do arquivo\n");
-    
-} catch(FileNotFoundException e) {
-    System.out.println("Arquivo não encontrado: " + e);
-} catch(IOException e) {
-    System.out.println("Erro de I/O: " + e);
-} finally {
-    // SEMPRE fechar o arquivo para liberar recursos
-    if(arquivo != null) {
-        arquivo.close();
-    }
-}
-```
-
-### Loop com Tratamento de Exceções
-```java
-while(true) {
-    try {
-        String s = JOptionPane.showInputDialog("Mês? ");
-        
-        // Permitir saída
-        if(s == null || s.equals("")) break;
-        
-        int mes = Integer.parseInt(s);
-        
-        // Validação de negócio
-        if(mes < 1 || mes > 12) {
-            JOptionPane.showMessageDialog(null, "Mês inválido!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Mês " + mes + " é válido!");
-            break;  // Sair do loop quando válido
-        }
-        
-    } catch(NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Digite apenas números inteiros");
-    } finally {
-        // Executado a cada iteração
-        System.out.println("Fim de uma tentativa");
-    }
-}
-```
-
-### Exemplo Prático - Entrada de Dados com Tratamento
-```java
-public static int lerIdade() {
-    while(true) {
-        try {
-            String entrada = JOptionPane.showInputDialog("Digite sua idade:");
-            if(entrada == null) return -1;  // Usuário cancelou
-            
-            int idade = Integer.parseInt(entrada);
-            
-            if(idade < 0 || idade > 120) {
-                JOptionPane.showMessageDialog(null, "Idade deve estar entre 0 e 120 anos");
-                continue;
-            }
-            
-            return idade;  // Idade válida
-            
-        } catch(NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Digite apenas números");
-        }
-    }
-}
-```
+---
 
 ## Operadores
 
@@ -519,7 +160,7 @@ public static int lerIdade() {
 int a = 10, b = 3;
 
 System.out.println(a + b);  // 13 - Adição
-System.out.println(a - b);  // 7  - Subtração
+System.out.println(a - b);  // 7  - Subtração  
 System.out.println(a * b);  // 30 - Multiplicação
 System.out.println(a / b);  // 3  - Divisão inteira
 System.out.println(a % b);  // 1  - Resto da divisão (módulo)
@@ -539,10 +180,10 @@ x /= 4;   // x = x / 4;  → x = 6
 x %= 4;   // x = x % 4;  → x = 2
 
 // Incremento e decremento
-x++;      // x = x + 1;  → Pós-incremento
-++x;      // x = x + 1;  → Pré-incremento
-x--;      // x = x - 1;  → Pós-decremento
---x;      // x = x - 1;  → Pré-decremento
+x++;      // Pós-incremento: usa x, depois incrementa
+++x;      // Pré-incremento: incrementa x, depois usa
+x--;      // Pós-decremento: usa x, depois decrementa
+--x;      // Pré-decremento: decrementa x, depois usa
 ```
 
 ### Operadores de Comparação
@@ -566,8 +207,9 @@ System.out.println(x || y);  // true  - OU lógico (OR)
 System.out.println(!x);      // false - NÃO lógico (NOT)
 
 // Avaliação com curto-circuito
-if(x && metodoCaroPraTeste()) {  // Se x for false, método não é executado
-    // ...
+if (x && metodoCaroParaTeste()) {  
+    // Se x for false, o método não é executado
+    System.out.println("Ambas condições são verdadeiras");
 }
 ```
 
@@ -577,15 +219,7 @@ if(x && metodoCaroPraTeste()) {  // Se x for false, método não é executado
 int idade = 20;
 String categoria = (idade >= 18) ? "Maior de idade" : "Menor de idade";
 
-// Equivale a:
-String categoria2;
-if(idade >= 18) {
-    categoria2 = "Maior de idade";
-} else {
-    categoria2 = "Menor de idade";
-}
-
-// Exemplo prático - determinar semestre
+// Exemplo prático - análise de RA
 String ra = "1050482423017";
 String semestre = (ra.substring(8, 9).equals("1")) ? 
                   "Primeiro semestre" : "Segundo semestre";
@@ -609,62 +243,674 @@ int resultado2 = (2 + 3) * 4;  // 20 - parênteses alteram precedência
 // 10. = += -= *= /= %= (atribuição)
 ```
 
-## Exemplos Práticos Completos
+---
 
-### 1. Sistema de Validação de Mês
+## Arrays
+
+### Declaração e Inicialização
 ```java
-public class ValidadorMes {
-    public static final int MES_MINIMO = 1;
-    public static final int MES_MAXIMO = 12;
+// Forma 1: Declaração com valores iniciais
+String[] nomes = {"Ana", "Bruno", "Carlos"};
+int[] numeros = {10, 20, 30, 40, 50};
+
+// Forma 2: Declaração com tamanho específico
+String[] cidades = new String[5];
+cidades[0] = "São Paulo";
+cidades[1] = "Rio de Janeiro";
+cidades[2] = "Belo Horizonte";
+
+// Forma 3: Declaração e inicialização separadas
+int[] idades;
+idades = new int[10];
+```
+
+### Propriedades e Acesso
+```java
+String[] frutas = {"Maçã", "Banana", "Laranja"};
+
+System.out.println("Tamanho: " + frutas.length);  // 3
+System.out.println("Primeira: " + frutas[0]);     // Maçã
+System.out.println("Última: " + frutas[frutas.length - 1]);  // Laranja
+```
+
+### Percorrendo Arrays
+```java
+String[] animais = {"Gato", "Cachorro", "Pássaro", "Peixe"};
+
+// Loop tradicional (com índice)
+for (int i = 0; i < animais.length; i++) {
+    System.out.println("Posição " + i + ": " + animais[i]);
+}
+
+// Enhanced for / For-each (mais limpo)
+for (String animal : animais) {
+    System.out.println(animal);
+}
+
+// Percorrendo ao contrário
+for (int i = animais.length - 1; i >= 0; i--) {
+    System.out.println(animais[i]);
+}
+```
+
+### Arrays Multidimensionais
+```java
+// Matriz 3x3
+int[][] matriz = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+
+// Percorrendo matriz
+for (int i = 0; i < matriz.length; i++) {
+    for (int j = 0; j < matriz[i].length; j++) {
+        System.out.print(matriz[i][j] + " ");
+    }
+    System.out.println();
+}
+```
+
+---
+
+## Entrada e Saída de Dados
+
+### Console com Scanner
+```java
+import java.util.Scanner;
+
+Scanner scanner = new Scanner(System.in);
+
+System.out.print("Digite seu nome: ");
+String nome = scanner.nextLine();
+
+System.out.print("Digite sua idade: ");
+int idade = scanner.nextInt();
+
+System.out.println("Olá " + nome + ", você tem " + idade + " anos.");
+
+scanner.close(); // Sempre fechar o Scanner
+```
+
+### Interface Gráfica com JOptionPane
+```java
+import javax.swing.JOptionPane;
+
+// Entrada de dados
+String nome = JOptionPane.showInputDialog("Digite seu nome:");
+String idadeStr = JOptionPane.showInputDialog("Digite sua idade:");
+
+// Saída de dados
+JOptionPane.showMessageDialog(null, "Olá " + nome + "!");
+
+// Confirmação
+int opcao = JOptionPane.showConfirmDialog(null, 
+    "Deseja continuar?", "Confirmação", JOptionPane.YES_NO_OPTION);
+
+if (opcao == JOptionPane.YES_OPTION) {
+    JOptionPane.showMessageDialog(null, "Continuando...");
+}
+```
+
+### Conversão de Tipos (Parsing)
+```java
+// String para números
+String numeroStr = "123";
+String decimalStr = "45.67";
+
+int numero = Integer.parseInt(numeroStr);
+float decimal = Float.parseFloat(decimalStr);
+double precisao = Double.parseDouble(decimalStr);
+
+// Números para String
+int valor = 100;
+String valorStr = String.valueOf(valor);
+String valorStr2 = Integer.toString(valor);
+```
+
+### Validação de Entrada
+```java
+String entrada = JOptionPane.showInputDialog("Digite um número:");
+
+// Verificar se é null (cancelou)
+if (entrada != null) {
+    // Verificar se não está vazio
+    if (!entrada.trim().equals("")) {
+        try {
+            int numero = Integer.parseInt(entrada.trim());
+            JOptionPane.showMessageDialog(null, "Número válido: " + numero);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Entrada inválida!");
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Campo não pode estar vazio!");
+    }
+}
+```
+
+---
+
+## Estruturas Condicionais
+
+### If-Else Simples
+```java
+int idade = 18;
+
+if (idade >= 18) {
+    System.out.println("Maior de idade");
+} else {
+    System.out.println("Menor de idade");
+}
+```
+
+### If-Else Encadeado
+```java
+double nota = 8.5;
+
+if (nota >= 9.0) {
+    System.out.println("Excelente!");
+} else if (nota >= 7.0) {
+    System.out.println("Bom!");
+} else if (nota >= 5.0) {
+    System.out.println("Regular");
+} else {
+    System.out.println("Insuficiente");
+}
+```
+
+### Condições Compostas
+```java
+int mes = 6;
+
+if (mes >= Constantes.MES_MINIMO && mes <= Constantes.MES_MAXIMO) {
+    System.out.println("Mês válido: " + mes);
+} else {
+    System.out.println("Mês inválido!");
+}
+
+// Validação de string
+String texto = "Java";
+if (texto != null && !texto.isEmpty() && texto.length() > 2) {
+    System.out.println("Texto válido: " + texto);
+}
+```
+
+### Switch-Case
+```java
+int mes = 3;
+String mesExtenso = "";
+
+switch (mes) {
+    case 1: mesExtenso = "Janeiro"; break;
+    case 2: mesExtenso = "Fevereiro"; break;
+    case 3: mesExtenso = "Março"; break;
+    case 4: mesExtenso = "Abril"; break;
+    case 5: mesExtenso = "Maio"; break;
+    case 6: mesExtenso = "Junho"; break;
+    case 7: mesExtenso = "Julho"; break;
+    case 8: mesExtenso = "Agosto"; break;
+    case 9: mesExtenso = "Setembro"; break;
+    case 10: mesExtenso = "Outubro"; break;
+    case 11: mesExtenso = "Novembro"; break;
+    case 12: mesExtenso = "Dezembro"; break;
+    default: mesExtenso = "Mês inválido";
+}
+
+System.out.println("Mês: " + mesExtenso);
+```
+
+### Switch Moderno (Java 12+)
+```java
+int mes = 3;
+String mesExtenso = switch (mes) {
+    case 1 -> "Janeiro";
+    case 2 -> "Fevereiro";
+    case 3 -> "Março";
+    case 4 -> "Abril";
+    case 5 -> "Maio";
+    case 6 -> "Junho";
+    case 7 -> "Julho";
+    case 8 -> "Agosto";
+    case 9 -> "Setembro";
+    case 10 -> "Outubro";
+    case 11 -> "Novembro";
+    case 12 -> "Dezembro";
+    default -> "Mês inválido";
+};
+```
+
+---
+
+## Estruturas de Repetição
+
+### For Tradicional
+```java
+// Loop básico de 0 a 9
+for (int i = 0; i < 10; i++) {
+    System.out.println("Número: " + i);
+}
+
+// Loop decrescente
+for (int i = 10; i >= 1; i--) {
+    System.out.println("Contagem regressiva: " + i);
+}
+
+// Loop com step personalizado
+for (int i = 0; i <= 100; i += 5) {
+    System.out.println("Múltiplo de 5: " + i);
+}
+```
+
+### For com Caracteres
+```java
+// Letras maiúsculas
+for (char letra = 'A'; letra <= 'Z'; letra++) {
+    System.out.println(letra + " = " + (int)letra);  // Casting para ASCII
+}
+
+// Letras minúsculas
+for (char letra = 'a'; letra <= 'z'; letra++) {
+    System.out.print(letra + " ");
+}
+```
+
+### Enhanced For (For-Each)
+```java
+String[] nomes = {"Ana", "Bruno", "Carlos", "Diana"};
+
+// Percorrer array
+for (String nome : nomes) {
+    System.out.println("Nome: " + nome);
+}
+
+// Percorrer String como array de caracteres
+String palavra = "Java";
+for (char letra : palavra.toCharArray()) {
+    System.out.println("Letra: " + letra);
+}
+```
+
+### While
+```java
+int contador = 0;
+while (contador < 5) {
+    System.out.println("Contador: " + contador);
+    contador++;
+}
+
+// Exemplo prático - validação de entrada
+boolean entradaValida = false;
+while (!entradaValida) {
+    String entrada = JOptionPane.showInputDialog("Digite um número entre 1 e 10:");
     
-    /**
-     * Valida se um número representa um mês válido
-     * @param mes o número do mês
-     * @return true se válido, false caso contrário
-     */
-    public static boolean isValido(int mes) {
-        return mes >= MES_MINIMO && mes <= MES_MAXIMO;
+    if (entrada != null) {
+        try {
+            int numero = Integer.parseInt(entrada);
+            if (numero >= 1 && numero <= 10) {
+                JOptionPane.showMessageDialog(null, "Número válido: " + numero);
+                entradaValida = true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Número deve estar entre 1 e 10!");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Digite apenas números!");
+        }
+    } else {
+        break; // Usuário cancelou
+    }
+}
+```
+
+### Do-While
+```java
+int numero;
+do {
+    String entrada = JOptionPane.showInputDialog("Digite um número positivo:");
+    numero = Integer.parseInt(entrada);
+    
+    if (numero <= 0) {
+        JOptionPane.showMessageDialog(null, "Número deve ser positivo!");
+    }
+} while (numero <= 0);
+
+JOptionPane.showMessageDialog(null, "Número válido: " + numero);
+```
+
+### Controle de Fluxo (break e continue)
+```java
+// break - sai do loop
+for (int i = 1; i <= 10; i++) {
+    if (i == 6) {
+        break; // Para o loop quando i = 6
+    }
+    System.out.println(i);
+} // Imprime: 1, 2, 3, 4, 5
+
+// continue - pula para próxima iteração
+for (int i = 1; i <= 10; i++) {
+    if (i % 2 == 0) {
+        continue; // Pula números pares
+    }
+    System.out.println(i);
+} // Imprime: 1, 3, 5, 7, 9
+```
+
+---
+
+## Métodos em Java
+
+### Conceitos Fundamentais
+
+**Definição**: Métodos são blocos de código que executam tarefas específicas. Podem receber dados de entrada (parâmetros), processá-los e retornar um resultado.
+
+```
+Entrada (argumentos) → Método() → Saída (retorno)
+```
+
+### Anatomia de um Método
+```java
+public static float somar(float a, float b) {
+    return a + b;
+}
+```
+
+**Componentes:**
+- `public`: **Modificador de acesso** (visibilidade)
+- `static`: **Modificador de escopo** (pertence à classe)
+- `float`: **Tipo de retorno**
+- `somar`: **Nome do método**
+- `(float a, float b)`: **Parâmetros**
+- `{ return a + b; }`: **Corpo/Implementação**
+
+### Modificadores de Acesso
+```java
+public class ExemplosAcesso {
+    public void metodoPublico() {
+        // Acessível de qualquer lugar
     }
     
-    /**
-     * Converte número do mês para nome por extenso
-     * @param mes o número do mês (1-12)
-     * @return nome do mês ou "Inválido"
-     */
-    public static String getNomeExtenso(int mes) {
-        if(!isValido(mes)) return "Mês inválido";
-        
-        String[] meses = {"", "Janeiro", "Fevereiro", "Março", "Abril", 
-                         "Maio", "Junho", "Julho", "Agosto", "Setembro", 
-                         "Outubro", "Novembro", "Dezembro"};
-        return meses[mes];
+    private void metodoPrivado() {
+        // Acessível apenas nesta classe
     }
     
-    public static void main(String[] args) {
-        while(true) {
+    protected void metodoProtegido() {
+        // Acessível no pacote e subclasses
+    }
+    
+    void metodoDefault() {
+        // Acessível apenas no mesmo pacote
+    }
+}
+```
+
+### Escopo: Static vs Não-Static
+
+#### Métodos Estáticos (Escopo de Classe)
+```java
+public class Calculadora {
+    // Pertence à CLASSE
+    public static int somar(int a, int b) {
+        return a + b;
+    }
+}
+
+// Chamada: NomeClasse.nomeMetodo()
+int resultado = Calculadora.somar(10, 20);
+```
+
+#### Métodos de Instância (Escopo de Objeto)
+```java
+public class Calculadora {
+    // Pertence ao OBJETO
+    public int somar(int a, int b) {
+        return a + b;
+    }
+}
+
+// Chamada: objeto.nomeMetodo()
+Calculadora calc = new Calculadora();
+int resultado = calc.somar(10, 20);
+```
+
+### Tipos de Retorno
+```java
+// void - Não retorna nada
+public static void imprimir(String texto) {
+    System.out.println(texto);
+}
+
+// Retorna um valor específico
+public static String inverter(String texto) {
+    StringBuilder resultado = new StringBuilder();
+    for (int i = texto.length() - 1; i >= 0; i--) {
+        resultado.append(texto.charAt(i));
+    }
+    return resultado.toString();
+}
+
+// Retorna boolean para indicar sucesso/falha
+public static boolean isIdadeValida(int idade) {
+    return idade >= 0 && idade <= 120;
+}
+```
+
+### Sobrecarga de Métodos (Overloading)
+```java
+public class Impressora {
+    // Versão básica
+    public static void imprimir() {
+        System.out.println("Documento padrão");
+    }
+    
+    // Com texto personalizado
+    public static void imprimir(String texto) {
+        System.out.println(texto);
+    }
+    
+    // Com repetição
+    public static void imprimir(String texto, int vezes) {
+        for (int i = 0; i < vezes; i++) {
+            System.out.println(texto);
+        }
+    }
+    
+    // Com formatação
+    public static void imprimir(String texto, boolean maiusculo) {
+        if (maiusculo) {
+            System.out.println(texto.toUpperCase());
+        } else {
+            System.out.println(texto.toLowerCase());
+        }
+    }
+}
+```
+
+### Exemplo Prático - Validação de Entrada
+```java
+public class ValidadorEntrada {
+    /**
+     * Lê um inteiro com validação e retry automático
+     * @param mensagem mensagem para o usuário
+     * @param min valor mínimo aceito
+     * @param max valor máximo aceito
+     * @return número válido ou -1 se usuário cancelar
+     */
+    public static int lerInteiro(String mensagem, int min, int max) {
+        while (true) {
             try {
-                String entrada = JOptionPane.showInputDialog("Digite o mês (1-12):");
-                if(entrada == null || entrada.trim().equals("")) break;
+                String entrada = JOptionPane.showInputDialog(
+                    mensagem + " (" + min + " a " + max + "):");
                 
-                int mes = Integer.parseInt(entrada.trim());
+                if (entrada == null) return -1;  // Cancelou
                 
-                if(isValido(mes)) {
-                    String mensagem = "Mês " + mes + ": " + getNomeExtenso(mes);
-                    JOptionPane.showMessageDialog(null, mensagem);
-                    break;
+                int numero = Integer.parseInt(entrada.trim());
+                
+                if (numero >= min && numero <= max) {
+                    return numero;
                 } else {
-                    JOptionPane.showMessageDialog(null, "Mês deve ser entre 1 e 12");
+                    JOptionPane.showMessageDialog(null, 
+                        "Número deve estar entre " + min + " e " + max);
                 }
                 
-            } catch(NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Digite apenas números");
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Digite apenas números inteiros");
             }
         }
     }
 }
 ```
 
-### 2. Gerador de Senhas Avançado
+### Documentação JavaDoc
+```java
+/**
+ * Classe utilitária para cálculos matemáticos básicos
+ * @author Rafael
+ * @version 1.0
+ * @since 2024
+ */
+public class CalculadoraUtil {
+    
+    /**
+     * Calcula a média aritmética de um array de números
+     * @param numeros array com os valores
+     * @return a média dos valores, ou 0 se array vazio
+     * @throws IllegalArgumentException se array for null
+     */
+    public static double calcularMedia(double[] numeros) {
+        if (numeros == null) {
+            throw new IllegalArgumentException("Array não pode ser null");
+        }
+        
+        if (numeros.length == 0) return 0;
+        
+        double soma = 0;
+        for (double num : numeros) {
+            soma += num;
+        }
+        return soma / numeros.length;
+    }
+}
+```
+
+---
+
+## Classe Math
+
+### Métodos Básicos
+```java
+// Valor absoluto
+int absoluto = Math.abs(-15);     // 15
+double abs = Math.abs(-3.14);     // 3.14
+
+// Máximo e mínimo
+int maior = Math.max(10, 25);     // 25
+double menor = Math.min(3.14, 2.71); // 2.71
+
+// Para 3 ou mais valores
+int maiorDeTres = Math.max(Math.max(5, 12), 8);  // 12
+```
+
+### Arredondamento
+```java
+double numero = 85.7;
+
+// Arredonda para o inteiro mais próximo
+long arredondado = Math.round(numero);        // 86
+
+// Arredonda para cima (teto)
+double paraCima = Math.ceil(numero);          // 86.0
+
+// Arredonda para baixo (chão)  
+double paraBaixo = Math.floor(numero);        // 85.0
+```
+
+**Exemplo prático - Cálculo de ônibus:**
+```java
+final int PASSAGEIROS_POR_ONIBUS = 40;
+int numeroAlunos = 85;
+
+// Quantos ônibus são necessários?
+int onibusNecessarios = (int) Math.ceil((double) numeroAlunos / PASSAGEIROS_POR_ONIBUS);
+System.out.println("Ônibus necessários: " + onibusNecessarios); // 3
+```
+
+### Potenciação e Raiz
+```java
+// Potenciação
+double potencia = Math.pow(2, 8);      // 2^8 = 256.0
+double quadrado = Math.pow(5, 2);      // 5^2 = 25.0
+
+// Raiz quadrada
+double raiz = Math.sqrt(16);           // 4.0
+double raizCubica = Math.cbrt(27);     // 3.0 (raiz cúbica)
+```
+
+### Números Aleatórios
+```java
+// Gera número entre 0.0 (incluído) e 1.0 (exclusivo)
+double aleatorio = Math.random();
+
+// Número inteiro entre 1 e 6 (dado)
+int dado = (int)(1 + Math.random() * 6);
+
+// Número inteiro entre min e max (incluído)
+int min = 10, max = 50;
+int numeroAleatorio = (int)(min + Math.random() * (max - min + 1));
+
+// Gerador da Mega-Sena
+System.out.println("Números da sorte:");
+for (int i = 0; i < 6; i++) {
+    int numero = (int)(1 + Math.random() * 60);
+    System.out.print(numero + " ");
+}
+```
+
+### Constantes Matemáticas
+```java
+double pi = Math.PI;        // 3.141592653589793
+double e = Math.E;          // 2.718281828459045
+
+// Cálculo da área do círculo
+double raio = 5.0;
+double area = Math.PI * Math.pow(raio, 2);
+System.out.println("Área: " + area);
+```
+
+---
+
+## Classe Random
+
+### Vantagens sobre Math.random()
+```java
+import java.util.Random;
+
+Random random = new Random();
+
+// Números inteiros em intervalos específicos
+int numeroEntre0e9 = random.nextInt(10);        // 0 a 9
+int numeroEntre10e19 = random.nextInt(10, 20);  // 10 a 19 (Java 17+)
+
+// Números decimais
+float decimal = random.nextFloat();             // 0.0 a 1.0
+double precisao = random.nextDouble();          // 0.0 a 1.0
+
+// Boolean aleatório
+boolean booleano = random.nextBoolean();        // true ou false
+```
+
+### Seeds (Reprodutibilidade)
+```java
+// Seed fixa para testes
+Random randomComSeed = new Random(42);
+
+// Com a mesma seed, a sequência será sempre igual
+System.out.println(randomComSeed.nextInt(100)); // Sempre o mesmo resultado
+System.out.println(randomComSeed.nextInt(100)); // Previsível para testes
+```
+
+### Aplicações Práticas
+
+#### Gerador de Senhas
 ```java
 public class GeradorSenhas {
     private static final String NUMEROS = "0123456789";
@@ -672,133 +918,386 @@ public class GeradorSenhas {
     private static final String MAIUSCULAS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String SIMBOLOS = "!@#$%^&*()_+-=[]{}|;:,.<>?";
     
-    /**
-     * Gera senha apenas numérica
-     * @param tamanho quantidade de dígitos
-     * @return senha numérica
-     */
-    public static String gerarNumerica(int tamanho) {
-        return gerarSenha(NUMEROS, tamanho);
+    public static String gerarSenhaSimples(int tamanho) {
+        String caracteres = NUMEROS + MINUSCULAS + MAIUSCULAS;
+        return gerarSenha(caracteres, tamanho);
     }
     
-    /**
-     * Gera senha simples (números + letras)
-     * @param tamanho quantidade de caracteres
-     * @return senha alfanumérica
-     */
-    public static String gerarSimples(int tamanho) {
-        return gerarSenha(NUMEROS + MINUSCULAS + MAIUSCULAS, tamanho);
+    public static String gerarSenhaComplexa(int tamanho) {
+        String caracteres = NUMEROS + MINUSCULAS + MAIUSCULAS + SIMBOLOS;
+        return gerarSenha(caracteres, tamanho);
     }
     
-    /**
-     * Gera senha complexa (números + letras + símbolos)
-     * @param tamanho quantidade de caracteres
-     * @return senha complexa
-     */
-    public static String gerarComplexa(int tamanho) {
-        return gerarSenha(NUMEROS + MINUSCULAS + MAIUSCULAS + SIMBOLOS, tamanho);
-    }
-    
-    /**
-     * Método base para geração de senhas
-     * @param caracteres pool de caracteres disponíveis
-     * @param tamanho tamanho da senha
-     * @return senha gerada
-     */
     private static String gerarSenha(String caracteres, int tamanho) {
+        Random random = new Random();
         StringBuilder senha = new StringBuilder();
-        for(int i = 0; i < tamanho; i++) {
-            int indice = (int)(Math.random() * caracteres.length());
+        
+        for (int i = 0; i < tamanho; i++) {
+            int indice = random.nextInt(caracteres.length());
             senha.append(caracteres.charAt(indice));
         }
+        
         return senha.toString();
-    }
-    
-    /**
-     * Avalia força da senha
-     * @param senha a senha a ser avaliada
-     * @return força da senha (Fraca/Média/Forte/Muito Forte)
-     */
-    public static String avaliarForca(String senha) {
-        int pontos = 0;
-        
-        if(senha.length() >= 8) pontos += 2;
-        if(senha.length() >= 12) pontos += 1;
-        
-        boolean temMinuscula = false, temMaiuscula = false;
-        boolean temNumero = false, temSimbolo = false;
-        
-        for(char c : senha.toCharArray()) {
-            if(Character.isLowerCase(c)) temMinuscula = true;
-            else if(Character.isUpperCase(c)) temMaiuscula = true;
-            else if(Character.isDigit(c)) temNumero = true;
-            else temSimbolo = true;
-        }
-        
-        if(temMinuscula) pontos++;
-        if(temMaiuscula) pontos++;
-        if(temNumero) pontos++;
-        if(temSimbolo) pontos += 2;
-        
-        if(pontos < 3) return "Fraca";
-        if(pontos < 5) return "Média";
-        if(pontos < 7) return "Forte";
-        return "Muito Forte";
     }
 }
 ```
 
-### 3. Analisador de RA (Registro Acadêmico)
+#### Sorteio de Elementos
 ```java
-public class AnalisadorRA {
-    /**
-     * Extrai informações do RA
-     * @param ra o registro acadêmico
-     * @return string com informações formatadas
-     */
-    public static String analisar(String ra) {
-        if(ra == null || ra.length() != 13) {
-            return "RA inválido - deve ter exatamente 13 dígitos";
-        }
-        
-        try {
-            // Validar se contém apenas números
-            Long.parseLong(ra);
-            
-            String unidade = ra.substring(0, 3);
-            String curso = ra.substring(3, 6);
-            String ano = "20" + ra.substring(6, 8);
-            String semestre = ra.substring(8, 9).equals("1") ? 
-                             "1º semestre" : "2º semestre";
-            String sequencial = ra.substring(9);
-            
-            StringBuilder resultado = new StringBuilder();
-            resultado.append("=== ANÁLISE DO RA ===\n");
-            resultado.append("RA: ").append(ra).append("\n");
-            resultado.append("Unidade: ").append(unidade).append("\n");
-            resultado.append("Curso: ").append(curso).append("\n");
-            resultado.append("Ano: ").append(ano).append("\n");
-            resultado.append("Semestre: ").append(semestre).append("\n");
-            resultado.append("Sequencial: ").append(sequencial);
-            
-            return resultado.toString();
-            
-        } catch(NumberFormatException e) {
-            return "RA inválido - deve conter apenas números";
-        }
+public class Sorteador {
+    public static <T> T sortear(T[] elementos) {
+        Random random = new Random();
+        int indiceAleatorio = random.nextInt(elementos.length);
+        return elementos[indiceAleatorio];
     }
     
     public static void main(String[] args) {
-        String ra = JOptionPane.showInputDialog("Digite o RA (13 dígitos):");
-        if(ra != null) {
-            String resultado = analisar(ra.trim());
-            JOptionPane.showMessageDialog(null, resultado);
+        String[] nomes = {"Ana", "Bruno", "Carlos", "Diana", "Eduardo"};
+        String sorteado = sortear(nomes);
+        System.out.println("Pessoa sorteada: " + sorteado);
+    }
+}
+```
+
+---
+
+## Manipulação de Strings
+
+### Métodos Básicos
+```java
+String texto = "Programação Java";
+
+// Informações básicas
+int tamanho = texto.length();                    // 16
+boolean vazio = texto.isEmpty();                 // false
+boolean contemJava = texto.contains("Java");     // true
+
+// Conversão de caso
+String maiuscula = texto.toUpperCase();          // "PROGRAMAÇÃO JAVA"
+String minuscula = texto.toLowerCase();          // "programação java"
+
+// Acesso a caracteres
+char primeiraLetra = texto.charAt(0);            // 'P'
+char ultimaLetra = texto.charAt(texto.length()-1); // 'a'
+```
+
+### Busca e Localização
+```java
+String frase = "Java é uma linguagem de programação Java";
+
+// Encontrar posição
+int primeiraOcorrencia = frase.indexOf("Java");      // 0
+int ultimaOcorrencia = frase.lastIndexOf("Java");    // 40
+int posicaoLinguagem = frase.indexOf("linguagem");   // 13
+
+// Verificar início e fim
+boolean comecaComJava = frase.startsWith("Java");    // true
+boolean terminaComJava = frase.endsWith("Java");     // true
+```
+
+### Substring - Extraindo Partes
+```java
+String ra = "1050482423017";
+
+// Extrair por posições (início incluído, fim excluído)
+String unidade = ra.substring(0, 3);        // "105"
+String curso = ra.substring(3, 6);          // "048"  
+String ano = "20" + ra.substring(6, 8);     // "2023"
+
+// Do índice até o final
+String sequencial = ra.substring(9);        // "3017"
+
+// Análise completa do RA
+String semestre = ra.substring(8, 9).equals("1") ? 
+                  "1º semestre" : "2º semestre";
+```
+
+### Divisão e Junção (Split e Join)
+```java
+String frase = "Java,Python,JavaScript,C++";
+String[] linguagens = frase.split(",");
+
+// Percorrer array resultante
+for (String linguagem : linguagens) {
+    System.out.println("Linguagem: " + linguagem);
+}
+
+// Juntar elementos (Java 8+)
+String resultado = String.join(" | ", linguagens);
+System.out.println(resultado); // "Java | Python | JavaScript | C++"
+```
+
+### Limpeza e Formatação
+```java
+String textoComEspacos = "   Java Programming   ";
+
+// Remover espaços do início e fim
+String limpo = textoComEspacos.trim();       // "Java Programming"
+
+// Substituições
+String texto = "Olá mundo! Mundo Java!";
+String substituido = texto.replace("mundo", "pessoal");  // Todas as ocorrências
+String primeiraSubst = texto.replaceFirst("mundo", "pessoal");  // Apenas primeira
+
+// Remover caracteres específicos
+String somenteNumeros = "ABC123DEF456".replaceAll("[^0-9]", ""); // "123456"
+String somenteLetras = "ABC123DEF456".replaceAll("[^A-Za-z]", ""); // "ABCDEF"
+```
+
+### Comparação de Strings
+```java
+String str1 = "Java";
+String str2 = "java";
+String str3 = "Java";
+
+// Comparação sensível a maiúsculas/minúsculas
+boolean igual1 = str1.equals(str3);           // true
+boolean igual2 = str1.equals(str2);           // false
+
+// Comparação ignorando maiúsculas/minúsculas
+boolean igualIgnoreCase = str1.equalsIgnoreCase(str2); // true
+
+// Comparação lexicográfica
+int comparacao = str1.compareTo(str2);        // Negativo (J < j em ASCII)
+```
+
+### StringBuilder para Performance
+```java
+// ❌ Ineficiente - cria nova String a cada concatenação
+String resultado = "";
+for (int i = 0; i < 1000; i++) {
+    resultado += "a";  // Muito lento!
+}
+
+// ✅ Eficiente - usa buffer interno
+StringBuilder sb = new StringBuilder();
+for (int i = 0; i < 1000; i++) {
+    sb.append("a");
+}
+String resultado = sb.toString();
+```
+
+### Validação e Formatação
+```java
+public class ValidadorTexto {
+    public static boolean isEmailValido(String email) {
+        return email != null && 
+               email.contains("@") && 
+               email.contains(".") &&
+               email.indexOf("@") < email.lastIndexOf(".");
+    }
+    
+    public static boolean isCPFValido(String cpf) {
+        if (cpf == null) return false;
+        
+        // Remover pontuação
+        String somenteNumeros = cpf.replaceAll("[^0-9]", "");
+        
+        return somenteNumeros.length() == 11;
+    }
+    
+    public static String formatarCPF(String cpf) {
+        String numeros = cpf.replaceAll("[^0-9]", "");
+        if (numeros.length() != 11) return cpf;
+        
+        return numeros.replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", 
+                                  "$1.$2.$3-$4");
+    }
+}
+```
+
+---
+
+## Tratamento de Exceções
+
+### Tipos de Exceções
+
+**Exceções Checked (Verificadas):**
+- Verificadas em tempo de compilação
+- **Devem** ser tratadas obrigatoriamente com try-catch ou throws
+- Exemplo: `IOException`, `FileNotFoundException`, `SQLException`
+
+**Exceções Unchecked (Não verificadas):**
+- Verificadas em tempo de execução  
+- **Podem** ser tratadas opcionalmente
+- Exemplo: `RuntimeException`, `NumberFormatException`, `NullPointerException`
+
+### Estrutura Try-Catch-Finally
+```java
+try {
+    // Código que pode gerar exceção
+    String entrada = JOptionPane.showInputDialog("Digite sua idade:");
+    int idade = Integer.parseInt(entrada);
+    System.out.println("Idade: " + idade);
+    
+} catch (NumberFormatException e) {
+    // Tratamento específico para erro de conversão
+    System.out.println("Erro: Digite apenas números inteiros!");
+    System.out.println("Detalhes: " + e.getMessage());
+    
+} catch (Exception e) {
+    // Captura qualquer outra exceção
+    System.out.println("Erro inesperado: " + e.getMessage());
+    
+} finally {
+    // SEMPRE executa - usado para limpeza de recursos
+    System.out.println("Bloco finally executado.");
+}
+```
+
+### Múltiplas Exceções Específicas
+```java
+try {
+    String entrada = JOptionPane.showInputDialog("Digite um número:");
+    int numero = Integer.parseInt(entrada);     // NumberFormatException
+    int resultado = 100 / numero;               // ArithmeticException
+    
+    System.out.println("Resultado: " + resultado);
+    
+} catch (NumberFormatException e) {
+    JOptionPane.showMessageDialog(null, "Digite apenas números válidos!");
+    
+} catch (ArithmeticException e) {
+    JOptionPane.showMessageDialog(null, "Divisão por zero não permitida!");
+    
+} catch (NullPointerException e) {
+    JOptionPane.showMessageDialog(null, "Operação cancelada pelo usuário.");
+}
+```
+
+### Try-Catch em Loops com Validação
+```java
+public static int lerIdadeComValidacao() {
+    while (true) {
+        try {
+            String entrada = JOptionPane.showInputDialog("Digite sua idade (0-120):");
+            
+            // Verificar se usuário cancelou
+            if (entrada == null) {
+                return -1;  // Código especial para cancelamento
+            }
+            
+            int idade = Integer.parseInt(entrada.trim());
+            
+            // Validação de negócio
+            if (idade < 0 || idade > 120) {
+                JOptionPane.showMessageDialog(null, "Idade deve estar entre 0 e 120 anos");
+                continue;  // Volta ao início do loop
+            }
+            
+            return idade;  // Idade válida
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Digite apenas números inteiros!");
+            // Loop continua automaticamente
         }
     }
 }
 ```
 
-### 4. Calculadora com Interface Gráfica
+### Tratamento de Arquivos
+```java
+import java.io.*;
+
+public static boolean salvarTexto(String conteudo, String nomeArquivo) {
+    PrintWriter arquivo = null;
+    
+    try {
+        arquivo = new PrintWriter(new FileWriter(nomeArquivo));
+        arquivo.println(conteudo);
+        return true;  // Sucesso
+        
+    } catch (IOException e) {
+        System.out.println("Erro ao salvar arquivo: " + e.getMessage());
+        return false;  // Falha
+        
+    } finally {
+        // SEMPRE fechar arquivo para liberar recursos
+        if (arquivo != null) {
+            arquivo.close();
+        }
+    }
+}
+```
+
+### Lançando Exceções Personalizadas
+```java
+public class IdadeInvalidaException extends Exception {
+    public IdadeInvalidaException(String mensagem) {
+        super(mensagem);
+    }
+}
+
+public static void validarIdade(int idade) throws IdadeInvalidaException {
+    if (idade < 0 || idade > 120) {
+        throw new IdadeInvalidaException("Idade deve estar entre 0 e 120 anos. Recebido: " + idade);
+    }
+}
+
+// Uso
+public static void main(String[] args) {
+    try {
+        validarIdade(150);
+    } catch (IdadeInvalidaException e) {
+        System.out.println("Erro de validação: " + e.getMessage());
+    }
+}
+```
+
+### Try-with-resources (Java 7+)
+```java
+// Fechamento automático de recursos
+public static void lerArquivo(String nomeArquivo) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo))) {
+        String linha;
+        while ((linha = reader.readLine()) != null) {
+            System.out.println(linha);
+        }
+        // reader.close() é chamado automaticamente
+        
+    } catch (IOException e) {
+        System.out.println("Erro ao ler arquivo: " + e.getMessage());
+    }
+}
+```
+
+---
+
+## Interface Gráfica (Swing)
+
+### Componentes Básicos com JOptionPane
+```java
+import javax.swing.JOptionPane;
+
+// Mensagem simples
+JOptionPane.showMessageDialog(null, "Bem-vindo ao sistema!");
+
+// Entrada de dados
+String nome = JOptionPane.showInputDialog("Digite seu nome:");
+
+// Confirmação
+int opcao = JOptionPane.showConfirmDialog(null, 
+    "Deseja salvar as alterações?", 
+    "Confirmação", 
+    JOptionPane.YES_NO_OPTION);
+
+if (opcao == JOptionPane.YES_OPTION) {
+    JOptionPane.showMessageDialog(null, "Dados salvos!");
+}
+
+// Seleção de opções
+String[] opcoes = {"Cadastrar", "Consultar", "Excluir", "Sair"};
+int escolha = JOptionPane.showOptionDialog(null,
+    "Escolha uma opção:",
+    "Menu Principal",
+    JOptionPane.DEFAULT_OPTION,
+    JOptionPane.QUESTION_MESSAGE,
+    null,
+    opcoes,
+    opcoes[0]);
+```
+
+### Janela Completa com Swing
 ```java
 import javax.swing.*;
 import java.awt.event.*;
@@ -885,22 +1384,22 @@ public class CalculadoraGUI extends JFrame {
             double num2 = Double.parseDouble(tfNumero2.getText().trim());
             double resultado = 0;
             
-            switch(operacao) {
-                case "+": resultado = num1 + num2; break;
-                case "-": resultado = num1 - num2; break;
-                case "*": resultado = num1 * num2; break;
-                case "/":
-                    if(num2 == 0) {
+            switch (operacao) {
+                case "+" -> resultado = num1 + num2;
+                case "-" -> resultado = num1 - num2;
+                case "*" -> resultado = num1 * num2;
+                case "/" -> {
+                    if (num2 == 0) {
                         JOptionPane.showMessageDialog(this, "Divisão por zero!");
                         return;
                     }
                     resultado = num1 / num2;
-                    break;
+                }
             }
             
             tfResultado.setText(String.valueOf(resultado));
             
-        } catch(NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Digite apenas números válidos!");
         }
     }
@@ -920,734 +1419,679 @@ public class CalculadoraGUI extends JFrame {
 }
 ```
 
-## Boas Práticas
+---
 
-### Nomenclatura
+## Exemplos Práticos Completos
+
+### 1. Sistema de Validação de Mês
 ```java
-// ✅ Boas práticas
-public class CalculadoraFinanceira {  // PascalCase para classes
-    private static final int IDADE_MINIMA = 18;  // MAIÚSCULO para constantes
-    
-    public static double calcularJuros(double capital, double taxa) {  // camelCase
-        return capital * taxa;
-    }
-}
-
-// ❌ Evitar
-public class calculadora {  // Minúsculo
-    private static final int idademinima = 18;  // Sem padrão
-    
-    public static double Calcular_Juros(double c, double t) {  // Inconsistente
-        return c * t;
-    }
-}
-```
-
-### Documentação JavaDoc
-```java
-/**
- * Classe utilitária para operações matemáticas básicas
- * @author Rafael Tadeu
- * @version 1.0
- * @since 2024
- */
-public class CalculadoraUtil {
+public class ValidadorMes {
+    public static final int MES_MINIMO = 1;
+    public static final int MES_MAXIMO = 12;
     
     /**
-     * Calcula a média aritmética de um array de números
-     * @param numeros array com os valores
-     * @return a média dos valores, ou 0 se array vazio
-     * @throws IllegalArgumentException se array for null
+     * Valida se um número representa um mês válido
+     * @param mes o número do mês
+     * @return true se válido, false caso contrário
      */
-    public static double calcularMedia(double[] numeros) {
-        if(numeros == null) {
-            throw new IllegalArgumentException("Array não pode ser null");
-        }
-        
-        if(numeros.length == 0) return 0;
-        
-        double soma = 0;
-        for(double num : numeros) {
-            soma += num;
-        }
-        return soma / numeros.length;
+    public static boolean isValido(int mes) {
+        return mes >= MES_MINIMO && mes <= MES_MAXIMO;
     }
-}
-```
-
-### Tratamento de Entrada de Usuário
-```java
-public class EntradaSegura {
     
     /**
-     * Lê um inteiro com validação e retry automático
-     * @param mensagem mensagem para o usuário
-     * @param min valor mínimo aceito
-     * @param max valor máximo aceito
-     * @return número válido ou -1 se usuário cancelar
+     * Converte número do mês para nome por extenso
+     * @param mes o número do mês (1-12)
+     * @return nome do mês ou "Inválido"
      */
-    public static int lerInteiro(String mensagem, int min, int max) {
-        while(true) {
+    public static String getNomeExtenso(int mes) {
+        if (!isValido(mes)) return "Mês inválido";
+        
+        String[] meses = {"", "Janeiro", "Fevereiro", "Março", "Abril", 
+                         "Maio", "Junho", "Julho", "Agosto", "Setembro", 
+                         "Outubro", "Novembro", "Dezembro"};
+        return meses[mes];
+    }
+    
+    /**
+     * Determina a estação do ano baseada no mês
+     * @param mes número do mês
+     * @return nome da estação
+     */
+    public static String getEstacao(int mes) {
+        if (!isValido(mes)) return "Mês inválido";
+        
+        return switch (mes) {
+            case 12, 1, 2 -> "Verão";
+            case 3, 4, 5 -> "Outono";
+            case 6, 7, 8 -> "Inverno";
+            case 9, 10, 11 -> "Primavera";
+            default -> "Desconhecida";
+        };
+    }
+    
+    public static void main(String[] args) {
+        while (true) {
             try {
-                String entrada = JOptionPane.showInputDialog(mensagem + 
-                    " (" + min + " a " + max + "):");
+                String entrada = JOptionPane.showInputDialog("Digite o mês (1-12) ou 0 para sair:");
+                if (entrada == null || entrada.trim().equals("0")) break;
                 
-                if(entrada == null) return -1;  // Cancelou
+                int mes = Integer.parseInt(entrada.trim());
                 
-                int numero = Integer.parseInt(entrada.trim());
-                
-                if(numero >= min && numero <= max) {
-                    return numero;
+                if (isValido(mes)) {
+                    String info = String.format(
+                        "Mês %d: %s\nEstação: %s", 
+                        mes, getNomeExtenso(mes), getEstacao(mes)
+                    );
+                    JOptionPane.showMessageDialog(null, info);
+                    break;
                 } else {
-                    JOptionPane.showMessageDialog(null, 
-                        "Número deve estar entre " + min + " e " + max);
+                    JOptionPane.showMessageDialog(null, "Mês deve ser entre 1 e 12");
                 }
                 
-            } catch(NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Digite apenas números inteiros");
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Digite apenas números");
             }
         }
     }
 }
 ```
 
-### Separação de Responsabilidades
+### 2. Analisador de RA (Registro Acadêmico)
 ```java
-// ✅ Classe focada em uma responsabilidade
-public class ValidadorCPF {
-    public static boolean isValido(String cpf) {
-        // Lógica específica de validação de CPF
-        return cpf != null && cpf.matches("\\d{11}");
-    }
-}
-
-public class FormatadorCPF {
-    public static String formatar(String cpf) {
-        // Lógica específica de formatação
-        return cpf.replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", 
-                             "$1.$2.$3-$4");
-    }
-}
-
-// ❌ Classe com muitas responsabilidades
-public class CPFUtil {
-    public static boolean validar(String cpf) { /* ... */ }
-    public static String formatar(String cpf) { /* ... */ }
-    public static String extrairNumeros(String cpf) { /* ... */ }
-    public static void salvarEmArquivo(String cpf) { /* ... */ }
-    public static void enviarPorEmail(String cpf) { /* ... */ }
-}
-```
-
-### Constantes Organizadas
-```java
-public class Constantes {
-    // Validações gerais
-    public static final class Validacao {
-        public static final int IDADE_MINIMA = 0;
-        public static final int IDADE_MAXIMA = 120;
-        public static final int CPF_TAMANHO = 11;
-    }
-    
-    // Mensagens de erro
-    public static final class Mensagens {
-        public static final String ERRO_NUMERO = "Digite apenas números";
-        public static final String ERRO_IDADE = "Idade deve estar entre 0 e 120";
-        public static final String SUCESSO_SALVAMENTO = "Dados salvos com sucesso!";
-    }
-    
-    // Configurações de arquivo
-    public static final class Arquivo {
-        public static final String DIRETORIO_LOGS = "logs/";
-        public static final String EXTENSAO_LOG = ".txt";
-    }
-}
-```
-
-### Main Method Limpo
-```java
-// ✅ Main focado apenas em inicialização
-public class Aplicacao {
-    public static void main(String[] args) {
+public class AnalisadorRA {
+    /**
+     * Extrai informações completas do RA
+     * @param ra o registro acadêmico
+     * @return objeto com informações do RA ou null se inválido
+     */
+    public static InfoRA analisar(String ra) {
+        if (ra == null || ra.length() != 13) {
+            return null;
+        }
+        
         try {
-            inicializarAplicacao();
-            executarFluxoPrincipal();
-        } catch(Exception e) {
-            tratarErroFatal(e);
+            // Validar se contém apenas números
+            Long.parseLong(ra);
+            
+            String unidade = ra.substring(0, 3);
+            String curso = ra.substring(3, 6);
+            String ano = "20" + ra.substring(6, 8);
+            String semestre = ra.substring(8, 9).equals("1") ? 
+                             "1º semestre" : "2º semestre";
+            String sequencial = ra.substring(9);
+            
+            return new InfoRA(ra, unidade, curso, ano, semestre, sequencial);
+            
+        } catch (NumberFormatException e) {
+            return null;
         }
     }
     
-    private static void inicializarAplicacao() {
-        // Configurações iniciais
-    }
-    
-    private static void executarFluxoPrincipal() {
-        // Lógica principal
-    }
-    
-    private static void tratarErroFatal(Exception e) {
-        JOptionPane.showMessageDialog(null, "Erro fatal: " + e.getMessage());
-        System.exit(1);
-    }
-}
-
-// ❌ Main com muita lógica
-public class AplicacaoRuim {
     public static void main(String[] args) {
-        // 200 linhas de código misturando inicialização,
-        // lógica de negócio, interface gráfica, etc.
-    }
-}
-```
-
----
-
-## Resumo dos Conceitos Fundamentais
-
-### Pilares da Programação Java
-1. **Orientação a Objetos**: Classes, objetos, métodos
-2. **Tratamento de Exceções**: Try-catch-finally, tipos de exceções
-3. **Manipulação de Dados**: Strings, arrays, tipos primitivos
-4. **Interface com Usuário**: Console, JOptionPane, Swing
-5. **Boas Práticas**: Nomenclatura, documentação, organização
-
-### Checklist de Qualidade
-- [ ] Todos os métodos documentados com JavaDoc
-- [ ] Nomes descritivos para classes, métodos e variáveis
-- [ ] Constantes em MAIÚSCULO e organizadas
-- [ ] Tratamento adequado de exceções
-- [ ] Validação de entrada do usuário
-- [ ] Separação clara de responsabilidades
-- [ ] Código limpo e bem estruturado
-
-### Próximos Passos
-- **Programação Orientada a Objetos**: Herança, polimorfismo, encapsulamento
-- **Collections**: ArrayList, HashMap, Set
-- **Threads**: Programação concorrente
-- **JDBC**: Acesso a banco de dados
-- **Frameworks**: Spring, Hibernate
-- **Testes Unitários**: JUnit
-
----
-
-**Lembre-se**: A prática é fundamental! Implemente projetos pequenos usando esses conceitos para consolidar o aprendizado.
-            System.out.println(texto.toLowerCase());
+        String ra = JOptionPane.showInputDialog("Digite o RA (13 dígitos):");
+        
+        if (ra != null) {
+            InfoRA info = analisar(ra.trim());
+            
+            if (info != null) {
+                JOptionPane.showMessageDialog(null, info.toString());
+            } else {
+                JOptionPane.showMessageDialog(null, "RA inválido! Deve ter 13 dígitos numéricos.");
+            }
         }
     }
 }
-```
 
-**Uso:**
-```java
-Impressora.imprimir();                        // "Apostila de Java"
-Impressora.imprimir("Oi!");                   // "Oi!"
-Impressora.imprimir("Java", 3);               // Imprime "Java" 3 vezes
-Impressora.imprimir("java", "alta");          // "JAVA"
-```
-
-### Documentação de Métodos (JavaDoc)
-
-**Regra fundamental**: **TODOS OS MÉTODOS DEVEM SER DOCUMENTADOS**
-
-```java
-/**
- * Calcula a soma de dois números
- * @param a primeiro número
- * @param b segundo número
- * @return a soma dos dois números
- */
-public static float somar(float a, float b) {
-    return a + b;
-}
-
-/**
- * Inverte o texto recebido
- * @param texto o texto a ser invertido
- * @return o texto invertido
- */
-public static String espelhar(String texto) {
-    String resultado = "";
-    for(int i = texto.length()-1; i >= 0; i--) {
-        resultado += texto.charAt(i);
+class InfoRA {
+    private String ra, unidade, curso, ano, semestre, sequencial;
+    
+    public InfoRA(String ra, String unidade, String curso, String ano, String semestre, String sequencial) {
+        this.ra = ra;
+        this.unidade = unidade;
+        this.curso = curso;
+        this.ano = ano;
+        this.semestre = semestre;
+        this.sequencial = sequencial;
     }
-    return resultado;
-}
-
-/**
- * Salva texto em arquivo
- * @param conteudo o texto a ser salvo
- * @param caminho caminho do arquivo
- * @param nomeArquivo nome do arquivo
- * @return mensagem de status da operação
- */
-public static String salvar(String conteudo, String caminho, String nomeArquivo) {
-    try {
-        PrintWriter pw = new PrintWriter(caminho + "/" + nomeArquivo);
-        pw.print(conteudo);
-        pw.close();
-        return "Arquivo salvo com sucesso!";
-    } catch (FileNotFoundException e) {
-        return "Falha ao gravar arquivo: " + e;
+    
+    @Override
+    public String toString() {
+        return String.format(
+            "=== ANÁLISE DO RA ===\n" +
+            "RA: %s\n" +
+            "Unidade: %s\n" +
+            "Curso: %s\n" +
+            "Ano: %s\n" +
+            "Semestre: %s\n" +
+            "Sequencial: %s",
+            ra, unidade, curso, ano, semestre, sequencial
+        );
     }
 }
 ```
 
-### Práticas Recomendadas
-
-#### Nomenclatura
-- **Usar verbos no infinitivo**: `somar()`, `calcular()`, `imprimir()`
-- **CamelCase**: `calcularMedia()`, `verificarIdade()`
-
-#### Design de Métodos
+### 3. Gerador de Senhas Avançado
 ```java
-// ❌ Evitar void quando possível
-public static void calcular() {
-    // Sem retorno, difícil de testar
-}
-
-// ✅ Preferir retornos
-public static double calcular(double a, double b) {
-    return a + b;  // Fácil de testar e reutilizar
-}
-
-// ✅ Ideal: um único ponto de retorno
-public static String validarIdade(int idade) {
-    if(idade < 0) {
-        return "Idade inválida";
-    }
-    if(idade < 18) {
-        return "Menor de idade";
-    }
-    return "Maior de idade";
-}
-```
-
-#### Tratamento de Erros
-```java
-// Versão que apenas salva
-public static void salvar(String texto, String arquivo) {
-    try {
-        PrintWriter pw = new PrintWriter(arquivo);
-        pw.print(texto);
-        pw.close();
-        System.out.println("Sucesso!");
-    } catch (FileNotFoundException e) {
-        System.out.println("Erro: " + e);
-    }
-}
-
-// Versão que retorna sucesso/falha
-public static boolean salvarComStatus(String texto, String arquivo) {
-    try {
-        PrintWriter pw = new PrintWriter(arquivo);
-        pw.print(texto);
-        pw.close();
-        return true;
-    } catch (FileNotFoundException e) {
-        return false;
-    }
-}
-
-// Versão que retorna mensagem detalhada
-public static String salvarComMensagem(String texto, String arquivo) {
-    try {
-        PrintWriter pw = new PrintWriter(arquivo);
-        pw.print(texto);
-        pw.close();
-        return "Arquivo salvo com sucesso!";
-    } catch (FileNotFoundException e) {
-        return "Erro ao salvar: " + e.getMessage();
-    }
-}
-```
-
-### Exemplo Completo - Classe Utilitária
-```java
-public class Texto {
-    /**
-     * Imprime texto invertido no console
-     * @param texto o texto a ser invertido
-     */
-    public static void inverter(String texto) {
-        for(int i = texto.length()-1; i >= 0; i--) {
-            System.out.print(texto.charAt(i));
+public class GeradorSenhas {
+    private static final String NUMEROS = "0123456789";
+    private static final String MINUSCULAS = "abcdefghijklmnopqrstuvwxyz";
+    private static final String MAIUSCULAS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String SIMBOLOS = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+    
+    public enum TipoSenha {
+        NUMERICA(NUMEROS),
+        SIMPLES(NUMEROS + MINUSCULAS),
+        COMPLETA(NUMEROS + MINUSCULAS + MAIUSCULAS),
+        COMPLEXA(NUMEROS + MINUSCULAS + MAIUSCULAS + SIMBOLOS);
+        
+        private final String caracteres;
+        
+        TipoSenha(String caracteres) {
+            this.caracteres = caracteres;
         }
-        System.out.println();
+        
+        public String getCaracteres() {
+            return caracteres;
+        }
     }
     
     /**
-     * Retorna o texto invertido
-     * @param texto o texto a ser invertido
-     * @return o texto invertido
+     * Gera senha do tipo especificado
+     * @param tipo tipo da senha
+     * @param tamanho tamanho desejado
+     * @return senha gerada
      */
-    public static String espelhar(String texto) {
-        String resultado = "";
-        for(int i = texto.length()-1; i >= 0; i--) {
-            resultado += texto.charAt(i);
+    public static String gerar(TipoSenha tipo, int tamanho) {
+        if (tamanho <= 0) return "";
+        
+        StringBuilder senha = new StringBuilder();
+        String pool = tipo.getCaracteres();
+        
+        for (int i = 0; i < tamanho; i++) {
+            int indice = (int)(Math.random() * pool.length());
+            senha.append(pool.charAt(indice));
         }
+        
+        return senha.toString();
+    }
+    
+    /**
+     * Avalia a força da senha
+     * @param senha a senha a ser avaliada
+     * @return força da senha (0-100)
+     */
+    public static int avaliarForca(String senha) {
+        if (senha == null || senha.isEmpty()) return 0;
+        
+        int pontos = 0;
+        
+        // Tamanho
+        if (senha.length() >= 8) pontos += 25;
+        else if (senha.length() >= 6) pontos += 15;
+        else if (senha.length() >= 4) pontos += 10;
+        
+        // Variedade de caracteres
+        boolean temMinuscula = false, temMaiuscula = false;
+        boolean temNumero = false, temSimbolo = false;
+        
+        for (char c : senha.toCharArray()) {
+            if (Character.isLowerCase(c)) temMinuscula = true;
+            else if (Character.isUpperCase(c)) temMaiuscula = true;
+            else if (Character.isDigit(c)) temNumero = true;
+            else temSimbolo = true;
+        }
+        
+        if (temMinuscula) pontos += 15;
+        if (temMaiuscula) pontos += 15;
+        if (temNumero) pontos += 15;
+        if (temSimbolo) pontos += 30;
+        
+        return Math.min(100, pontos);
+    }
+    
+    public static String getClassificacao(int forca) {
+        if (forca < 30) return "Muito Fraca";
+        if (forca < 50) return "Fraca";
+        if (forca < 70) return "Média";
+        if (forca < 90) return "Forte";
+        return "Muito Forte";
+    }
+}
+```
+
+### 4. Sistema de Menu Interativo
+```java
+public class SistemaMenu {
+    public static void main(String[] args) {
+        while (true) {
+            String[] opcoes = {"Validar Mês", "Analisar RA", "Gerar Senha", "Sair"};
+            
+            int escolha = JOptionPane.showOptionDialog(null,
+                "Escolha uma opção:",
+                "Sistema Integrado",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcoes,
+                opcoes[0]);
+            
+            switch (escolha) {
+                case 0 -> ValidadorMes.main(null);
+                case 1 -> AnalisadorRA.main(null);
+                case 2 -> menuGeradorSenhas();
+                case 3, -1 -> {
+                    JOptionPane.showMessageDialog(null, "Sistema encerrado!");
+                    System.exit(0);
+                }
+            }
+        }
+    }
+    
+    private static void menuGeradorSenhas() {
+        try {
+            String[] tipos = {"Numérica", "Simples", "Completa", "Complexa"};
+            int tipoEscolhido = JOptionPane.showOptionDialog(null,
+                "Escolha o tipo de senha:",
+                "Gerador de Senhas",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                tipos,
+                tipos[2]);
+                
+            if (tipoEscolhido == -1) return;
+            
+            String tamanhoStr = JOptionPane.showInputDialog("Tamanho da senha (4-50):");
+            if (tamanhoStr == null) return;
+            
+            int tamanho = Integer.parseInt(tamanhoStr);
+            if (tamanho < 4 || tamanho > 50) {
+                JOptionPane.showMessageDialog(null, "Tamanho deve estar entre 4 e 50!");
+                return;
+            }
+            
+            GeradorSenhas.TipoSenha[] tiposEnum = GeradorSenhas.TipoSenha.values();
+            String senha = GeradorSenhas.gerar(tiposEnum[tipoEscolhido], tamanho);
+            
+            int forca = GeradorSenhas.avaliarForca(senha);
+            String classificacao = GeradorSenhas.getClassificacao(forca);
+            
+            String resultado = String.format(
+                "Senha gerada: %s\n\nForça: %d/100 (%s)",
+                senha, forca, classificacao
+            );
+            
+            JOptionPane.showMessageDialog(null, resultado);
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Digite um número válido!");
+        }
+    }
+}
+```
+
+---
+
+## Boas Práticas
+
+### Nomenclatura e Convenções
+```java
+// ✅ Boas práticas
+public class CalculadoraFinanceira {  // PascalCase para classes
+    private static final double TAXA_JUROS_PADRAO = 0.05;  // MAIÚSCULO para constantes
+    
+    /**
+     * Calcula juros compostos
+     * @param capitalInicial valor inicial do investimento
+     * @param taxaAnual taxa de juros anual
+     * @param periodoAnos período em anos
+     * @return valor final com juros
+     */
+    public static double calcularJurosCompostos(double capitalInicial, 
+                                               double taxaAnual, 
+                                               int periodoAnos) {  // camelCase para métodos
+        return capitalInicial * Math.pow(1 + taxaAnual, periodoAnos);
+    }
+}
+
+// ❌ Evitar
+public class calculadora {  // Minúsculo - incorreto
+    private static final double taxa = 0.05;  // Constante sem padrão
+    
+    public static double Calcular_Juros(double c, double t) {  // Inconsistente
+        return c * t;  // Nomes não descritivos
+    }
+}
+```
+
+### Organização de Classes
+```java
+// ✅ Classe bem estruturada
+public class Pessoa {
+    // 1. Constantes
+    private static final int IDADE_MAXIMA = 120;
+    
+    // 2. Atributos
+    private String nome;
+    private int idade;
+    private String email;
+    
+    // 3. Construtores
+    public Pessoa(String nome, int idade) {
+        this.nome = nome;
+        setIdade(idade);  // Usar setter para validação
+    }
+    
+    // 4. Métodos públicos
+    public void setIdade(int idade) {
+        if (idade < 0 || idade > IDADE_MAXIMA) {
+            throw new IllegalArgumentException("Idade inválida: " + idade);
+        }
+        this.idade = idade;
+    }
+    
+    public int getIdade() {
+        return idade;
+    }
+    
+    // 5. Métodos privados (auxiliares)
+    private boolean isIdadeValida(int idade) {
+        return idade >= 0 && idade <= IDADE_MAXIMA;
+    }
+    
+    // 6. toString, equals, hashCode
+    @Override
+    public String toString() {
+        return String.format("Pessoa{nome='%s', idade=%d}", nome, idade);
+    }
+}
+```
+
+### Tratamento de Erros Robusto
+```java
+public class ProcessadorTexto {
+    /**
+     * Processa arquivo de texto de forma segura
+     * @param nomeArquivo nome do arquivo a processar
+     * @return resultado do processamento
+     */
+    public static ResultadoProcessamento processarArquivo(String nomeArquivo) {
+        // Validação de entrada
+        if (nomeArquivo == null || nomeArquivo.trim().isEmpty()) {
+            return ResultadoProcessamento.erro("Nome do arquivo não pode estar vazio");
+        }
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo))) {
+            StringBuilder conteudo = new StringBuilder();
+            String linha;
+            int numeroLinhas = 0;
+            
+            while ((linha = reader.readLine()) != null) {
+                conteudo.append(linha).append("\n");
+                numeroLinhas++;
+            }
+            
+            return ResultadoProcessamento.sucesso(conteudo.toString(), numeroLinhas);
+            
+        } catch (FileNotFoundException e) {
+            return ResultadoProcessamento.erro("Arquivo não encontrado: " + nomeArquivo);
+            
+        } catch (IOException e) {
+            return ResultadoProcessamento.erro("Erro ao ler arquivo: " + e.getMessage());
+            
+        } catch (Exception e) {
+            return ResultadoProcessamento.erro("Erro inesperado: " + e.getMessage());
+        }
+    }
+}
+
+class ResultadoProcessamento {
+    private final boolean sucesso;
+    private final String conteudo;
+    private final int numeroLinhas;
+    private final String mensagemErro;
+    
+    private ResultadoProcessamento(boolean sucesso, String conteudo, int numeroLinhas, String mensagemErro) {
+        this.sucesso = sucesso;
+        this.conteudo = conteudo;
+        this.numeroLinhas = numeroLinhas;
+        this.mensagemErro = mensagemErro;
+    }
+    
+    public static ResultadoProcessamento sucesso(String conteudo, int numeroLinhas) {
+        return new ResultadoProcessamento(true, conteudo, numeroLinhas, null);
+    }
+    
+    public static ResultadoProcessamento erro(String mensagem) {
+        return new ResultadoProcessamento(false, null, 0, mensagem);
+    }
+    
+    // Getters...
+    public boolean isSucesso() { return sucesso; }
+    public String getConteudo() { return conteudo; }
+    public String getMensagemErro() { return mensagemErro; }
+}
+```
+
+### Performance e Otimização
+```java
+public class OtimizacaoBestPractices {
+    
+    // ✅ Use StringBuilder para múltiplas concatenações
+    public static String criarRelatorio(String[] dados) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("=== RELATÓRIO ===\n");
+        
+        for (String item : dados) {
+            sb.append("- ").append(item).append("\n");
+        }
+        
+        return sb.toString();
+    }
+    
+    // ✅ Cache valores calculados
+    private static final Map<Integer, Long> cacheFactorial = new HashMap<>();
+    
+    public static long calcularFactorial(int n) {
+        if (cacheFactorial.containsKey(n)) {
+            return cacheFactorial.get(n);
+        }
+        
+        long resultado = 1;
+        for (int i = 2; i <= n; i++) {
+            resultado *= i;
+        }
+        
+        cacheFactorial.put(n, resultado);
         return resultado;
     }
     
+    // ✅ Evite criação desnecessária de objetos
+    public static boolean isEmailValido(String email) {
+        return email != null && 
+               email.contains("@") && 
+               email.lastIndexOf(".") > email.indexOf("@");
+        // Melhor que usar regex para validações simples
+    }
+}
+```
+
+### Documentação Completa
+```java
+/**
+ * Utilitário para cálculos estatísticos básicos
+ * 
+ * <p>Esta classe fornece métodos estáticos para realizar
+ * operações estatísticas comuns em arrays de números.</p>
+ * 
+ * <p>Exemplo de uso:</p>
+ * <pre>
+ * double[] numeros = {1.0, 2.0, 3.0, 4.0, 5.0};
+ * double media = EstatisticaUtil.calcularMedia(numeros);
+ * double desvio = EstatisticaUtil.calcularDesvioPadrao(numeros);
+ * </pre>
+ * 
+ * @author Rafael
+ * @version 2.0
+ * @since 1.0
+ */
+public class EstatisticaUtil {
+    
     /**
-     * Gera senha numérica aleatória
-     * @param quantidadeDigitos número de dígitos da senha
-     * @return senha gerada
+     * Calcula a média aritmética de um conjunto de valores
+     * 
+     * @param valores array de valores numéricos
+     * @return a média aritmética dos valores
+     * @throws IllegalArgumentException se o array for null ou vazio
+     * @throws ArithmeticException se ocorrer overflow no cálculo
+     * 
+     * @see #calcularMediana(double[])
+     * @see #calcularModa(double[])
      */
-    public static String gerarSenha(int quantidadeDigitos) {
-        String senha = "";
-        for(int i = 1; i <= quantidadeDigitos; i++) {
-            senha += (int)(Math.random() * 10);
+    public static double calcularMedia(double[] valores) {
+        validarArray(valores);
+        
+        double soma = 0;
+        for (double valor : valores) {
+            soma += valor;
         }
-        return senha;
+        
+        return soma / valores.length;
+    }
+    
+    /**
+     * Valida se o array é válido para cálculos
+     * @param array array a ser validado
+     * @throws IllegalArgumentException se inválido
+     */
+    private static void validarArray(double[] array) {
+        if (array == null) {
+            throw new IllegalArgumentException("Array não pode ser null");
+        }
+        if (array.length == 0) {
+            throw new IllegalArgumentException("Array não pode estar vazio");
+        }
     }
 }
 ```
 
-### Comunicação Entre Objetos (Mensagens)
-
-Em programação orientada a objetos, objetos se comunicam através de **mensagens** (chamadas de métodos):
-
-```
-Objeto A ----mensagem(dados)----> Objeto B
-         <-------resposta--------
-```
-
+### Testes e Validação
 ```java
-// Exemplo de comunicação
-public class UsaTexto {
+public class TestadorSistema {
     public static void main(String[] args) {
-        String original = "Java";
+        System.out.println("=== INICIANDO TESTES ===");
         
-        // Enviando mensagem "espelhar" para a classe Texto
-        String invertido = Texto.espelhar(original);
+        testarValidadorMes();
+        testarGeradorSenhas();
+        testarAnalisadorRA();
         
-        // Resultado: "avaJ"
-        System.out.println(original + " → " + invertido);
+        System.out.println("=== TESTES CONCLUÍDOS ===");
+    }
+    
+    private static void testarValidadorMes() {
+        System.out.println("\n--- Testando ValidadorMes ---");
+        
+        // Casos válidos
+        assert ValidadorMes.isValido(1) : "Mês 1 deveria ser válido";
+        assert ValidadorMes.isValido(12) : "Mês 12 deveria ser válido";
+        
+        // Casos inválidos
+        assert !ValidadorMes.isValido(0) : "Mês 0 deveria ser inválido";
+        assert !ValidadorMes.isValido(13) : "Mês 13 deveria ser inválido";
+        
+        // Teste de nomes
+        assert "Janeiro".equals(ValidadorMes.getNomeExtenso(1)) : "Nome do mês 1 incorreto";
+        
+        System.out.println("ValidadorMes: ✅ Todos os testes passaram");
+    }
+    
+    private static void testarGeradorSenhas() {
+        System.out.println("\n--- Testando GeradorSenhas ---");
+        
+        String senha = GeradorSenhas.gerar(GeradorSenhas.TipoSenha.NUMERICA, 8);
+        assert senha.length() == 8 : "Tamanho da senha incorreto";
+        assert senha.matches("\\d+") : "Senha numérica contém caracteres não numéricos";
+        
+        int forca = GeradorSenhas.avaliarForca("Abc123!@#");
+        assert forca > 50 : "Avaliação de força incorreta";
+        
+        System.out.println("GeradorSenhas: ✅ Todos os testes passaram");
+    }
+    
+    private static void testarAnalisadorRA() {
+        System.out.println("\n--- Testando AnalisadorRA ---");
+        
+        InfoRA info = AnalisadorRA.analisar("1050482423017");
+        assert info != null : "RA válido deveria ser analisado";
+        
+        InfoRA infoInvalida = AnalisadorRA.analisar("123");
+        assert infoInvalida == null : "RA inválido deveria retornar null";
+        
+        System.out.println("AnalisadorRA: ✅ Todos os testes passaram");
     }
 }
 ```
 
-### Assinatura de Método
+---
 
-**Assinatura** = Nome do método + Tipos dos parâmetros
+## Resumo e Próximos Passos
 
-```java
-// Assinatura: somar(int, int)
-public static int somar(int a, int b) { return a + b; }
+### Conceitos Fundamentais Cobertos
+1. **✅ Sintaxe Básica**: Classes, métodos, variáveis
+2. **✅ Tipos de Dados**: Primitivos e objetos
+3. **✅ Estruturas de Controle**: Condicionais e loops
+4. **✅ Arrays**: Manipulação de coleções simples
+5. **✅ Métodos**: Modularização e reutilização de código
+6. **✅ Tratamento de Exceções**: Programação defensiva
+7. **✅ Strings**: Manipulação de texto
+8. **✅ Interface Gráfica**: Básico do Swing
+9. **✅ Boas Práticas**: Código limpo e manutenível
 
-// Assinatura: somar(float, float) - DIFERENTE da anterior
-public static float somar(float a, float b) { return a + b; }
+### Checklist de Domínio
+- [ ] Consigo criar classes e métodos sem consulta
+- [ ] Domino todas as estruturas de repetição e condicionais  
+- [ ] Sei tratar exceções adequadamente
+- [ ] Entendo a diferença entre tipos primitivos e objetos
+- [ ] Consigo manipular strings eficientemente
+- [ ] Sei criar interfaces gráficas básicas
+- [ ] Aplico boas práticas de nomenclatura e documentação
+- [ ] Consigo debugar erros comuns
+- [ ] Entendo conceitos de modularização (métodos)
+- [ ] Sei quando usar arrays vs outras estruturas
 
-// Assinatura: somar(int, float) - DIFERENTE das anteriores
-public static float somar(int a, float b) { return a + b; }
-```
+### Próximos Tópicos de Estudo
 
-**Importante**: O tipo de retorno **NÃO** faz parte da assinatura!
+#### Nível Intermediário
+- **Programação Orientada a Objetos**:
+  - Encapsulamento, herança, polimorfismo
+  - Classes abstratas e interfaces
+  - Modificadores de acesso avançados
 
-### Terminologia
+- **Collections Framework**:
+  - ArrayList, LinkedList, HashMap
+  - Iteradores e streams
+  - Comparators e sorting
 
-- **Método**: Função associada a um objeto (não-static)
-- **Função**: Método estático (genérico, não precisa de objeto)
-- **Mensagem**: Sinônimo para método em orientação a objetos
-- **Parâmetros**: Variáveis definidas no método
-- **Argumentos**: Valores passados ao chamar o método
+#### Nível Avançado
+- **Generics**: Tipos parametrizados
+- **Threads**: Programação concorrente
+- **I/O Streams**: Manipulação avançada de arquivos
+- **JDBC**: Conexão com bancos de dados
+- **Design Patterns**: Padrões de projeto
 
-## Classe Math
+#### Ferramentas e Frameworks
+- **Maven/Gradle**: Gerenciamento de dependências
+- **JUnit**: Testes unitários automatizados
+- **Spring Framework**: Desenvolvimento empresarial
+- **JavaFX**: Interfaces gráficas modernas
 
-### Métodos Básicos
-```java
-// Valor absoluto
-int absoluto = Math.abs(-10);  // Retorna 10
+### Dicas de Estudo
+1. **Pratique diariamente**: Implemente pequenos projetos
+2. **Leia código**: Estude código de projetos open source
+3. **Documente tudo**: Mantenha o hábito da documentação
+4. **Teste sempre**: Valide suas implementações
+5. **Refatore**: Melhore código existente continuamente
 
-// Máximo e mínimo
-int maior = Math.max(5, 8);    // Retorna 8
-int menor = Math.min(5, 8);    // Retorna 5
+**Lembre-se**: A programação é uma habilidade prática. Quanto mais você codificar, melhor será!
 
-// Para 3 ou mais valores
-int maior3 = Math.max(Math.max(3, 7), 5);  // Retorna 7
-```
-
-### Arredondamento
-```java
-double numero = 85.7;
-
-// Arredonda para cima (teto)
-int paraCima = (int)Math.ceil(numero);    // 86
-
-// Arredonda para baixo (chão)
-int paraBaixo = (int)Math.floor(numero);  // 85
-```
-
-**Exemplo prático - Cálculo de ônibus:**
-```java
-final int PASSAGEIROS_POR_ONIBUS = 40;
-float numeroAlunos = 85;
-
-// Quantos ônibus são necessários?
-int onibusNecessarios = (int)Math.ceil(numeroAlunos / PASSAGEIROS_POR_ONIBUS);
-// Resultado: 3 ônibus (para 85 alunos)
-```
-
-### Potenciação e Raiz
-```java
-double base = 2;
-double expoente = 16;
-
-// Potenciação: 2^16
-double potencia = Math.pow(base, expoente);  // 65536.0
-
-// Raiz quadrada
-double raiz = Math.sqrt(16);  // 4.0
-```
-
-### Números Aleatórios com Math.random()
-```java
-// Gera número entre 0.0 e 1.0 (exclusivo)
-double aleatorio = Math.random();
-
-// Número inteiro entre 1 e 60 (loteria)
-int numero = (int)(1 + Math.random() * 60);
-
-// Gerador de cartões da mega-sena
-for(int cartao = 1; cartao <= 10; cartao++) {
-    System.out.print("Cartão " + cartao + ": ");
-    for(int x = 0; x < 6; x++) {
-        System.out.print((int)(1 + Math.random() * 60) + " ");
-    }
-    System.out.println();
-}
-```
-
-## Classe Random
-
-### Vantagens sobre Math.random()
-```java
-import java.util.Random;
-
-Random r = new Random();
-
-// Números com intervalo específico
-int numeroEntre10e20 = r.nextInt(10, 20);  // Entre 10 e 19
-float decimal = r.nextFloat(10);           // Entre 0.0 e 10.0
-double precisao = r.nextDouble(10);        // Entre 0.0 e 10.0
-```
-
-### Seeds (Reprodutibilidade)
-```java
-Random rSeed = new Random(100);  // Seed fixa
-// Com seed, a sequência será sempre a mesma
-// Útil para testes e depuração
-```
-
-### Aplicações Práticas
-
-#### Geração de Senhas Numéricas
-```java
-String senha = "";
-int qtdeNumeros = 10;
-for(int i = 1; i <= qtdeNumeros; i++) {
-    int n = (int)(Math.random() * 10);  // 0 a 9
-    senha += n;
-}
-System.out.println(senha);  // Ex: "4729163580"
-```
-
-#### Geração de Senhas Complexas
-```java
-String caracteres = "0123456789abcdefghijklmnopqrstuvwxyz" +
-                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ.,@#%*&!";
-int tamanho = caracteres.length();
-String senha = "";
-
-for(int i = 1; i <= 10; i++) {
-    int indice = (int)(Math.random() * tamanho);
-    senha += caracteres.charAt(indice);
-}
-System.out.println(senha);  // Ex: "aB3#mK9@xZ"
-```
-
-#### Seleção Aleatória de Arrays
-```java
-String[] alunos = {"Eduardo", "Jorge", "Cleiton", "Pedro", "Beatriz"};
-int indiceAleatorio = (int)(Math.random() * alunos.length);
-System.out.println("Aluno sorteado: " + alunos[indiceAleatorio]);
-```
-
-## Manipulação de Strings
-
-### Métodos Básicos
-```java
-String s = "Rafael Tadeu";
-
-// Conversão de caso
-System.out.println(s.toUpperCase());  // "RAFAEL TADEU"
-System.out.println(s.toLowerCase());  // "rafael tadeu"
-
-// Tamanho
-System.out.println(s.length());       // 12
-```
-
-### Acesso a Caracteres
-```java
-String texto = "Programação Orientada a Objetos";
-
-// Obter caractere por índice
-char letra = texto.charAt(3);  // 'g'
-
-// Percorrer string caractere por caractere
-for(int i = 0; i < texto.length(); i++) {
-    System.out.print(texto.charAt(i));
-}
-
-// Percorrer string ao contrário
-for(int i = texto.length() - 1; i >= 0; i--) {
-    System.out.print(texto.charAt(i));
-}
-```
-
-### Busca e Validação
-```java
-String termosProibidos = "sexo sexual droga";
-String entrada = "minha pesquisa";
-
-// Verificar se contém termo
-if(termosProibidos.contains(entrada.toLowerCase())) {
-    System.out.println("Termo proibido!");
-} else {
-    System.out.println("Liberado!");
-}
-```
-
-### Substring - Extraindo Partes
-```java
-String ra = "1050482423017";
-
-// Extrair partes específicas (início, fim exclusivo)
-String unidade = ra.substring(0, 3);    // "105"
-String curso = ra.substring(3, 6);      // "048"
-String ano = "20" + ra.substring(6, 8); // "2024"
-
-// Operador ternário para semestre
-String semestre = (ra.substring(8, 9).equals("1") ? 
-                  "Primeiro " : "Segundo ") + "semestre";
-```
-
-### Split - Dividindo Strings
-```java
-String frase = "Programação Orientada a Objetos";
-String numeros = "1,2,3,4,5,6,7,8,9,0";
-
-// Dividir por espaço
-String[] palavras = frase.split(" ");
-
-// Dividir por vírgula
-String[] arrayNumeros = numeros.split(",");
-
-// Percorrer arrays resultantes
-for(String palavra : palavras) {
-    System.out.println(palavra);
-}
-```
-
-### Trim - Removendo Espaços
-```java
-String ra1 = "1293120  ";      // Espaços no final
-String ra2 = "   2132443  ";   // Espaços início e fim
-
-System.out.println(ra1.length());        // 10
-System.out.println(ra1.trim().length()); // 7
-
-System.out.println(ra2.length());        // 12  
-System.out.println(ra2.trim().length()); // 7
-```
-
-## Tratamento de Exceções
-
-### Tipos de Exceções
-
-**Exceções Checked (Verificadas):**
-- Verificadas em **tempo de compilação**
-- **Devem** ser tratadas obrigatoriamente
-- Exemplo: `FileNotFoundException`, `InterruptedException`
-
-**Exceções Unchecked (Não verificadas):**
-- Verificadas em **tempo de execução**
-- **Podem** ser tratadas opcionalmente
-- Exemplo: `NumberFormatException`, `ArithmeticException`
-
-```java
-// Exceção Checked - deve ser tratada
-try {
-    Thread.sleep(1000);  // InterruptedException
-} catch(InterruptedException e) {
-    System.out.println("Erro: " + e);
-}
-
-// Exceção Unchecked - pode ser tratada
-int numero = Integer.parseInt("abc");  // NumberFormatException (opcional)
-```
-
-### Estrutura Try-Catch-Finally
-```java
-try {
-    // Código que pode gerar exceção
-    int n = Integer.parseInt(JOptionPane.showInputDialog("Idade? "));
-    System.out.println("Parabéns, você digitou um valor inteiro");
-    
-} catch(NumberFormatException erro) {
-    // Tratamento específico
-    System.out.println("Erro: você não digitou um valor inteiro " + erro);
-    
-} finally {
-    // SEMPRE executa - usado para liberar recursos
-    JOptionPane.showMessageDialog(null, "Passou.");
-}
-```
-
-### Múltiplas Exceções
-```java
-try {
-    String s = JOptionPane.showInputDialog("Mês? ");
-    int n = Integer.parseInt(s);     // NumberFormatException
-    int resultado = 30 / n;          // ArithmeticException
-    
-} catch(NumberFormatException erro) {
-    JOptionPane.showMessageDialog(null, "Digite um número inteiro");
-    
-} catch(ArithmeticException erro) {
-    JOptionPane.showMessageDialog(null, "Divisão por zero não permitida");
-    
-} catch(Exception erro) {
-    // Captura qualquer outra exceção (usar com cuidado)
-    JOptionPane.showMessageDialog(null, "Erro geral: " + erro);
-}
-```
-
-### Tratamento Inteligente de Exceções
-```java
-try {
-    String s = JOptionPane.showInputDialog("Mês? ");
-    if(s == null || s.equals("")) break;  // Usuário cancelou
-    
-    int n = Integer.parseInt(s);
-    int resultado = 30 / n;
-    
-    // Validação de negócio
-    if(n < 1 || n > 12) {
-        JOptionPane.showMessageDialog(null, "Mês inválido!");
-    } else {
-        JOptionPane.showMessageDialog(null, "Mês válido!");
-    }
-    
-} catch(Exception erro) {
-    // Verificar tipo de erro pela mensagem
-    if(erro.toString().contains("Number")) {
-        JOptionPane.showMessageDialog(null, "Digite apenas números");
-    } else if(erro.toString().contains("Arithmetic")) {
-        JOptionPane.showMessageDialog(null, "Não é possível dividir por zero");
-    } else {
-        JOptionPane.showMessageDialog(null, "Erro: "+erro)
-    }finally {
-        JOptionPane.showMessageDialog(null, "Passou aqui.");
-    }
-}
+---
