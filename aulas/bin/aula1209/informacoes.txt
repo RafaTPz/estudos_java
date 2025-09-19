@@ -1,0 +1,147 @@
+
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+
+um método pode chamar outros métodos
+métodos tem entradas e saidas
+
+in(entrada) ->   método()   ->out(saida)
+métodos começam com o nome minusculo somar() vem logo após a classe se chamado externamente Calculadora.somar()
+
+métodos de Math:
+Math.
+    random()
+    pow()
+    etc
+
+
+especificação ou declaração de um método(o que  = public static float soma(float a, float b){
+
+public ou private = modificador | modifica a forma de acesso deste método
+public = pode ser acessado de qualquer lugar do meu projeto Java
+se um método público de um pacote do projeto for chamado em outro pacote ele irá importar, por exemplo : import 
+
+private = será visivel apenas na mesma classe em que está presente
+
+UML
++ public
+- private
+# protected
+
+static = a POSSE do método é da classe
+
+sem o STATIC o método não pertence mais à classe, ele pertence ao objeto.
+escopo de intancia ou objeto:
+ex: criação do objeto: Calculadora c = new Calculadora();
+ex: c.somar(); --> método chamado pelo objeto
+
+um método tem um escopo de uma classe, pertence a class, sem o static ele tem um escopo de um objeto, pertence ao objeto.
+
+
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+
+método ou função?
+
+quando um método não é estático ele com certeza é um método
+um método está associado com um objeto
+
+função = método static -> genérico
+
+
+float int void após o static = tipo de retorno
+ex: public static "void" soma(float a, float b){
+
+
+outro sinonimo para método é MENSAGEM
+
+eles trocam mensagems chamando métodos
+
+objeto a manda uma mensagem para o objeto b.
+
+a ------mensagem()------> b
+        somar(5,2)
+  <---------7------------
+  
+ex: INT retorna um inteiro(7)
+a -----------------------> b
+	void imprimir("ola")
+VOID não retorna nada    
+
+
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+
+evitar utilizar VOID, pois é sempre bom ter retorno
+
+é conveniente sempre criar métodos no infinitivo, como "somar()"
+
+
+interface funcional -> tratar funções --> lambda
+
+
+public static float "somar(float a, float b)"{ = a àrea marcada é chamada de assinatura "somar(float a, float b)"
+
+se errar o tipo dos parametros da erro ja na compilação, é de suma importância enviar dados corretos à assinatura
+ex: somar("abc" + 2);
+
+se eu adiciono 10.2 em somar(10.2 + 2) gera erro, é necessário digitar 10.2f para dizer q um valor é float
+
+
+somar(1,2,3) por que retornaria erro? r: porque a assinatura está errada!
+
+assinatura = nome do método + tipo dos parâmetros
+
+
+é possivel existir métodos com o mesmo nome na mesma classe! = SOBRECARGA
+só posso ter sobrecarga(métodos de mesmo nome) se os métodos tiverem assinaturas diferentes
+ex:
+public static void somar(float a, float b){
+public static void somar(float a, float b, float c){
+public static void somar(int a, float b){
+public static void somar(int a, int b){
+
+ou seja SOBRECARGA são métodos com o mesmo nome, porém com assinaturas diferentes na mesma classe.
+
+(float a, float b) = PARÂMETROS
+
+um parâmetro é uma váriavel local, porque funciona apenas dentro do método.
+tempo de vida: existe apenas durante a execução do método.
+
+
+
+diferenças entre parâmetros e argumentos
+
+parâmetros são as variaveis do método, argumentos são os dados colocados nos campos dos parametros ao chamar tal método 
+ex: somar(5,2), 5 e 2 são os parâmetros
+
+
+eu posso ter métodos abstract, final, syn... mas são incomuns
+
+
+tudo que está dentro da chave -> {} é o corpo/implementação -> define o que o método faz
+
+
+
+
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+TODOS OS MÈTODOS DEVEM SER DOCUMENTADOS
+
+
+uma prática ideal é que um método tenha apenas um retorno
