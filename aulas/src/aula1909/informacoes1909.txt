@@ -1,0 +1,76 @@
+um método pode ser:
+public ou não
+static ou não
+ter return ou não
+tratar um erro ou lançar um erro   --- lançar um erro --> passar pra frente
+sincronizado / concorrente
+recursivo ou não
+sincrono ou assincrono
+
+
+uma classe Thread não tem main, tem run(); 
+
+o método run() não é esático, por isso é necessario chamar um objeto da classe Thread na aplicação:
+ex:
+public static void main(String[] args) {
+	Word01 w1 = new Word01();
+	Word02 w2 = new Word02();
+}
+
+para executar as aplicações acima:
+
+w1.start();
+w2.start();
+
+
+método sincronizado, é como se fosse um token, ao rodar uma Thread, vai rodar ela inteira para então rodar a outra
+ex: public synchronized static ....
+
+recursividade  e pilha de dados - estudar
+
+método assyncrono: formas de trabalhar - Thread, 
+
+métodos syncronos travam e espera voce ver ele inteiro antes de ir pro próximo, assyncrono pode fazer ao mesmo tempo
+segue o diagrama de classe para melhor entedimento
+
+
+atributos: definem o ESTADO de um objeto
+
+definindo atributos:
+ex:
+public String cor;
+public double preco;
+public int tamanho;
+
+atributos podem ser chamados também de propriedades, variaveis de instancia ou fields
+o atributo define o que o objeto é
+
+os métodos realizam ações sobre os dados do objeto
+
+criando objetos:
+Pincel pincel = new Pincel(); o objeto é o pincel com p minusculo ao lado de Classe
+Classe > objeto > cria objeto
+
+objeto = instância
+
+pincel p; // reserva espaço para armazenar um objeto Pincel no disco rígido
+p = new Pincel(); // cria o objeto e atribui valores iniciais
+
+
+os objetos podem ter N estados mas 1 comportamento
+
+
+os métodos realizam ações sobre os dados do objeto
+métodos definem o comportamento de um objeto
+
+
+	//atributos(propriedades -> estado do objeto
+	
+	public String cor;
+	public double preco;
+	public int tamanho;
+	//define o que o objeto é
+	//os métodos realizam ações sobre os dados do objeto
+	//métodos definem o comportamento de um objeto
+	
+
