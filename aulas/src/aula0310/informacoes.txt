@@ -1,0 +1,84 @@
+Herança
+
+a herança é um mecanismo para permitir que as classes compartilhem atributos e operações baseados em um relacionamento
+uma subclasse herda atributos e métodos de uma super classe
+
+- por default as classes ja herdam da classe Object do Java
+
+#importante para a prova
+lembrar que atributos e métodos privados não serão resgatados pela subclasse
+
+classe mãe pode ser chamada de classe base ou superclasse;
+
+classe filha pode ser chamada de subclasse ou classe derivada;
+
+a classe filha(mais especifica) herda atributos e metodos da classe mae(mais genérica)
+
+
+
+vantagems de herança
+
+permite a modificação de uma classe(inserção de novos métodos e variaveis) sem mudanças na classe original
+permite a reutilização de código
+permite a alteração do comportamento de uma classe
+
+
+
+@Override: métodos com mesmo nome e assinatura em classes diferentes, e implementações diferentes
+o Override verifica em tempo real no compilador, se a classe existe na classe mãe, se não, da erro... serve para garantir que voce esta
+sobrescrevendo uma classe, pois caso não seja mesmo nome e assinatura, não há sobrescrita, apenas utilização de dados
+
+
+reaproveitando método da classe mae na subclasse:
+	public void digitar()
+	{
+		super.digitar();
+		cpf = JOptionPane.showInputDialog("CPF a ser digitado: ");
+		rg = JOptionPane.showInputDialog("RG a ser digitado: ");
+	}
+	
+	
+	
+em uma hierarquia de classes é muito comum que uma classe(super classe) seja abstrata
+
+na UML uma classe com o nome em itálico é uma classe abstrata
+e no código é um conceito, um modelo, uma classe que não gera instancia
+public ''''abstract'''' class Pessoa
+
+
+
+
+# = protected é um tipo de atributo que não é nem publico e nem privado
+dentro de uma hierarquia ou pacote protected funciona como se fosse um atributo publico, mas não é possivel de ser acessado de fora da hierarquia
+
+se eu crirar uma classe em outro pacote que extend uma classe da hierarquia mesmo que em outro pacote, os atributos protected dessa hierarquia funcionarão.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Polimorfismo
+
+è a capacidade de um objeto em decidir que método aplicar a si mesmo
+termo originado do grego: "Muitas formas"
+(poli = muitas, morphos = formas)
+mecanismo que permite a um objeto assumir multiplas formas(uma de cada vez)
+a propriedade segundo a qual
+
+a subclasse redefine a implementação de um método herdado da superclasse
+
+
+
+facilita a adição de novas classes a um sistema com o minimo de modificações no código
+
+//adicionar mais informaçoes importantes do polimorfismo
+
+VANTAGEM DO POLIMORFISMO = Economia de recursos
