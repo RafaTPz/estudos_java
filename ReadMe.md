@@ -1,6 +1,11 @@
-# Documentação Java - Conceitos Fundamentais
+# Documentação Completa de Java
+## Fundamentos e Programação Orientada a Objetos
 
-## Índice
+---
+
+## 📑 Índice Completo
+
+### Parte I: Fundamentos de Java
 1. [Introdução](#introdução)
 2. [Estrutura Básica](#estrutura-básica)
 3. [Tipos de Dados](#tipos-de-dados)
@@ -16,10 +21,36 @@
 13. [Manipulação de Strings](#manipulação-de-strings)
 14. [Tratamento de Exceções](#tratamento-de-exceções)
 15. [Interface Gráfica (Swing)](#interface-gráfica-swing)
-16. [Exemplos Práticos Completos](#exemplos-práticos-completos)
-17. [Boas Práticas](#boas-práticas)
+
+### Parte II: Programação Orientada a Objetos
+16. [Conceitos Fundamentais de POO](#conceitos-fundamentais-de-poo)
+17. [Classes e Objetos](#classes-e-objetos)
+18. [Atributos e Métodos](#atributos-e-métodos)
+19. [Encapsulamento](#encapsulamento)
+20. [Getters e Setters](#getters-e-setters)
+21. [Construtores](#construtores)
+22. [Métodos Especiais (toString)](#métodos-especiais-tostring)
+23. [Static - Atributos e Métodos Estáticos](#static-atributos-e-métodos-estáticos)
+24. [Serialização](#serialização)
+25. [Threads e Sincronização](#threads-e-sincronização)
+26. [Recursividade](#recursividade)
+
+### Parte III: Herança e Polimorfismo
+27. [Herança](#herança)
+28. [Modificadores de Acesso](#modificadores-de-acesso)
+29. [Classes Abstratas](#classes-abstratas)
+30. [Polimorfismo](#polimorfismo)
+31. [Override (Sobrescrita)](#override-sobrescrita)
+32. [Palavra-chave super](#palavra-chave-super)
+
+### Parte IV: Recursos Avançados
+33. [Exemplos Práticos Completos](#exemplos-práticos-completos)
+34. [Boas Práticas](#boas-práticas)
+35. [Glossário](#glossário)
 
 ---
+
+# PARTE I: FUNDAMENTOS DE JAVA
 
 ## Introdução
 
@@ -725,41 +756,6 @@ public class Impressora {
 }
 ```
 
-### Exemplo Prático - Validação de Entrada
-```java
-public class ValidadorEntrada {
-    /**
-     * Lê um inteiro com validação e retry automático
-     * @param mensagem mensagem para o usuário
-     * @param min valor mínimo aceito
-     * @param max valor máximo aceito
-     * @return número válido ou -1 se usuário cancelar
-     */
-    public static int lerInteiro(String mensagem, int min, int max) {
-        while (true) {
-            try {
-                String entrada = JOptionPane.showInputDialog(
-                    mensagem + " (" + min + " a " + max + "):");
-                
-                if (entrada == null) return -1;  // Cancelou
-                
-                int numero = Integer.parseInt(entrada.trim());
-                
-                if (numero >= min && numero <= max) {
-                    return numero;
-                } else {
-                    JOptionPane.showMessageDialog(null, 
-                        "Número deve estar entre " + min + " e " + max);
-                }
-                
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Digite apenas números inteiros");
-            }
-        }
-    }
-}
-```
-
 ### Documentação JavaDoc
 ```java
 /**
@@ -908,9 +904,7 @@ System.out.println(randomComSeed.nextInt(100)); // Sempre o mesmo resultado
 System.out.println(randomComSeed.nextInt(100)); // Previsível para testes
 ```
 
-### Aplicações Práticas
-
-#### Gerador de Senhas
+### Aplicação Prática - Gerador de Senhas
 ```java
 public class GeradorSenhas {
     private static final String NUMEROS = "0123456789";
@@ -938,23 +932,6 @@ public class GeradorSenhas {
         }
         
         return senha.toString();
-    }
-}
-```
-
-#### Sorteio de Elementos
-```java
-public class Sorteador {
-    public static <T> T sortear(T[] elementos) {
-        Random random = new Random();
-        int indiceAleatorio = random.nextInt(elementos.length);
-        return elementos[indiceAleatorio];
-    }
-    
-    public static void main(String[] args) {
-        String[] nomes = {"Ana", "Bruno", "Carlos", "Diana", "Eduardo"};
-        String sorteado = sortear(nomes);
-        System.out.println("Pessoa sorteada: " + sorteado);
     }
 }
 ```
@@ -1077,186 +1054,118 @@ for (int i = 0; i < 1000; i++) {
 String resultado = sb.toString();
 ```
 
-### Validação e Formatação
-```java
-public class ValidadorTexto {
-    public static boolean isEmailValido(String email) {
-        return email != null && 
-               email.contains("@") && 
-               email.contains(".") &&
-               email.indexOf("@") < email.lastIndexOf(".");
-    }
-    
-    public static boolean isCPFValido(String cpf) {
-        if (cpf == null) return false;
-        
-        // Remover pontuação
-        String somenteNumeros = cpf.replaceAll("[^0-9]", "");
-        
-        return somenteNumeros.length() == 11;
-    }
-    
-    public static String formatarCPF(String cpf) {
-        String numeros = cpf.replaceAll("[^0-9]", "");
-        if (numeros.length() != 11) return cpf;
-        
-        return numeros.replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", 
-                                  "$1.$2.$3-$4");
-    }
-}
-```
-
 ---
 
 ## Tratamento de Exceções
 
-### Tipos de Exceções
-
-**Exceções Checked (Verificadas):**
-- Verificadas em tempo de compilação
-- **Devem** ser tratadas obrigatoriamente com try-catch ou throws
-- Exemplo: `IOException`, `FileNotFoundException`, `SQLException`
-
-**Exceções Unchecked (Não verificadas):**
-- Verificadas em tempo de execução  
-- **Podem** ser tratadas opcionalmente
-- Exemplo: `RuntimeException`, `NumberFormatException`, `NullPointerException`
-
-### Estrutura Try-Catch-Finally
+### Try-Catch Básico
 ```java
-try {
-    // Código que pode gerar exceção
-    String entrada = JOptionPane.showInputDialog("Digite sua idade:");
-    int idade = Integer.parseInt(entrada);
-    System.out.println("Idade: " + idade);
-    
-} catch (NumberFormatException e) {
-    // Tratamento específico para erro de conversão
-    System.out.println("Erro: Digite apenas números inteiros!");
-    System.out.println("Detalhes: " + e.getMessage());
-    
-} catch (Exception e) {
-    // Captura qualquer outra exceção
-    System.out.println("Erro inesperado: " + e.getMessage());
-    
-} finally {
-    // SEMPRE executa - usado para limpeza de recursos
-    System.out.println("Bloco finally executado.");
-}
-```
-
-### Múltiplas Exceções Específicas
-```java
-try {
-    String entrada = JOptionPane.showInputDialog("Digite um número:");
-    int numero = Integer.parseInt(entrada);     // NumberFormatException
-    int resultado = 100 / numero;               // ArithmeticException
-    
-    System.out.println("Resultado: " + resultado);
-    
-} catch (NumberFormatException e) {
-    JOptionPane.showMessageDialog(null, "Digite apenas números válidos!");
-    
-} catch (ArithmeticException e) {
-    JOptionPane.showMessageDialog(null, "Divisão por zero não permitida!");
-    
-} catch (NullPointerException e) {
-    JOptionPane.showMessageDialog(null, "Operação cancelada pelo usuário.");
-}
-```
-
-### Try-Catch em Loops com Validação
-```java
-public static int lerIdadeComValidacao() {
-    while (true) {
-        try {
-            String entrada = JOptionPane.showInputDialog("Digite sua idade (0-120):");
-            
-            // Verificar se usuário cancelou
-            if (entrada == null) {
-                return -1;  // Código especial para cancelamento
-            }
-            
-            int idade = Integer.parseInt(entrada.trim());
-            
-            // Validação de negócio
-            if (idade < 0 || idade > 120) {
-                JOptionPane.showMessageDialog(null, "Idade deve estar entre 0 e 120 anos");
-                continue;  // Volta ao início do loop
-            }
-            
-            return idade;  // Idade válida
-            
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Digite apenas números inteiros!");
-            // Loop continua automaticamente
-        }
+public static void exemplo() {
+    try {
+        int resultado = 10 / 0;  // ArithmeticException
+    } catch (ArithmeticException e) {
+        System.out.println("Erro: Divisão por zero!");
+        e.printStackTrace();
     }
 }
 ```
 
-### Tratamento de Arquivos
+### Try-Catch com Múltiplas Exceções
 ```java
-import java.io.*;
-
-public static boolean salvarTexto(String conteudo, String nomeArquivo) {
-    PrintWriter arquivo = null;
-    
+public static void lerArquivo(String nomeArquivo) {
     try {
-        arquivo = new PrintWriter(new FileWriter(nomeArquivo));
-        arquivo.println(conteudo);
-        return true;  // Sucesso
+        FileReader arquivo = new FileReader(nomeArquivo);
+        BufferedReader leitor = new BufferedReader(arquivo);
+        String linha = leitor.readLine();
+        System.out.println(linha);
+        leitor.close();
+        
+    } catch (FileNotFoundException e) {
+        System.out.println("Arquivo não encontrado: " + nomeArquivo);
         
     } catch (IOException e) {
-        System.out.println("Erro ao salvar arquivo: " + e.getMessage());
-        return false;  // Falha
+        System.out.println("Erro ao ler arquivo: " + e.getMessage());
         
-    } finally {
-        // SEMPRE fechar arquivo para liberar recursos
-        if (arquivo != null) {
+    } catch (Exception e) {
+        System.out.println("Erro inesperado: " + e.getMessage());
+    }
+}
+```
+
+### Try-Catch-Finally
+```java
+FileWriter arquivo = null;
+try {
+    arquivo = new FileWriter("dados.txt");
+    arquivo.write("Conteúdo importante");
+    
+} catch (IOException e) {
+    System.out.println("Erro ao escrever: " + e.getMessage());
+    
+} finally {
+    // SEMPRE executa, mesmo com exceção
+    if (arquivo != null) {
+        try {
             arquivo.close();
+        } catch (IOException e) {
+            System.out.println("Erro ao fechar arquivo");
         }
     }
 }
 ```
 
-### Lançando Exceções Personalizadas
+### Try-with-Resources (Java 7+)
 ```java
+// Auto-fechamento de recursos
+public static void gravarComAutoClose(String conteudo) {
+    try (FileWriter arquivo = new FileWriter("dados.txt")) {
+        arquivo.write(conteudo);
+        // arquivo.close() é chamado automaticamente
+        
+    } catch (IOException e) {
+        System.out.println("Erro: " + e.getMessage());
+    }
+}
+```
+
+### Throws - Lançando Exceções
+```java
+// Método que lança exceção
+public static void processar() throws IOException {
+    FileWriter arquivo = new FileWriter("dados.txt");
+    arquivo.write("Teste");
+    arquivo.close();
+    // Quem chama este método deve tratar a exceção
+}
+
+// Método chamador
+public static void main(String[] args) {
+    try {
+        processar();
+    } catch (IOException e) {
+        System.out.println("Erro ao processar: " + e.getMessage());
+    }
+}
+```
+
+### Criando Exceções Customizadas
+```java
+// Exceção personalizada
 public class IdadeInvalidaException extends Exception {
     public IdadeInvalidaException(String mensagem) {
         super(mensagem);
     }
 }
 
-public static void validarIdade(int idade) throws IdadeInvalidaException {
-    if (idade < 0 || idade > 120) {
-        throw new IdadeInvalidaException("Idade deve estar entre 0 e 120 anos. Recebido: " + idade);
-    }
-}
-
-// Uso
-public static void main(String[] args) {
-    try {
-        validarIdade(150);
-    } catch (IdadeInvalidaException e) {
-        System.out.println("Erro de validação: " + e.getMessage());
-    }
-}
-```
-
-### Try-with-resources (Java 7+)
-```java
-// Fechamento automático de recursos
-public static void lerArquivo(String nomeArquivo) {
-    try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo))) {
-        String linha;
-        while ((linha = reader.readLine()) != null) {
-            System.out.println(linha);
+// Uso da exceção customizada
+public class Pessoa {
+    private int idade;
+    
+    public void setIdade(int idade) throws IdadeInvalidaException {
+        if (idade < 0 || idade > 150) {
+            throw new IdadeInvalidaException("Idade inválida: " + idade);
         }
-        // reader.close() é chamado automaticamente
-        
-    } catch (IOException e) {
-        System.out.println("Erro ao ler arquivo: " + e.getMessage());
+        this.idade = idade;
     }
 }
 ```
@@ -1265,466 +1174,1473 @@ public static void lerArquivo(String nomeArquivo) {
 
 ## Interface Gráfica (Swing)
 
-### Componentes Básicos com JOptionPane
+### Componentes Básicos
 ```java
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.awt.*;
 
-// Mensagem simples
-JOptionPane.showMessageDialog(null, "Bem-vindo ao sistema!");
-
-// Entrada de dados
-String nome = JOptionPane.showInputDialog("Digite seu nome:");
-
-// Confirmação
-int opcao = JOptionPane.showConfirmDialog(null, 
-    "Deseja salvar as alterações?", 
-    "Confirmação", 
-    JOptionPane.YES_NO_OPTION);
-
-if (opcao == JOptionPane.YES_OPTION) {
-    JOptionPane.showMessageDialog(null, "Dados salvos!");
+public class JanelaSimples {
+    public static void main(String[] args) {
+        // Criar janela
+        JFrame janela = new JFrame("Minha Aplicação");
+        janela.setSize(400, 300);
+        janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        janela.setLocationRelativeTo(null);  // Centralizar
+        
+        // Adicionar componentes
+        JLabel rotulo = new JLabel("Olá, Mundo!");
+        rotulo.setHorizontalAlignment(SwingConstants.CENTER);
+        janela.add(rotulo);
+        
+        // Exibir janela
+        janela.setVisible(true);
+    }
 }
-
-// Seleção de opções
-String[] opcoes = {"Cadastrar", "Consultar", "Excluir", "Sair"};
-int escolha = JOptionPane.showOptionDialog(null,
-    "Escolha uma opção:",
-    "Menu Principal",
-    JOptionPane.DEFAULT_OPTION,
-    JOptionPane.QUESTION_MESSAGE,
-    null,
-    opcoes,
-    opcoes[0]);
 ```
 
-### Janela Completa com Swing
+### Layouts
+```java
+// BorderLayout
+JFrame janela = new JFrame();
+janela.setLayout(new BorderLayout());
+janela.add(new JButton("Norte"), BorderLayout.NORTH);
+janela.add(new JButton("Sul"), BorderLayout.SOUTH);
+janela.add(new JButton("Centro"), BorderLayout.CENTER);
+
+// FlowLayout (padrão de JPanel)
+JPanel painel = new JPanel(new FlowLayout());
+painel.add(new JButton("Botão 1"));
+painel.add(new JButton("Botão 2"));
+
+// GridLayout
+JPanel grade = new JPanel(new GridLayout(3, 2));
+for (int i = 1; i <= 6; i++) {
+    grade.add(new JButton("Botão " + i));
+}
+```
+
+### Eventos e Listeners
 ```java
 import javax.swing.*;
 import java.awt.event.*;
 
-public class CalculadoraGUI extends JFrame {
-    private JTextField tfNumero1, tfNumero2, tfResultado;
-    private JButton btSomar, btSubtrair, btMultiplicar, btDividir, btLimpar;
+public class ExemploEventos extends JFrame {
+    private JButton botao;
+    private JLabel label;
+    private int contador = 0;
     
-    public CalculadoraGUI() {
-        configurarJanela();
-        criarComponentes();
-        configurarEventos();
-    }
-    
-    private void configurarJanela() {
-        setTitle("Calculadora Java");
-        setBounds(100, 100, 400, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null);
-        setResizable(false);
-    }
-    
-    private void criarComponentes() {
-        // Labels
-        JLabel lblNum1 = new JLabel("Primeiro número:");
-        lblNum1.setBounds(20, 20, 120, 25);
-        add(lblNum1);
+    public ExemploEventos() {
+        setTitle("Eventos");
+        setSize(300, 150);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
         
-        JLabel lblNum2 = new JLabel("Segundo número:");
-        lblNum2.setBounds(20, 60, 120, 25);
-        add(lblNum2);
+        label = new JLabel("Cliques: 0");
+        botao = new JButton("Clique aqui");
         
-        JLabel lblResult = new JLabel("Resultado:");
-        lblResult.setBounds(20, 200, 120, 25);
-        add(lblResult);
-        
-        // TextFields
-        tfNumero1 = new JTextField();
-        tfNumero1.setBounds(150, 20, 200, 25);
-        add(tfNumero1);
-        
-        tfNumero2 = new JTextField();
-        tfNumero2.setBounds(150, 60, 200, 25);
-        add(tfNumero2);
-        
-        tfResultado = new JTextField();
-        tfResultado.setBounds(150, 200, 200, 25);
-        tfResultado.setEditable(false);
-        add(tfResultado);
-        
-        // Botões
-        btSomar = new JButton("+");
-        btSomar.setBounds(50, 110, 60, 30);
-        add(btSomar);
-        
-        btSubtrair = new JButton("-");
-        btSubtrair.setBounds(120, 110, 60, 30);
-        add(btSubtrair);
-        
-        btMultiplicar = new JButton("*");
-        btMultiplicar.setBounds(190, 110, 60, 30);
-        add(btMultiplicar);
-        
-        btDividir = new JButton("/");
-        btDividir.setBounds(260, 110, 60, 30);
-        add(btDividir);
-        
-        btLimpar = new JButton("Limpar");
-        btLimpar.setBounds(150, 160, 100, 30);
-        add(btLimpar);
-    }
-    
-    private void configurarEventos() {
-        btSomar.addActionListener(e -> calcular("+"));
-        btSubtrair.addActionListener(e -> calcular("-"));
-        btMultiplicar.addActionListener(e -> calcular("*"));
-        btDividir.addActionListener(e -> calcular("/"));
-        btLimpar.addActionListener(e -> limpar());
-    }
-    
-    private void calcular(String operacao) {
-        try {
-            double num1 = Double.parseDouble(tfNumero1.getText().trim());
-            double num2 = Double.parseDouble(tfNumero2.getText().trim());
-            double resultado = 0;
-            
-            switch (operacao) {
-                case "+" -> resultado = num1 + num2;
-                case "-" -> resultado = num1 - num2;
-                case "*" -> resultado = num1 * num2;
-                case "/" -> {
-                    if (num2 == 0) {
-                        JOptionPane.showMessageDialog(this, "Divisão por zero!");
-                        return;
-                    }
-                    resultado = num1 / num2;
-                }
+        // ActionListener com classe anônima
+        botao.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                contador++;
+                label.setText("Cliques: " + contador);
             }
-            
-            tfResultado.setText(String.valueOf(resultado));
-            
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Digite apenas números válidos!");
-        }
-    }
-    
-    private void limpar() {
-        tfNumero1.setText("");
-        tfNumero2.setText("");
-        tfResultado.setText("");
-        tfNumero1.requestFocus();
+        });
+        
+        // Ou com lambda (Java 8+)
+        // botao.addActionListener(e -> {
+        //     contador++;
+        //     label.setText("Cliques: " + contador);
+        // });
+        
+        add(label);
+        add(botao);
+        setVisible(true);
     }
     
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new CalculadoraGUI().setVisible(true);
+        new ExemploEventos();
+    }
+}
+```
+
+### Campos de Entrada
+```java
+public class FormularioSimples extends JFrame {
+    private JTextField campoNome;
+    private JPasswordField campoSenha;
+    private JTextArea areaTexto;
+    private JButton botaoEnviar;
+    
+    public FormularioSimples() {
+        setTitle("Formulário");
+        setSize(400, 300);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
+        
+        // Campo de texto
+        add(new JLabel("Nome:"));
+        campoNome = new JTextField(20);
+        add(campoNome);
+        
+        // Campo de senha
+        add(new JLabel("Senha:"));
+        campoSenha = new JPasswordField(20);
+        add(campoSenha);
+        
+        // Área de texto
+        areaTexto = new JTextArea(5, 30);
+        add(new JScrollPane(areaTexto));
+        
+        // Botão
+        botaoEnviar = new JButton("Enviar");
+        botaoEnviar.addActionListener(e -> {
+            String nome = campoNome.getText();
+            String senha = new String(campoSenha.getPassword());
+            areaTexto.setText("Nome: " + nome + "\nSenha: " + senha);
         });
+        add(botaoEnviar);
+        
+        setVisible(true);
     }
 }
 ```
 
 ---
 
-## Exemplos Práticos Completos
+# PARTE II: PROGRAMAÇÃO ORIENTADA A OBJETOS
 
-### 1. Sistema de Validação de Mês
+## Conceitos Fundamentais de POO
+
+### O que é Programação Orientada a Objetos?
+
+A POO é um paradigma de programação baseado no conceito de "objetos", que podem conter dados (atributos) e código (métodos). Os quatro pilares da POO são:
+
+- **Encapsulamento**: Proteção dos dados internos de um objeto
+- **Herança**: Capacidade de uma classe herdar características de outra
+- **Polimorfismo**: Capacidade de objetos diferentes responderem de forma diferente ao mesmo método
+- **Abstração**: Simplificação de sistemas complexos modelando classes apropriadas
+
+### Classe vs Objeto
+
+**Classe**: É o modelo, a planta ou blueprint que define as características e comportamentos.
+
+**Objeto**: É a instância concreta da classe, uma realização específica.
+
 ```java
-public class ValidadorMes {
-    public static final int MES_MINIMO = 1;
-    public static final int MES_MAXIMO = 12;
+Pincel pincel = new Pincel(); // 'pincel' é o objeto, 'Pincel' é a classe
+```
+
+**Analogia**: Se a classe é a planta de uma casa, o objeto é a casa construída.
+
+---
+
+## Classes e Objetos
+
+### Criando uma Classe
+
+```java
+public class Pincel {
+    // Atributos
+    public String cor;
+    public double preco;
+    public int tamanho;
     
-    /**
-     * Valida se um número representa um mês válido
-     * @param mes o número do mês
-     * @return true se válido, false caso contrário
-     */
-    public static boolean isValido(int mes) {
-        return mes >= MES_MINIMO && mes <= MES_MAXIMO;
+    // Métodos
+    public void mostrar() {
+        System.out.println("cor: " + cor);
+        System.out.println("tamanho: " + tamanho);
+        System.out.println("preço: " + preco);
+    }
+}
+```
+
+### Instanciando Objetos
+
+```java
+// Forma 1: Declaração e instanciação separadas
+Pincel p;              // Reserva espaço na memória
+p = new Pincel();      // Cria o objeto
+
+// Forma 2: Declaração e instanciação juntas
+Pincel p1 = new Pincel();
+```
+
+⚠️ **IMPORTANTE**: Antes de usar `new`, o objeto não existe, apenas o espaço reservado.
+
+### Estados de um Objeto
+
+Um objeto pode ter **N estados** diferentes, mas possui **1 comportamento** consistente.
+
+**Exemplo com a classe Pincel**:
+- Estado 1: cor="vermelho", preco=80.00, tamanho=5
+- Estado 2: cor="azul", preco=9.99, tamanho=15
+- Comportamento: mostrar(), limpar(), abrirTampa(), fecharTampa()
+
+---
+
+## Atributos e Métodos
+
+### Atributos (Propriedades)
+
+Os atributos definem o **ESTADO** de um objeto. Também chamados de:
+- Propriedades
+- Variáveis de instância
+- Fields
+
+```java
+public String cor;      // Atributo público
+private int volume;     // Atributo privado
+```
+
+### Métodos
+
+Os métodos definem o **COMPORTAMENTO** de um objeto, realizando ações sobre seus dados.
+
+#### Características de um Método
+
+Um método pode ser:
+
+1. **Público ou Privado**
+   ```java
+   public void mostrar() { }
+   private void calcular() { }
+   ```
+
+2. **Estático ou Não Estático**
+   ```java
+   public static void imprimir() { }  // Pertence à classe
+   public void acelerar() { }          // Pertence ao objeto
+   ```
+
+3. **Com ou Sem Retorno**
+   ```java
+   public void ligar() { }            // Sem retorno
+   public String consumir(int v) { }  // Com retorno
+   ```
+
+4. **Sincronizado ou Não**
+   ```java
+   public synchronized static void imprimir() { }
+   ```
+
+5. **Recursivo ou Não**
+   ```java
+   public static int somar(int n) {
+       if(n == 1) return 1;
+       return n + somar(n-1);  // Chama a si mesmo
+   }
+   ```
+
+---
+
+## Encapsulamento
+
+O encapsulamento é um mecanismo que possibilita **restringir o acesso**, **separar em partes**, **isolar**, **proteger** e **restringir conteúdo**.
+
+### O que é Encapsulamento?
+
+É o princípio de esconder os detalhes internos de um objeto e expor apenas o necessário através de uma interface controlada.
+
+**Analogia**: Como um carro - você não precisa saber como o motor funciona internamente, apenas usa o volante, pedais e câmbio (interface pública).
+
+### Modificadores de Acesso (Visibilidade)
+
+A visibilidade define **quem enxerga** atributos e métodos.
+
+| Modificador | Visibilidade | Uso |
+|-------------|--------------|-----|
+| `public`    | Sem restrições, acessível de qualquer lugar | Métodos de interface pública |
+| `private`   | Maior restrição, apenas dentro da própria classe | **Mais usado** para encapsular |
+| `protected` | Nível intermediário, classe e subclasses | Herança |
+| (default)   | Apenas no mesmo pacote | Classes do mesmo módulo |
+
+### Exemplo Prático: Conta Bancária
+
+```java
+public class ContaBancaria {
+    private int numero;           // Encapsulado
+    public String titular;        // NÃO encapsulado
+    private double saldo;         // Encapsulado
+    private final double LIMITE_PARA_SAQUE = 1000;  // Constante privada
+    
+    public void depositar(double valor) {
+        if(valor > 0) {              // Regra de negócio
+            saldo += valor;
+        }
     }
     
-    /**
-     * Converte número do mês para nome por extenso
-     * @param mes o número do mês (1-12)
-     * @return nome do mês ou "Inválido"
-     */
-    public static String getNomeExtenso(int mes) {
-        if (!isValido(mes)) return "Mês inválido";
-        
-        String[] meses = {"", "Janeiro", "Fevereiro", "Março", "Abril", 
-                         "Maio", "Junho", "Julho", "Agosto", "Setembro", 
-                         "Outubro", "Novembro", "Dezembro"};
-        return meses[mes];
-    }
-    
-    /**
-     * Determina a estação do ano baseada no mês
-     * @param mes número do mês
-     * @return nome da estação
-     */
-    public static String getEstacao(int mes) {
-        if (!isValido(mes)) return "Mês inválido";
-        
-        return switch (mes) {
-            case 12, 1, 2 -> "Verão";
-            case 3, 4, 5 -> "Outono";
-            case 6, 7, 8 -> "Inverno";
-            case 9, 10, 11 -> "Primavera";
-            default -> "Desconhecida";
-        };
-    }
-    
-    public static void main(String[] args) {
-        while (true) {
-            try {
-                String entrada = JOptionPane.showInputDialog("Digite o mês (1-12) ou 0 para sair:");
-                if (entrada == null || entrada.trim().equals("0")) break;
-                
-                int mes = Integer.parseInt(entrada.trim());
-                
-                if (isValido(mes)) {
-                    String info = String.format(
-                        "Mês %d: %s\nEstação: %s", 
-                        mes, getNomeExtenso(mes), getEstacao(mes)
-                    );
-                    JOptionPane.showMessageDialog(null, info);
-                    break;
-                } else {
-                    JOptionPane.showMessageDialog(null, "Mês deve ser entre 1 e 12");
-                }
-                
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Digite apenas números");
+    public String sacar(double valor) {
+        if(valor <= LIMITE_PARA_SAQUE) {
+            if(saldo >= valor) {
+                saldo -= valor;
+                return "Saque realizado com sucesso";
+            } else {
+                return titular + " você não possui esta quantia";
             }
+        } else {
+            return titular + " o seu limite para saque é " + LIMITE_PARA_SAQUE;
         }
     }
 }
 ```
 
-### 2. Analisador de RA (Registro Acadêmico)
+### Por que Encapsular?
+
+✅ **Benefícios**:
+- **Proteção de dados**: Evita valores inválidos (saldo negativo, número de conta 0)
+- **Regras de negócio**: Valida operações (limite de saque, valor positivo)
+- **Facilita manutenção**: Alterar implementação interna sem afetar código externo
+- **Segurança**: Dados críticos não podem ser alterados diretamente
+
+**Comparação**:
 ```java
-public class AnalisadorRA {
-    /**
-     * Extrai informações completas do RA
-     * @param ra o registro acadêmico
-     * @return objeto com informações do RA ou null se inválido
-     */
-    public static InfoRA analisar(String ra) {
-        if (ra == null || ra.length() != 13) {
-            return null;
-        }
-        
-        try {
-            // Validar se contém apenas números
-            Long.parseLong(ra);
-            
-            String unidade = ra.substring(0, 3);
-            String curso = ra.substring(3, 6);
-            String ano = "20" + ra.substring(6, 8);
-            String semestre = ra.substring(8, 9).equals("1") ? 
-                             "1º semestre" : "2º semestre";
-            String sequencial = ra.substring(9);
-            
-            return new InfoRA(ra, unidade, curso, ano, semestre, sequencial);
-            
-        } catch (NumberFormatException e) {
-            return null;
-        }
+// SEM encapsulamento (❌ PERIGOSO)
+conta.saldo = -1000;  // Permite saldo negativo!
+
+// COM encapsulamento (✅ SEGURO)
+conta.depositar(-1000);  // Validação impede valor negativo
+```
+
+---
+
+## Getters e Setters
+
+Getters e Setters são métodos que **controlam o acesso** aos atributos privados.
+
+### Convenção de Nomenclatura
+
+```java
+private int codigo;
+private String nome;
+private boolean novo;
+
+// GETTER: pegar/obter o valor
+public int getCodigo() {
+    return codigo;
+}
+
+// SETTER: definir/modificar o valor
+public void setCodigo(int codigo) {
+    this.codigo = codigo;
+}
+
+// Para boolean, usa "is" no getter
+public boolean isNovo() {
+    return novo;
+}
+
+public void setNovo(boolean novo) {
+    this.novo = novo;
+}
+```
+
+### Getters e Setters com Validação
+
+```java
+private double valor;
+
+public double getValor() {
+    return valor;
+}
+
+public void setValor(double valor) {
+    if(valor > 0) {              // Validação
+        this.valor = valor;
+    }
+    // Se valor <= 0, não altera!
+}
+```
+
+### A Palavra-chave `this`
+
+`this` refere-se ao **objeto atual**, distinguindo entre parâmetro e atributo:
+
+```java
+public void setNome(String nome) {
+    this.nome = nome;
+    // this.nome = atributo do objeto
+    // nome = parâmetro do método
+}
+```
+
+### Métodos de Acesso Personalizados
+
+Você pode criar nomes personalizados se fizer sentido:
+
+```java
+public void definirNumero(int n) {  // Ao invés de setNumero
+    if(n > 0) {
+        numero = n;
+    }
+}
+
+public int pegarNumero() {          // Ao invés de getNumero
+    return numero;
+}
+
+public double consultarSaldo() {     // Ao invés de getSaldo
+    return saldo;
+}
+```
+
+---
+
+## Construtores
+
+O construtor é um **método especial** usado para **inicializar objetos** no momento da criação.
+
+### Características do Construtor
+
+- ✅ **Mesmo nome da classe** (começa com letra maiúscula)
+- ✅ **Não possui tipo de retorno** (nem void)
+- ✅ Invocado automaticamente com `new`
+- ✅ Objetivo: atribuir valores iniciais ao objeto
+- ✅ Pode haver múltiplos construtores (sobrecarga)
+
+### Construtor Default
+
+Quando você não cria nenhum construtor, Java fornece um **construtor padrão vazio**:
+
+```java
+public class Produto {
+    private int codigo;
+    private String nome;
+    
+    // Java cria automaticamente:
+    // public Produto() { }
+}
+
+// Uso:
+Produto p = new Produto();  // Funciona!
+```
+
+⚠️ **ATENÇÃO**: Se você criar qualquer construtor, o default **não é mais criado automaticamente**!
+
+### Criando Construtores
+
+#### Construtor sem parâmetros (explícito)
+
+```java
+public Produto() {
+    // Inicialização vazia ou com valores padrão
+}
+```
+
+#### Construtor com parâmetros
+
+```java
+public Produto(int codigo, String nome) {
+    this.codigo = codigo;
+    this.nome = nome;
+}
+
+// Uso:
+Produto p = new Produto(1, "Sabonete");
+```
+
+#### Construtor completo
+
+```java
+public Produto(int codigo, String nome, double valor, boolean novo, char tipo) {
+    this.codigo = codigo;
+    this.nome = nome;
+    setValor(valor);      // Usa setter para validar!
+    this.novo = novo;
+    this.tipo = tipo;
+}
+```
+
+### Por que Usar Setter no Construtor?
+
+Se há validação no setter, **chame o setter** ao invés de atribuir diretamente:
+
+```java
+// ❌ RUIM: Duplica validação
+public Produto(double valor) {
+    if(valor > 0) {
+        this.valor = valor;
+    }
+}
+
+// ✅ BOM: Reutiliza validação
+public Produto(double valor) {
+    setValor(valor);  // Setter já valida
+}
+```
+
+### Sobrecarga de Construtores
+
+Você pode ter **múltiplos construtores** com diferentes parâmetros:
+
+```java
+public class Produto {
+    private int codigo;
+    private String nome;
+    
+    // Construtor vazio
+    public Produto() {
     }
     
-    public static void main(String[] args) {
-        String ra = JOptionPane.showInputDialog("Digite o RA (13 dígitos):");
-        
-        if (ra != null) {
-            InfoRA info = analisar(ra.trim());
+    // Construtor com 2 parâmetros
+    public Produto(int codigo, String nome) {
+        this.codigo = codigo;
+        this.nome = nome;
+    }
+    
+    // Construtor completo
+    public Produto(int codigo, String nome, double valor) {
+        this.codigo = codigo;
+        this.nome = nome;
+        setValor(valor);
+    }
+}
+
+// Uso:
+Produto p1 = new Produto();
+Produto p2 = new Produto(1, "Sabonete");
+Produto p3 = new Produto(1, "Sabonete", 2.34);
+```
+
+---
+
+## Métodos Especiais (toString)
+
+### O Método toString()
+
+`toString()` é um método especial que **retorna uma representação em String do objeto**.
+
+#### Sem toString()
+
+```java
+ContaBancaria cb = new ContaBancaria();
+System.out.println(cb);
+// Saída: aula2609.ContaBancaria@15db9742  (código hash)
+```
+
+#### Com toString()
+
+```java
+@Override
+public String toString() {
+    return "[" + numero + "; " + titular + "; " + saldo + "]";
+}
+
+ContaBancaria cb = new ContaBancaria();
+System.out.println(cb);
+// Saída: [1000; Jorginho Bezerra; 1000.0]
+```
+
+### Por que usar @Override?
+
+A anotação `@Override` indica que você está **sobrescrevendo** um método da superclasse (Object). Benefícios:
+
+- Previne erros de digitação
+- Deixa claro a intenção
+- Compilador verifica se o método realmente existe na superclasse
+
+### toString() Completo
+
+```java
+@Override
+public String toString() {
+    return "Produto [codigo=" + codigo + 
+           ", nome=" + nome + 
+           ", valor=" + valor + 
+           ", novo=" + novo + 
+           ", tipo=" + tipo + 
+           ", empresa=" + empresa + "]";
+}
+```
+
+**Uso prático**:
+```java
+Produto p = new Produto(1, "Sabonete", 2.34, true, 'S');
+System.out.println(p);  // Chama toString() automaticamente
+```
+
+---
+
+## Static - Atributos e Métodos Estáticos
+
+### O que é `static`?
+
+`static` indica que um atributo ou método **pertence à classe**, não aos objetos individuais.
+
+### Diferença: Static vs Não-Static
+
+```java
+public class Produto {
+    public static String empresa;  // STATIC - da classe
+    private int codigo;            // Não-static - do objeto
+}
+```
+
+**Visualização**:
+```
+Classe Produto
+├── empresa = "Fatec"  (1 única cópia para TODOS)
+│
+Objeto p1              Objeto p2              Objeto p3
+├── codigo = 1         ├── codigo = 2         ├── codigo = 3
+└── nome = "A"         └── nome = "B"         └── nome = "C"
+```
+
+### Características de Atributos Static
+
+- **Compartilhado**: Todos os objetos veem o mesmo valor
+- **Acesso pela classe**: `Produto.empresa` (não precisa de objeto)
+- **Único na memória**: Apenas uma cópia existe
+
+```java
+Produto p1 = new Produto();
+Produto p2 = new Produto();
+
+Produto.empresa = "Fatec";  // Acesso pela classe
+
+System.out.println(p1.empresa);  // Fatec
+System.out.println(p2.empresa);  // Fatec (mesmo valor!)
+```
+
+### Métodos Static
+
+Métodos static **não têm acesso a atributos não-static** (pois não têm um objeto):
+
+```java
+public class ContaBancaria {
+    private double saldo;  // Não-static
+    
+    // Método static
+    public static boolean fazerPix(ContaBancaria origem, 
+                                   ContaBancaria destino, 
+                                   double valor) {
+        // Precisa receber as contas como parâmetros
+        origem.sacar(valor);
+        destino.depositar(valor);
+        return true;
+    }
+}
+
+// Uso:
+ContaBancaria.fazerPix(cb1, cb2, 100);  // Pela classe!
+```
+
+### Quando Usar Static?
+
+✅ **Use static para**:
+- Constantes compartilhadas: `public static final double PI = 3.14159`
+- Métodos utilitários: `Math.sqrt()`, `Arrays.sort()`
+- Contadores: `private static int totalObjetos`
+- Factory methods: `public static Produto criar()`
+
+❌ **NÃO use static para**:
+- Atributos que variam por objeto
+- Métodos que precisam de estado do objeto
+
+---
+
+## Serialização
+
+### O que é Serialização?
+
+Serialização é o processo de **converter um objeto em bytes** para salvá-lo em arquivo ou transmiti-lo pela rede.
+
+**Persistência** = Objeto sobrevive após o programa terminar.
+
+### Implementando Serializable
+
+```java
+import java.io.Serializable;
+
+public class Aluno implements Serializable {
+    public String ra, nome;
+    public int idade;
+}
+```
+
+⚠️ **IMPORTANTE**: A classe deve implementar `Serializable` (é uma interface marcadora, sem métodos).
+
+### Gravando Objetos em Arquivo
+
+```java
+import java.io.*;
+
+public static String gravar(Aluno a) {
+    String retorno = "Objeto armazenado com sucesso";
+    try {
+        FileOutputStream fos = new FileOutputStream("aluno.obj");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(a);  // Grava o objeto
+        oos.flush();         // Garante escrita
+        oos.close();         // Fecha arquivo
+    } catch(IOException e) {
+        retorno = "Falha ao gravar o objeto " + e;
+    }
+    return retorno;
+}
+```
+
+### Lendo Objetos de Arquivo
+
+```java
+public static Aluno ler() {
+    Aluno a = null;
+    try {
+        FileInputStream fis = new FileInputStream("aluno.obj");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        a = (Aluno) ois.readObject();  // Lê e converte
+        ois.close();
+    } catch(IOException | ClassNotFoundException e) {
+        e.printStackTrace();
+    }
+    return a;
+}
+```
+
+### Uso Prático
+
+```java
+// Criar e gravar
+Aluno a = new Aluno();
+a.nome = "Pedro Denny Re";
+a.ra = "10519012901";
+a.idade = 19;
+System.out.println(Aluno.gravar(a));
+
+// Ler depois
+Aluno aRecuperado = Aluno.ler();
+System.out.println(aRecuperado.nome);  // Pedro Denny Re
+```
+
+### Quando Usar Serialização?
+
+✅ **Casos de uso**:
+- Salvar configurações do programa
+- Cache de objetos
+- Transmissão de objetos pela rede
+- Persistência simples sem banco de dados
+
+⚠️ **Limitações**:
+- Não é adequado para grandes volumes de dados
+- Versão da classe pode causar incompatibilidade
+- Para produção, considere banco de dados ou JSON
+
+---
+
+## Threads e Sincronização
+
+### O que são Threads?
+
+Threads permitem que um programa execute múltiplas tarefas simultaneamente (programação assíncrona).
+
+### Criando uma Thread
+
+```java
+public class Word01 extends Thread {
+    String texto = "Apostila de Python";
+    
+    public void run() {  // Não é main, é run()!
+        Impressora.imprimir(texto);
+    }
+}
+```
+
+### Executando Threads
+
+```java
+public static void main(String[] args) {
+    Word01 w1 = new Word01();
+    Word02 w2 = new Word02();
+    
+    w1.start();  // Inicia a thread
+    w2.start();  // Inicia outra thread
+}
+```
+
+⚠️ **IMPORTANTE**:
+- Uma classe Thread não tem `main()`, tem `run()`
+- O método `run()` não é estático
+- Use `start()` para executar, não `run()` diretamente
+
+### Sincronização de Métodos
+
+Quando múltiplas threads acessam o mesmo recurso, pode haver conflitos. A palavra-chave `synchronized` resolve isso.
+
+```java
+public synchronized static void imprimir(String texto) {
+    for(int i = 1; i <= 10; i++) {
+        System.out.println(texto + " " + i);
+    }
+}
+```
+
+**Sem synchronized**:
+```
+Apostila de Python 1
+Mapa Mental de Java 1
+Apostila de Python 2
+Mapa Mental de Java 2
+```
+
+**Com synchronized**:
+```
+Apostila de Python 1
+Apostila de Python 2
+...
+Apostila de Python 10
+Mapa Mental de Java 1
+...
+Mapa Mental de Java 10
+```
+
+### Controle de Threads
+
+```java
+public class MinhaThread extends Thread {
+    public void run() {
+        for(int i = 0; i < 5; i++) {
+            System.out.println(Thread.currentThread().getName() + ": " + i);
             
-            if (info != null) {
-                JOptionPane.showMessageDialog(null, info.toString());
-            } else {
-                JOptionPane.showMessageDialog(null, "RA inválido! Deve ter 13 dígitos numéricos.");
+            try {
+                Thread.sleep(1000);  // Pausa por 1 segundo
+            } catch(InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
 }
 
-class InfoRA {
-    private String ra, unidade, curso, ano, semestre, sequencial;
+// Uso
+MinhaThread t1 = new MinhaThread();
+t1.setName("Thread-A");
+t1.start();
+```
+
+---
+
+## Recursividade
+
+### O que é Recursividade?
+
+Recursividade ocorre quando um método **chama a si mesmo**. É útil para resolver problemas que podem ser divididos em subproblemas menores e similares.
+
+### Estrutura Básica
+
+Todo método recursivo precisa de:
+1. **Caso Base**: Condição de parada
+2. **Caso Recursivo**: Chamada do método a si mesmo
+
+### Exemplos Práticos
+
+#### Factorial
+```java
+public static int factorial(int n) {
+    // Caso base
+    if(n == 0 || n == 1) {
+        return 1;
+    }
     
-    public InfoRA(String ra, String unidade, String curso, String ano, String semestre, String sequencial) {
-        this.ra = ra;
-        this.unidade = unidade;
-        this.curso = curso;
+    // Caso recursivo
+    return n * factorial(n - 1);
+}
+
+// factorial(5) = 5 * factorial(4)
+//              = 5 * 4 * factorial(3)
+//              = 5 * 4 * 3 * factorial(2)
+//              = 5 * 4 * 3 * 2 * factorial(1)
+//              = 5 * 4 * 3 * 2 * 1 = 120
+```
+
+#### Fibonacci
+```java
+public static int fibonacci(int n) {
+    // Caso base
+    if(n <= 1) {
+        return n;
+    }
+    
+    // Caso recursivo
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+// fibonacci(5) = fibonacci(4) + fibonacci(3)
+//              = (fibonacci(3) + fibonacci(2)) + (fibonacci(2) + fibonacci(1))
+//              = ... = 5
+```
+
+#### Soma de Array
+```java
+public static int somarArray(int[] array, int indice) {
+    // Caso base
+    if(indice == array.length) {
+        return 0;
+    }
+    
+    // Caso recursivo
+    return array[indice] + somarArray(array, indice + 1);
+}
+```
+
+### Vantagens e Desvantagens
+
+✅ **Vantagens**:
+- Código mais limpo e elegante
+- Natural para problemas recursivos (árvores, grafos)
+- Mais fácil de entender em alguns casos
+
+❌ **Desvantagens**:
+- Pode consumir muita memória (pilha de chamadas)
+- Pode ser mais lento que iteração
+- Risco de estouro de pilha (StackOverflowError)
+
+---
+
+# PARTE III: HERANÇA E POLIMORFISMO
+
+## Herança
+
+### Conceito
+
+Herança é um mecanismo fundamental da POO que permite que classes compartilhem atributos e operações baseados em um relacionamento hierárquico. Uma **subclasse** (classe filha/derivada) herda atributos e métodos de uma **superclasse** (classe mãe/base).
+
+### Terminologia
+
+- **Classe Mãe**: Também chamada de classe base ou superclasse
+- **Classe Filha**: Também chamada de subclasse ou classe derivada
+- A classe filha (mais específica) herda da classe mãe (mais genérica)
+
+### Sintaxe em Java
+
+```java
+public class ClasseFilha extends ClasseMae {
+    // código da classe filha
+}
+```
+
+### Características Importantes
+
+- Por padrão, todas as classes em Java herdam da classe `Object`
+- **⚠️ IMPORTANTE**: Atributos e métodos **privados** NÃO são herdados pela subclasse
+- Atributos e métodos **públicos** e **protected** são herdados
+
+### Vantagens da Herança
+
+1. **Reutilização de código**: Evita duplicação de código
+2. **Modificação sem alteração**: Permite adicionar novos métodos e variáveis sem mudar a classe original
+3. **Flexibilidade**: Permite alterar o comportamento de uma classe através de sobrescrita
+
+### Exemplo Prático
+
+```java
+// Hierarquia: Pessoa -> PessoaFisica -> Funcionario -> Vendedor
+
+public abstract class Pessoa {
+    private int numero;
+    protected String nome;
+    
+    public void digitar() {
+        // lógica de entrada
+    }
+}
+
+public class PessoaFisica extends Pessoa {
+    private String cpf;
+    private String rg;
+    
+    @Override
+    public void digitar() {
+        super.digitar(); // chama o método da classe mãe
+        // adiciona lógica específica
+    }
+}
+```
+
+---
+
+## Modificadores de Acesso
+
+### Tipos de Modificadores
+
+| Modificador | Mesma Classe | Mesmo Pacote | Subclasse (outro pacote) | Qualquer Lugar |
+|-------------|--------------|--------------|--------------------------|----------------|
+| `private` | ✅ | ❌ | ❌ | ❌ |
+| `default` (sem modificador) | ✅ | ✅ | ❌ | ❌ |
+| `protected` | ✅ | ✅ | ✅ | ❌ |
+| `public` | ✅ | ✅ | ✅ | ✅ |
+
+### Protected - Conceito Especial
+
+O modificador `protected` (#) tem um comportamento único:
+- Funciona como **público** dentro de uma hierarquia ou pacote
+- **Não pode** ser acessado fora da hierarquia
+- Se você criar uma classe em outro pacote que estende uma classe da hierarquia, os atributos `protected` dessa hierarquia continuarão acessíveis
+
+### Exemplo
+
+```java
+public abstract class Pessoa {
+    private int numero;      // NÃO é herdado
+    protected String nome;   // É herdado e acessível em subclasses
+    
+    public void mostrar() {  // É herdado
+        System.out.println(numero);
+        System.out.println(nome);
+    }
+}
+```
+
+---
+
+## Classes Abstratas
+
+### Conceito
+
+Uma classe abstrata é um **conceito**, um **modelo** que não gera instâncias. Ela serve como base para outras classes, definindo um comportamento comum.
+
+### Características
+
+- Declarada com a palavra-chave `abstract`
+- **Não pode ser instanciada** diretamente
+- Pode conter métodos abstratos (sem implementação) e métodos concretos (com implementação)
+- Em UML, o nome da classe abstrata aparece em *itálico*
+- É muito comum que superclasses em uma hierarquia sejam abstratas
+
+### Sintaxe
+
+```java
+public abstract class Animal {
+    // Método concreto
+    public void comer() {
+        // pode ter implementação
+    }
+    
+    // Método abstrato (se necessário)
+    public abstract void emitirSom();
+}
+```
+
+### Exemplo Prático
+
+```java
+public abstract class Fruta {
+    public void descascar() {
+        // implementação padrão (pode ser vazia)
+    }
+}
+
+public class Banana extends Fruta {
+    @Override
+    public void descascar() {
+        System.out.println("Descascando a banana");
+    }
+}
+```
+
+### Por que usar?
+
+- Define um **contrato** que subclasses devem seguir
+- Permite criar **hierarquias consistentes**
+- Evita que objetos genéricos sejam criados quando só faz sentido ter objetos específicos
+
+---
+
+## Polimorfismo
+
+### Conceito
+
+Polimorfismo vem do grego: **Poli** (muitas) + **Morphos** (formas) = "Muitas formas"
+
+É a capacidade de um objeto decidir qual método aplicar a si mesmo. É o mecanismo que permite a um objeto assumir múltiplas formas (uma de cada vez).
+
+### Definição Técnica
+
+A propriedade segundo a qual uma subclasse redefine a implementação de um método herdado da superclasse.
+
+### Vantagem Principal
+
+**Economia de recursos**: Facilita a adição de novas classes ao sistema com o mínimo de modificações no código existente.
+
+### Tipos de Polimorfismo
+
+#### 1. Polimorfismo de Sobrescrita (Override)
+
+Quando uma subclasse fornece uma implementação específica para um método já definido na superclasse.
+
+```java
+public abstract class Animal {
+    public void comer() { }
+}
+
+public class Gato extends Animal {
+    @Override
+    public void comer() {
+        System.out.println("Gato comendo");
+    }
+}
+```
+
+#### 2. Polimorfismo de Referência
+
+Quando uma variável do tipo da superclasse pode referenciar objetos de qualquer subclasse.
+
+```java
+// "Esquisito, mas é polimorfismo"
+Animal a = new Gato();  // Referência Animal, objeto Gato
+a.beber();  // Chama o método de Gato
+a.comer();  // Chama o método de Gato
+```
+
+### Exemplo Prático - Descascador Polimórfico
+
+```java
+public class Descascador {
+    // Método genérico que aceita qualquer Fruta
+    public static void agir(Fruta f) {
+        f.descascar();  // Polimorfismo: chama o método correto em tempo de execução
+    }
+    
+    public static void main(String[] args) {
+        Fruta f = new AbacaxiReal();  // Polimorfismo de referência
+        agir(f);  // Saída: "Descascando o abacaxi real..."
+    }
+}
+```
+
+### Comparação: Com e Sem Polimorfismo
+
+**Sem Polimorfismo**:
+```java
+Banana b = new Banana();
+b.descascar();
+
+Abacaxi a = new Abacaxi();
+a.descascar();
+
+Melancia m = new Melancia();
+m.descascar();
+// Repetitivo e difícil de manter
+```
+
+**Com Polimorfismo**:
+```java
+public static void agir(Fruta f) {
+    f.descascar();
+}
+// Único método para todas as frutas!
+```
+
+---
+
+## Override (Sobrescrita)
+
+### Conceito
+
+Métodos com o **mesmo nome e assinatura** em classes diferentes, mas com **implementações diferentes**.
+
+### Anotação @Override
+
+A anotação `@Override` é uma proteção do compilador:
+- Verifica em **tempo de compilação** se o método realmente existe na classe mãe
+- Se não existir, gera **erro de compilação**
+- Garante que você está realmente sobrescrevendo um método, não criando um novo
+
+### Importante
+
+⚠️ Se não houver mesmo nome e assinatura, **NÃO há sobrescrita**, apenas uso de dados diferentes.
+
+### Exemplo
+
+```java
+public class PessoaFisica extends Pessoa {
+    @Override  // Garante que estamos sobrescrevendo
+    public void digitar() {
+        super.digitar();  // Chama o método da classe mãe
+        cpf = JOptionPane.showInputDialog("CPF a ser digitado: ");
+        rg = JOptionPane.showInputDialog("RG a ser digitado: ");
+    }
+}
+```
+
+### Regras para Override
+
+1. **Mesmo nome** do método
+2. **Mesma assinatura** (tipos e quantidade de parâmetros)
+3. **Mesmo tipo de retorno** (ou tipo compatível - covariante)
+4. **Não pode reduzir a visibilidade** (se era public, não pode ser protected)
+5. **Não pode adicionar exceções checked novas**
+
+---
+
+## Palavra-chave super
+
+### Conceito
+
+A palavra-chave `super` é usada para acessar membros da classe mãe (superclasse).
+
+### Usos Principais
+
+#### 1. Chamar Método da Superclasse
+
+```java
+public void digitar() {
+    super.digitar();  // Chama o método digitar() da classe mãe
+    // Adiciona comportamento específico da subclasse
+}
+```
+
+#### 2. Chamar Construtor da Superclasse
+
+```java
+public class Funcionario extends PessoaFisica {
+    public Funcionario(String nome, String cpf, double salario) {
+        super(nome, cpf);  // Chama construtor de PessoaFisica
+        this.salario = salario;
+    }
+}
+```
+
+### Quando Usar super
+
+- Para **reaproveitar** código da classe mãe
+- Para **estender** funcionalidade sem duplicar código
+- Para acessar atributos ou métodos **ocultos** por sobrescrita
+
+### Exemplo da Hierarquia
+
+```java
+Vendedor -> Funcionario -> PessoaFisica -> Pessoa
+
+// No Vendedor:
+public void digitar() {
+    super.digitar();  // Chama Funcionario.digitar()
+    // que por sua vez chama super.digitar() de PessoaFisica
+    // que por sua vez chama super.digitar() de Pessoa
+    comissao = Float.parseFloat(JOptionPane.showInputDialog("Comissão: "));
+}
+```
+
+---
+
+# PARTE IV: RECURSOS AVANÇADOS
+
+## Exemplos Práticos Completos
+
+### 1. Sistema de Gerenciamento de Biblioteca
+
+```java
+import java.io.*;
+import java.util.*;
+
+public class Biblioteca {
+    private List<Livro> livros;
+    private List<Usuario> usuarios;
+    
+    public Biblioteca() {
+        this.livros = new ArrayList<>();
+        this.usuarios = new ArrayList<>();
+    }
+    
+    public void cadastrarLivro(Livro livro) {
+        livros.add(livro);
+        System.out.println("Livro cadastrado: " + livro.getTitulo());
+    }
+    
+    public void cadastrarUsuario(Usuario usuario) {
+        usuarios.add(usuario);
+        System.out.println("Usuário cadastrado: " + usuario.getNome());
+    }
+    
+    public boolean emprestarLivro(String isbn, String idUsuario) {
+        Livro livro = buscarLivroPorISBN(isbn);
+        Usuario usuario = buscarUsuarioPorId(idUsuario);
+        
+        if (livro != null && usuario != null && livro.isDisponivel()) {
+            livro.setDisponivel(false);
+            usuario.adicionarLivro(livro);
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public boolean devolverLivro(String isbn, String idUsuario) {
+        Livro livro = buscarLivroPorISBN(isbn);
+        Usuario usuario = buscarUsuarioPorId(idUsuario);
+        
+        if (livro != null && usuario != null) {
+            livro.setDisponivel(true);
+            usuario.removerLivro(livro);
+            return true;
+        }
+        
+        return false;
+    }
+    
+    private Livro buscarLivroPorISBN(String isbn) {
+        for (Livro livro : livros) {
+            if (livro.getIsbn().equals(isbn)) {
+                return livro;
+            }
+        }
+        return null;
+    }
+    
+    private Usuario buscarUsuarioPorId(String id) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getId().equals(id)) {
+                return usuario;
+            }
+        }
+        return null;
+    }
+}
+
+class Livro implements Serializable {
+    private String isbn;
+    private String titulo;
+    private String autor;
+    private int ano;
+    private boolean disponivel;
+    
+    public Livro(String isbn, String titulo, String autor, int ano) {
+        this.isbn = isbn;
+        this.titulo = titulo;
+        this.autor = autor;
         this.ano = ano;
-        this.semestre = semestre;
-        this.sequencial = sequencial;
+        this.disponivel = true;
+    }
+    
+    // Getters e Setters
+    public String getIsbn() { return isbn; }
+    public String getTitulo() { return titulo; }
+    public String getAutor() { return autor; }
+    public int getAno() { return ano; }
+    public boolean isDisponivel() { return disponivel; }
+    public void setDisponivel(boolean disponivel) { this.disponivel = disponivel; }
+    
+    @Override
+    public String toString() {
+        return String.format("Livro[isbn=%s, titulo=%s, autor=%s, ano=%d, disponivel=%s]",
+                            isbn, titulo, autor, ano, disponivel ? "Sim" : "Não");
+    }
+}
+
+class Usuario implements Serializable {
+    private String id;
+    private String nome;
+    private List<Livro> livrosEmprestados;
+    
+    public Usuario(String id, String nome) {
+        this.id = id;
+        this.nome = nome;
+        this.livrosEmprestados = new ArrayList<>();
+    }
+    
+    public void adicionarLivro(Livro livro) {
+        livrosEmprestados.add(livro);
+    }
+    
+    public void removerLivro(Livro livro) {
+        livrosEmprestados.remove(livro);
+    }
+    
+    // Getters
+    public String getId() { return id; }
+    public String getNome() { return nome; }
+    public List<Livro> getLivrosEmprestados() { return livrosEmprestados; }
+    
+    @Override
+    public String toString() {
+        return String.format("Usuario[id=%s, nome=%s, livros=%d]",
+                            id, nome, livrosEmprestados.size());
+    }
+}
+```
+
+### 2. Hierarquia de Formas Geométricas
+
+```java
+public abstract class FormaGeometrica {
+    protected String cor;
+    
+    public FormaGeometrica(String cor) {
+        this.cor = cor;
+    }
+    
+    // Métodos abstratos
+    public abstract double calcularArea();
+    public abstract double calcularPerimetro();
+    
+    // Método concreto
+    public void exibirInfo() {
+        System.out.println("Cor: " + cor);
+        System.out.println("Área: " + calcularArea());
+        System.out.println("Perímetro: " + calcularPerimetro());
+    }
+}
+
+public class Circulo extends FormaGeometrica {
+    private double raio;
+    
+    public Circulo(String cor, double raio) {
+        super(cor);
+        this.raio = raio;
+    }
+    
+    @Override
+    public double calcularArea() {
+        return Math.PI * Math.pow(raio, 2);
+    }
+    
+    @Override
+    public double calcularPerimetro() {
+        return 2 * Math.PI * raio;
     }
     
     @Override
     public String toString() {
-        return String.format(
-            "=== ANÁLISE DO RA ===\n" +
-            "RA: %s\n" +
-            "Unidade: %s\n" +
-            "Curso: %s\n" +
-            "Ano: %s\n" +
-            "Semestre: %s\n" +
-            "Sequencial: %s",
-            ra, unidade, curso, ano, semestre, sequencial
-        );
+        return String.format("Círculo[cor=%s, raio=%.2f]", cor, raio);
     }
 }
-```
 
-### 3. Gerador de Senhas Avançado
-```java
-public class GeradorSenhas {
-    private static final String NUMEROS = "0123456789";
-    private static final String MINUSCULAS = "abcdefghijklmnopqrstuvwxyz";
-    private static final String MAIUSCULAS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static final String SIMBOLOS = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+public class Retangulo extends FormaGeometrica {
+    private double largura;
+    private double altura;
     
-    public enum TipoSenha {
-        NUMERICA(NUMEROS),
-        SIMPLES(NUMEROS + MINUSCULAS),
-        COMPLETA(NUMEROS + MINUSCULAS + MAIUSCULAS),
-        COMPLEXA(NUMEROS + MINUSCULAS + MAIUSCULAS + SIMBOLOS);
-        
-        private final String caracteres;
-        
-        TipoSenha(String caracteres) {
-            this.caracteres = caracteres;
-        }
-        
-        public String getCaracteres() {
-            return caracteres;
-        }
+    public Retangulo(String cor, double largura, double altura) {
+        super(cor);
+        this.largura = largura;
+        this.altura = altura;
     }
     
-    /**
-     * Gera senha do tipo especificado
-     * @param tipo tipo da senha
-     * @param tamanho tamanho desejado
-     * @return senha gerada
-     */
-    public static String gerar(TipoSenha tipo, int tamanho) {
-        if (tamanho <= 0) return "";
-        
-        StringBuilder senha = new StringBuilder();
-        String pool = tipo.getCaracteres();
-        
-        for (int i = 0; i < tamanho; i++) {
-            int indice = (int)(Math.random() * pool.length());
-            senha.append(pool.charAt(indice));
-        }
-        
-        return senha.toString();
+    @Override
+    public double calcularArea() {
+        return largura * altura;
     }
     
-    /**
-     * Avalia a força da senha
-     * @param senha a senha a ser avaliada
-     * @return força da senha (0-100)
-     */
-    public static int avaliarForca(String senha) {
-        if (senha == null || senha.isEmpty()) return 0;
-        
-        int pontos = 0;
-        
-        // Tamanho
-        if (senha.length() >= 8) pontos += 25;
-        else if (senha.length() >= 6) pontos += 15;
-        else if (senha.length() >= 4) pontos += 10;
-        
-        // Variedade de caracteres
-        boolean temMinuscula = false, temMaiuscula = false;
-        boolean temNumero = false, temSimbolo = false;
-        
-        for (char c : senha.toCharArray()) {
-            if (Character.isLowerCase(c)) temMinuscula = true;
-            else if (Character.isUpperCase(c)) temMaiuscula = true;
-            else if (Character.isDigit(c)) temNumero = true;
-            else temSimbolo = true;
-        }
-        
-        if (temMinuscula) pontos += 15;
-        if (temMaiuscula) pontos += 15;
-        if (temNumero) pontos += 15;
-        if (temSimbolo) pontos += 30;
-        
-        return Math.min(100, pontos);
+    @Override
+    public double calcularPerimetro() {
+        return 2 * (largura + altura);
     }
     
-    public static String getClassificacao(int forca) {
-        if (forca < 30) return "Muito Fraca";
-        if (forca < 50) return "Fraca";
-        if (forca < 70) return "Média";
-        if (forca < 90) return "Forte";
-        return "Muito Forte";
+    @Override
+    public String toString() {
+        return String.format("Retângulo[cor=%s, largura=%.2f, altura=%.2f]", 
+                            cor, largura, altura);
     }
 }
-```
 
-### 4. Sistema de Menu Interativo
-```java
-public class SistemaMenu {
+// Demonstração de polimorfismo
+public class TesteFormas {
     public static void main(String[] args) {
-        while (true) {
-            String[] opcoes = {"Validar Mês", "Analisar RA", "Gerar Senha", "Sair"};
-            
-            int escolha = JOptionPane.showOptionDialog(null,
-                "Escolha uma opção:",
-                "Sistema Integrado",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                opcoes,
-                opcoes[0]);
-            
-            switch (escolha) {
-                case 0 -> ValidadorMes.main(null);
-                case 1 -> AnalisadorRA.main(null);
-                case 2 -> menuGeradorSenhas();
-                case 3, -1 -> {
-                    JOptionPane.showMessageDialog(null, "Sistema encerrado!");
-                    System.exit(0);
-                }
-            }
-        }
-    }
-    
-    private static void menuGeradorSenhas() {
-        try {
-            String[] tipos = {"Numérica", "Simples", "Completa", "Complexa"};
-            int tipoEscolhido = JOptionPane.showOptionDialog(null,
-                "Escolha o tipo de senha:",
-                "Gerador de Senhas",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                tipos,
-                tipos[2]);
-                
-            if (tipoEscolhido == -1) return;
-            
-            String tamanhoStr = JOptionPane.showInputDialog("Tamanho da senha (4-50):");
-            if (tamanhoStr == null) return;
-            
-            int tamanho = Integer.parseInt(tamanhoStr);
-            if (tamanho < 4 || tamanho > 50) {
-                JOptionPane.showMessageDialog(null, "Tamanho deve estar entre 4 e 50!");
-                return;
-            }
-            
-            GeradorSenhas.TipoSenha[] tiposEnum = GeradorSenhas.TipoSenha.values();
-            String senha = GeradorSenhas.gerar(tiposEnum[tipoEscolhido], tamanho);
-            
-            int forca = GeradorSenhas.avaliarForca(senha);
-            String classificacao = GeradorSenhas.getClassificacao(forca);
-            
-            String resultado = String.format(
-                "Senha gerada: %s\n\nForça: %d/100 (%s)",
-                senha, forca, classificacao
-            );
-            
-            JOptionPane.showMessageDialog(null, resultado);
-            
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Digite um número válido!");
+        FormaGeometrica[] formas = {
+            new Circulo("Vermelho", 5.0),
+            new Retangulo("Azul", 4.0, 6.0),
+            new Circulo("Verde", 3.0)
+        };
+        
+        for (FormaGeometrica forma : formas) {
+            System.out.println("\n" + forma);
+            forma.exibirInfo();
         }
     }
 }
@@ -1735,6 +2651,7 @@ public class SistemaMenu {
 ## Boas Práticas
 
 ### Nomenclatura e Convenções
+
 ```java
 // ✅ Boas práticas
 public class CalculadoraFinanceira {  // PascalCase para classes
@@ -1753,18 +2670,10 @@ public class CalculadoraFinanceira {  // PascalCase para classes
         return capitalInicial * Math.pow(1 + taxaAnual, periodoAnos);
     }
 }
-
-// ❌ Evitar
-public class calculadora {  // Minúsculo - incorreto
-    private static final double taxa = 0.05;  // Constante sem padrão
-    
-    public static double Calcular_Juros(double c, double t) {  // Inconsistente
-        return c * t;  // Nomes não descritivos
-    }
-}
 ```
 
 ### Organização de Classes
+
 ```java
 // ✅ Classe bem estruturada
 public class Pessoa {
@@ -1808,72 +2717,55 @@ public class Pessoa {
 ```
 
 ### Tratamento de Erros Robusto
+
 ```java
-public class ProcessadorTexto {
+public class ValidadorDados {
     /**
-     * Processa arquivo de texto de forma segura
-     * @param nomeArquivo nome do arquivo a processar
-     * @return resultado do processamento
+     * Valida CPF
+     * @param cpf o CPF a ser validado
+     * @return true se válido, false caso contrário
      */
-    public static ResultadoProcessamento processarArquivo(String nomeArquivo) {
+    public static boolean validarCPF(String cpf) {
         // Validação de entrada
-        if (nomeArquivo == null || nomeArquivo.trim().isEmpty()) {
-            return ResultadoProcessamento.erro("Nome do arquivo não pode estar vazio");
+        if (cpf == null || cpf.trim().isEmpty()) {
+            return false;
         }
         
-        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo))) {
-            StringBuilder conteudo = new StringBuilder();
-            String linha;
-            int numeroLinhas = 0;
-            
-            while ((linha = reader.readLine()) != null) {
-                conteudo.append(linha).append("\n");
-                numeroLinhas++;
-            }
-            
-            return ResultadoProcessamento.sucesso(conteudo.toString(), numeroLinhas);
-            
-        } catch (FileNotFoundException e) {
-            return ResultadoProcessamento.erro("Arquivo não encontrado: " + nomeArquivo);
-            
-        } catch (IOException e) {
-            return ResultadoProcessamento.erro("Erro ao ler arquivo: " + e.getMessage());
-            
-        } catch (Exception e) {
-            return ResultadoProcessamento.erro("Erro inesperado: " + e.getMessage());
+        // Remover caracteres não numéricos
+        String somenteNumeros = cpf.replaceAll("[^0-9]", "");
+        
+        // Verificar tamanho
+        if (somenteNumeros.length() != 11) {
+            return false;
         }
-    }
-}
-
-class ResultadoProcessamento {
-    private final boolean sucesso;
-    private final String conteudo;
-    private final int numeroLinhas;
-    private final String mensagemErro;
-    
-    private ResultadoProcessamento(boolean sucesso, String conteudo, int numeroLinhas, String mensagemErro) {
-        this.sucesso = sucesso;
-        this.conteudo = conteudo;
-        this.numeroLinhas = numeroLinhas;
-        this.mensagemErro = mensagemErro;
+        
+        // Verificar se todos os dígitos são iguais
+        if (somenteNumeros.matches("(\\d)\\1{10}")) {
+            return false;
+        }
+        
+        return true;  // Simplificado - validação completa requer cálculo dos dígitos
     }
     
-    public static ResultadoProcessamento sucesso(String conteudo, int numeroLinhas) {
-        return new ResultadoProcessamento(true, conteudo, numeroLinhas, null);
+    /**
+     * Valida email
+     * @param email o email a ser validado
+     * @return true se válido, false caso contrário
+     */
+    public static boolean validarEmail(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            return false;
+        }
+        
+        return email.contains("@") && 
+               email.contains(".") &&
+               email.indexOf("@") < email.lastIndexOf(".");
     }
-    
-    public static ResultadoProcessamento erro(String mensagem) {
-        return new ResultadoProcessamento(false, null, 0, mensagem);
-    }
-    
-    // Getters...
-    public boolean isSucesso() { return sucesso; }
-    public String getConteudo() { return conteudo; }
-    public String getMensagemErro() { return mensagemErro; }
 }
 ```
 
 ### Performance e Otimização
+
 ```java
 public class OtimizacaoBestPractices {
     
@@ -1905,193 +2797,61 @@ public class OtimizacaoBestPractices {
         cacheFactorial.put(n, resultado);
         return resultado;
     }
-    
-    // ✅ Evite criação desnecessária de objetos
-    public static boolean isEmailValido(String email) {
-        return email != null && 
-               email.contains("@") && 
-               email.lastIndexOf(".") > email.indexOf("@");
-        // Melhor que usar regex para validações simples
-    }
-}
-```
-
-### Documentação Completa
-```java
-/**
- * Utilitário para cálculos estatísticos básicos
- * 
- * <p>Esta classe fornece métodos estáticos para realizar
- * operações estatísticas comuns em arrays de números.</p>
- * 
- * <p>Exemplo de uso:</p>
- * <pre>
- * double[] numeros = {1.0, 2.0, 3.0, 4.0, 5.0};
- * double media = EstatisticaUtil.calcularMedia(numeros);
- * double desvio = EstatisticaUtil.calcularDesvioPadrao(numeros);
- * </pre>
- * 
- * @author Rafael
- * @version 2.0
- * @since 1.0
- */
-public class EstatisticaUtil {
-    
-    /**
-     * Calcula a média aritmética de um conjunto de valores
-     * 
-     * @param valores array de valores numéricos
-     * @return a média aritmética dos valores
-     * @throws IllegalArgumentException se o array for null ou vazio
-     * @throws ArithmeticException se ocorrer overflow no cálculo
-     * 
-     * @see #calcularMediana(double[])
-     * @see #calcularModa(double[])
-     */
-    public static double calcularMedia(double[] valores) {
-        validarArray(valores);
-        
-        double soma = 0;
-        for (double valor : valores) {
-            soma += valor;
-        }
-        
-        return soma / valores.length;
-    }
-    
-    /**
-     * Valida se o array é válido para cálculos
-     * @param array array a ser validado
-     * @throws IllegalArgumentException se inválido
-     */
-    private static void validarArray(double[] array) {
-        if (array == null) {
-            throw new IllegalArgumentException("Array não pode ser null");
-        }
-        if (array.length == 0) {
-            throw new IllegalArgumentException("Array não pode estar vazio");
-        }
-    }
-}
-```
-
-### Testes e Validação
-```java
-public class TestadorSistema {
-    public static void main(String[] args) {
-        System.out.println("=== INICIANDO TESTES ===");
-        
-        testarValidadorMes();
-        testarGeradorSenhas();
-        testarAnalisadorRA();
-        
-        System.out.println("=== TESTES CONCLUÍDOS ===");
-    }
-    
-    private static void testarValidadorMes() {
-        System.out.println("\n--- Testando ValidadorMes ---");
-        
-        // Casos válidos
-        assert ValidadorMes.isValido(1) : "Mês 1 deveria ser válido";
-        assert ValidadorMes.isValido(12) : "Mês 12 deveria ser válido";
-        
-        // Casos inválidos
-        assert !ValidadorMes.isValido(0) : "Mês 0 deveria ser inválido";
-        assert !ValidadorMes.isValido(13) : "Mês 13 deveria ser inválido";
-        
-        // Teste de nomes
-        assert "Janeiro".equals(ValidadorMes.getNomeExtenso(1)) : "Nome do mês 1 incorreto";
-        
-        System.out.println("ValidadorMes: ✅ Todos os testes passaram");
-    }
-    
-    private static void testarGeradorSenhas() {
-        System.out.println("\n--- Testando GeradorSenhas ---");
-        
-        String senha = GeradorSenhas.gerar(GeradorSenhas.TipoSenha.NUMERICA, 8);
-        assert senha.length() == 8 : "Tamanho da senha incorreto";
-        assert senha.matches("\\d+") : "Senha numérica contém caracteres não numéricos";
-        
-        int forca = GeradorSenhas.avaliarForca("Abc123!@#");
-        assert forca > 50 : "Avaliação de força incorreta";
-        
-        System.out.println("GeradorSenhas: ✅ Todos os testes passaram");
-    }
-    
-    private static void testarAnalisadorRA() {
-        System.out.println("\n--- Testando AnalisadorRA ---");
-        
-        InfoRA info = AnalisadorRA.analisar("1050482423017");
-        assert info != null : "RA válido deveria ser analisado";
-        
-        InfoRA infoInvalida = AnalisadorRA.analisar("123");
-        assert infoInvalida == null : "RA inválido deveria retornar null";
-        
-        System.out.println("AnalisadorRA: ✅ Todos os testes passaram");
-    }
 }
 ```
 
 ---
 
-## Resumo e Próximos Passos
+## Glossário
 
-### Conceitos Fundamentais Cobertos
-1. **✅ Sintaxe Básica**: Classes, métodos, variáveis
-2. **✅ Tipos de Dados**: Primitivos e objetos
-3. **✅ Estruturas de Controle**: Condicionais e loops
-4. **✅ Arrays**: Manipulação de coleções simples
-5. **✅ Métodos**: Modularização e reutilização de código
-6. **✅ Tratamento de Exceções**: Programação defensiva
-7. **✅ Strings**: Manipulação de texto
-8. **✅ Interface Gráfica**: Básico do Swing
-9. **✅ Boas Práticas**: Código limpo e manutenível
-
-### Checklist de Domínio
-- [ ] Consigo criar classes e métodos sem consulta
-- [ ] Domino todas as estruturas de repetição e condicionais  
-- [ ] Sei tratar exceções adequadamente
-- [ ] Entendo a diferença entre tipos primitivos e objetos
-- [ ] Consigo manipular strings eficientemente
-- [ ] Sei criar interfaces gráficas básicas
-- [ ] Aplico boas práticas de nomenclatura e documentação
-- [ ] Consigo debugar erros comuns
-- [ ] Entendo conceitos de modularização (métodos)
-- [ ] Sei quando usar arrays vs outras estruturas
-
-### Próximos Tópicos de Estudo
-
-#### Nível Intermediário
-- **Programação Orientada a Objetos**:
-  - Encapsulamento, herança, polimorfismo
-  - Classes abstratas e interfaces
-  - Modificadores de acesso avançados
-
-- **Collections Framework**:
-  - ArrayList, LinkedList, HashMap
-  - Iteradores e streams
-  - Comparators e sorting
-
-#### Nível Avançado
-- **Generics**: Tipos parametrizados
-- **Threads**: Programação concorrente
-- **I/O Streams**: Manipulação avançada de arquivos
-- **JDBC**: Conexão com bancos de dados
-- **Design Patterns**: Padrões de projeto
-
-#### Ferramentas e Frameworks
-- **Maven/Gradle**: Gerenciamento de dependências
-- **JUnit**: Testes unitários automatizados
-- **Spring Framework**: Desenvolvimento empresarial
-- **JavaFX**: Interfaces gráficas modernas
-
-### Dicas de Estudo
-1. **Pratique diariamente**: Implemente pequenos projetos
-2. **Leia código**: Estude código de projetos open source
-3. **Documente tudo**: Mantenha o hábito da documentação
-4. **Teste sempre**: Valide suas implementações
-5. **Refatore**: Melhore código existente continuamente
-
-**Lembre-se**: A programação é uma habilidade prática. Quanto mais você codificar, melhor será!
+| Termo | Significado |
+|-------|-------------|
+| **Classe** | Modelo/blueprint para criar objetos |
+| **Objeto** | Instância concreta de uma classe |
+| **Atributo** | Característica/propriedade do objeto (estado) |
+| **Método** | Ação/comportamento do objeto |
+| **Encapsulamento** | Proteção de dados internos |
+| **Getter** | Método que retorna valor de atributo |
+| **Setter** | Método que define valor de atributo |
+| **Construtor** | Método especial para inicializar objetos |
+| **this** | Referência ao objeto atual |
+| **static** | Pertence à classe, não ao objeto |
+| **final** | Valor constante, não pode ser alterado |
+| **Serialização** | Conversão de objeto em bytes |
+| **Thread** | Processo de execução paralela |
+| **synchronized** | Controle de acesso concorrente |
+| **Override** | Sobrescrever método da superclasse |
+| **Sobrecarga** | Múltiplos métodos com mesmo nome |
+| **Herança** | Classe que estende outra classe |
+| **Polimorfismo** | Múltiplas formas para mesma ação |
+| **Classe Abstrata** | Classe que não pode ser instanciada |
+| **super** | Referência à superclasse |
+| **protected** | Modificador de acesso para herança |
 
 ---
+
+## Recursos Adicionais
+
+### Documentação Oficial
+- **Oracle Java Tutorials**: https://docs.oracle.com/javase/tutorial/
+- **Java API Docs**: https://docs.oracle.com/en/java/javase/
+
+### Ferramentas
+- **IDE**: IntelliJ IDEA, Eclipse, VS Code
+- **Build**: Maven, Gradle
+- **Testes**: JUnit
+
+### Práticas
+- **Exercism**: Exercícios práticos de Java
+- **HackerRank**: Desafios de programação
+- **LeetCode**: Problemas algorítmicos
+
+### Livros Recomendados
+- "Effective Java" - Joshua Bloch
+- "Clean Code" - Robert C. Martin
+- "Head First Java" - Kathy Sierra
+
+---
+
+**Documentação compilada e unificada**
+*Contém conceitos fundamentais, POO, herança e polimorfismo*
