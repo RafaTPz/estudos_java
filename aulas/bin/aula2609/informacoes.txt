@@ -1,0 +1,65 @@
+encapsulamento = um mecanismo que possibilita restringir o processo ...[] separar em partes, isolar, proteger e restringir contéudo.
+
+visibilidade define quem enxerga atributos e métodos
+tipos usados em java: package public private e protected
+
+public = um  nivel sem restrições equivalente a não encapsular
+
+private = o nivel de maior restrição em que apenas a proprai classe pode ter acesso a variaveis e ou metodos, e o tipo mais usado ára implementar o encapsulamento
+
+protected = um nivel intermediario de encapsulamento em que as variaveis ...[]
+
+
+
+
+
+encapsulamento, getters e setters, construtores
+
+
+método construtor:
+Começa com letra maiúscula (mesmo nome da classe).
+Não possui tipo de retorno (nem void).
+Quando na aplicação é invocado com o operador new → exemplo: new Produto();.
+Objetivo: inicializar/atribuir valores ao objeto.
+É um método especial da classe.
+Sempre tem o mesmo nome da classe.
+É chamado no momento da criação do objeto.
+
+definindo um construtor na classe/model:
+
+public Produto(int codigo, String nome) {
+	this.codigo = codigo;
+	this.nome = nome;
+}
+
+após setar um construtor o default falhará
+
+terá de passar os parâmetros: 
+Produto p = new Produto(1,"Cleiton");   -- atribuindo os valores de codigo e nome
+
+
+criando o construtor default, para evitar os erros e manter 2 construtores:
+public Produto() {
+}
+
+
+se tiver uma checagem antes de setar algo, é bom chamar o setter no construtor, ao inves de deixar como this:
+exemplo:
+
+public Produto(int codigo, String nome, double valor, boolean novo, char tipo) {
+	//super();
+	this.codigo = codigo;
+	this.nome = nome;
+	setValor(valor);
+	this.novo = novo;
+	this.tipo = tipo;
+}
+public void setValor(double valor) {
+	if(valor > 0) {
+		this.valor = valor;
+	}
+}
+
+
+
+objetos persistentes
