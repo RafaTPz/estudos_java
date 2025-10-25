@@ -20,3 +20,5 @@ agregação
 -objetos recebidos externamente
 'objetos compartilhados'
 
+
+explicar melhor agregação e composição
