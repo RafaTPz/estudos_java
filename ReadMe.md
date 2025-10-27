@@ -25,28 +25,42 @@
 ### Parte II: Programação Orientada a Objetos
 16. [Conceitos Fundamentais de POO](#conceitos-fundamentais-de-poo)
 17. [Classes e Objetos](#classes-e-objetos)
-18. [Atributos e Métodos](#atributos-e-métodos)
-19. [Encapsulamento](#encapsulamento)
-20. [Getters e Setters](#getters-e-setters)
-21. [Construtores](#construtores)
-22. [Métodos Especiais (toString)](#métodos-especiais-tostring)
-23. [Static - Atributos e Métodos Estáticos](#static-atributos-e-métodos-estáticos)
-24. [Serialização](#serialização)
-25. [Threads e Sincronização](#threads-e-sincronização)
-26. [Recursividade](#recursividade)
+18. [Instanciação de Objetos](#instanciação-de-objetos)
+19. [Atributos e Métodos](#atributos-e-métodos)
+20. [Encapsulamento](#encapsulamento)
+21. [Getters e Setters](#getters-e-setters)
+22. [Construtores](#construtores)
+23. [Métodos Especiais (toString)](#métodos-especiais-tostring)
+24. [Static - Atributos e Métodos Estáticos](#static-atributos-e-métodos-estáticos)
+25. [Composição](#composição)
+26. [Agregação](#agregação)
+27. [Injeção de Dependências](#injeção-de-dependências)
+28. [Serialização](#serialização)
+29. [Threads e Sincronização](#threads-e-sincronização)
+30. [Recursividade](#recursividade)
 
 ### Parte III: Herança e Polimorfismo
-27. [Herança](#herança)
-28. [Modificadores de Acesso](#modificadores-de-acesso)
-29. [Classes Abstratas](#classes-abstratas)
-30. [Polimorfismo](#polimorfismo)
-31. [Override (Sobrescrita)](#override-sobrescrita)
-32. [Palavra-chave super](#palavra-chave-super)
+31. [Herança](#herança)
+32. [Modificadores de Acesso](#modificadores-de-acesso)
+33. [Classes Abstratas](#classes-abstratas)
+34. [Polimorfismo](#polimorfismo)
+35. [Override (Sobrescrita)](#override-sobrescrita)
+36. [Palavra-chave super](#palavra-chave-super)
 
-### Parte IV: Recursos Avançados
-33. [Exemplos Práticos Completos](#exemplos-práticos-completos)
-34. [Boas Práticas](#boas-práticas)
-35. [Glossário](#glossário)
+### Parte IV: Interfaces e Recursos Avançados
+37. [Interfaces](#interfaces)
+38. [Implementação Múltipla de Interfaces](#implementação-múltipla-de-interfaces)
+39. [Polimorfismo com Interfaces](#polimorfismo-com-interfaces)
+40. [Padrão Consumer/Provider](#padrão-consumerprovider)
+41. [Interfaces vs Classes Abstratas](#interfaces-vs-classes-abstratas)
+42. [Classes Internas (Inner Classes)](#classes-internas-inner-classes)
+43. [Boas Práticas com Interfaces](#boas-práticas-com-interfaces)
+
+### Parte V: Exemplos e Referências
+44. [Exemplos Práticos Completos](#exemplos-práticos-completos)
+45. [Boas Práticas](#boas-práticas)
+46. [Glossário](#glossário)
+47. [Quadro Comparativo de Conceitos](#quadro-comparativo-de-conceitos)
 
 ---
 
@@ -1378,6 +1392,84 @@ Um objeto pode ter **N estados** diferentes, mas possui **1 comportamento** cons
 
 ---
 
+## Instanciação de Objetos
+
+### O que é Instanciar?
+
+**Instanciar** significa criar um objeto concreto a partir de uma classe. A classe é como um molde ou blueprint, e a instância é o objeto real criado na memória do computador.
+
+```java
+// A classe é o molde/modelo
+Pessoa p1 = new Pessoa(1, "Ana");
+//  ↑         ↑
+// variável  instanciação (cria o objeto na memória)
+```
+
+### Pontos Importantes sobre Instanciação
+
+- **Cada instância ocupa um espaço próprio na memória**: Cada objeto criado é único e independente
+- **Instâncias podem ter valores diferentes**: Mesmo sendo da mesma classe, cada objeto pode ter estado diferente
+- **O operador `new` é essencial**: É ele quem realmente cria o objeto na memória (heap)
+- **O construtor é chamado**: Durante a instanciação, o construtor da classe é automaticamente executado
+- **Múltiplas instâncias**: Você pode criar quantos objetos precisar da mesma classe
+
+### Exemplo Prático de Múltiplas Instâncias
+
+```java
+// Criando várias instâncias da mesma classe
+Pessoa p1 = new Pessoa(1, "Ana");
+Pessoa p2 = new Pessoa(2, "Lucas");
+Pessoa p3 = new Pessoa(3, "Maria");
+
+// p1, p2 e p3 são instâncias DIFERENTES da classe Pessoa
+// Cada uma tem seu próprio espaço na memória
+// Cada uma pode ter valores diferentes para id e nome
+```
+
+### Processo de Instanciação
+
+1. **Declaração da variável**: `Pessoa p1;` - Cria uma referência (ainda null)
+2. **Chamada do `new`**: `new Pessoa(...)` - Aloca memória no heap
+3. **Execução do construtor**: Inicializa os atributos do objeto
+4. **Atribuição da referência**: A variável recebe o endereço do objeto criado
+
+```java
+Pessoa p1;                    // Passo 1: Declaração (p1 = null)
+p1 = new Pessoa(1, "Ana");    // Passos 2, 3 e 4: Criação e atribuição
+```
+
+### Visualização em Memória
+
+```
+Stack (pilha)           Heap (memória dinâmica)
+┌──────────────┐       ┌────────────────────┐
+│ p1 ─────────┼──────>│ Objeto Pessoa       │
+└──────────────┘       │ id = 1              │
+┌──────────────┐       │ nome = "Ana"        │
+│ p2 ─────────┼──┐     └────────────────────┘
+└──────────────┘ │     ┌────────────────────┐
+                 └────>│ Objeto Pessoa       │
+                       │ id = 2              │
+                       │ nome = "Lucas"      │
+                       └────────────────────┘
+```
+
+### Diferença: Declaração vs Instanciação
+
+```java
+// APENAS DECLARAÇÃO (não cria objeto!)
+Pessoa p;
+// p == null (não aponta para nenhum objeto)
+// p.nome → ERRO! NullPointerException
+
+// DECLARAÇÃO + INSTANCIAÇÃO
+Pessoa p = new Pessoa(1, "Ana");
+// Agora p aponta para um objeto real na memória
+// p.nome → "Ana" ✓
+```
+
+---
+
 ## Atributos e Métodos
 
 ### Atributos (Propriedades)
@@ -1835,6 +1927,583 @@ ContaBancaria.fazerPix(cb1, cb2, 100);  // Pela classe!
 ❌ **NÃO use static para**:
 - Atributos que variam por objeto
 - Métodos que precisam de estado do objeto
+
+---
+
+## Composição
+
+### Conceito Fundamental
+
+**Composição** representa um relacionamento "todo-parte" **forte**, onde:
+- O objeto "todo" é **responsável por criar** suas "partes"
+- As partes são criadas **ao mesmo tempo** que o todo
+- As partes **não existem sem** o todo
+- Há **forte dependência** entre os objetos
+- Os objetos internos são **exclusivos** daquele todo
+
+**Frase-chave**: "Nasce junto, morre junto"
+
+### Notação UML
+
+- Representado por um **losango preto (preenchido)** ◆ no diagrama de classes
+- O losango fica do lado da classe "todo"
+- Indica que o todo é responsável pela existência das partes
+
+```
+Casa ◆──── Quarto
+     ◆──── Sala
+     ◆──── Cozinha
+```
+
+### Características Principais
+
+1. **Criação simultânea**: Os objetos são criados juntos no construtor
+2. **Responsabilidade de criação**: A classe principal cria os objetos internos
+3. **Ciclo de vida compartilhado**: Quando o todo é destruído, as partes também são
+4. **Exclusividade**: As partes pertencem apenas àquele todo
+5. **Forte acoplamento**: Alta dependência entre todo e partes
+
+### Exemplo 1: Casa e seus Cômodos
+
+```java
+public class Casa {
+    public Quarto quarto1, quarto2, quarto3;
+    public Sala sala;
+    public Cozinha cozinha;
+    
+    // COMPOSIÇÃO: a Casa CRIA seus próprios cômodos no construtor
+    public Casa() {
+        quarto1 = new Quarto();    // Cria o quarto 1
+        quarto2 = new Quarto();    // Cria o quarto 2
+        quarto3 = new Quarto();    // Cria o quarto 3
+        sala = new Sala();         // Cria a sala
+        cozinha = new Cozinha();   // Cria a cozinha
+    }
+}
+```
+
+**Por que é composição?**
+- ✓ A Casa cria os cômodos no construtor
+- ✓ Os cômodos são criados junto com a Casa
+- ✓ Não faz sentido ter um quarto sem casa (dependência forte)
+- ✓ Se a casa for destruída, os cômodos também serão
+- ✓ Esses cômodos são exclusivos desta casa
+
+### Exemplo 2: Sala e Lâmpadas
+
+```java
+public class Sala {
+    public Lampada lampada1, lampada2;
+    public ArCondicionado ar;
+    
+    // As lâmpadas são criadas DENTRO da sala
+    public Sala() {
+        lampada1 = new Lampada();        // Composição
+        lampada2 = new Lampada();        // Composição
+        ar = new ArCondicionado();       // Composição
+    }
+}
+```
+
+### Exemplo 3: Cozinha e Lâmpada
+
+```java
+public class Cozinha {
+    public Lampada lampada;
+    
+    public Cozinha() {
+        // A lâmpada é parte integrante e exclusiva da cozinha
+        lampada = new Lampada();
+    }
+}
+```
+
+### Uso Prático de Composição
+
+```java
+public static void main(String[] args) {
+    Casa casa = new Casa();
+    
+    // Ao criar a casa, TODOS os cômodos já foram automaticamente criados!
+    // Não precisamos criar os cômodos manualmente
+    
+    casa.cozinha.lampada.ligar();      // Acessa objetos internos
+    casa.sala.lampada1.ligar();
+    casa.sala.lampada2.ligar();
+    casa.quarto1.lampada.desligar();
+}
+```
+
+### Vantagens da Composição
+
+✅ **Benefícios**:
+- **Controle total**: O todo controla completamente a criação das partes
+- **Encapsulamento**: Detalhes de criação ficam ocultos
+- **Garantia de existência**: As partes sempre existem quando o todo existe
+- **Simplicidade de uso**: Cliente não precisa criar partes manualmente
+
+❌ **Desvantagens**:
+- **Baixa flexibilidade**: Não é possível trocar as partes facilmente
+- **Forte acoplamento**: Mudanças nas partes podem afetar o todo
+- **Sem reutilização**: As partes não podem ser compartilhadas
+
+### Quando Usar Composição?
+
+**Use Composição quando:**
+- O objeto "parte" não faz sentido sem o "todo"
+- Você quer controle total sobre a criação
+- As partes são exclusivas e não serão compartilhadas
+- O ciclo de vida das partes depende do todo
+
+**Exemplos do mundo real:**
+- 🏠 Casa → Cômodos (quarto não existe sem casa)
+- 🚗 Carro → Motor (motor específico daquele carro)
+- 📱 Celular → Tela (tela exclusiva do celular)
+- 📄 Documento → Páginas (páginas do documento)
+
+---
+
+## Agregação
+
+### Conceito Fundamental
+
+**Agregação** representa um relacionamento "todo-parte" **fraco**, onde:
+- Os objetos são criados em **momentos diferentes**
+- A classe **não tem responsabilidade** por criar os objetos
+- Usa **injeção de dependências** (recebe objetos prontos)
+- Os objetos vêm de fora (externamente)
+- Os objetos podem ser **compartilhados** entre várias instâncias
+
+**Frase-chave**: "Cada um na sua, mas trabalham juntos"
+
+### Notação UML
+
+- Representado por um **losango branco (vazio)** ◇ no diagrama de classes
+- O losango fica do lado da classe que "possui" a agregação
+- Indica que os objetos têm existência independente
+
+```
+Funcionario ◇──── Cargo
+Professor   ◇──── Disciplina
+Aluno       ◇──── Curso
+```
+
+### Características Principais
+
+1. **Criação independente**: Objetos existem antes da associação
+2. **Sem responsabilidade de criação**: Recebe objetos já criados (injeção)
+3. **Ciclo de vida independente**: A destruição de um não afeta o outro
+4. **Compartilhamento**: Um objeto pode pertencer a vários "todos"
+5. **Fraco acoplamento**: Baixa dependência entre os objetos
+
+### Exemplo 1: Funcionário e Cargo
+
+```java
+public class Funcionario {
+    public int id;
+    public String nome;
+    public Cargo cargo;  // AGREGAÇÃO: recebe o cargo de fora (injeção)
+    
+    // Construtor SEM criar o cargo
+    public Funcionario(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+        // NÃO cria o cargo aqui!
+    }
+}
+```
+
+```java
+public class Cargo {
+    public int id;
+    public String nome;
+    
+    public Cargo(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+}
+```
+
+**Uso demonstrando agregação**:
+```java
+// 1. Cria o cargo ANTES (independente)
+Cargo c = new Cargo(100, "Programador");
+
+// 2. Cria funcionários
+Funcionario f1 = new Funcionario(1, "Pedro");
+Funcionario f2 = new Funcionario(2, "Lucas");
+
+// 3. INJETA o cargo (associação posterior)
+f1.cargo = c;  // Pedro é Programador
+f2.cargo = c;  // Lucas também é Programador (MESMO cargo compartilhado!)
+```
+
+**Por que é agregação?**
+- ✓ O Cargo existe independentemente do Funcionário
+- ✓ Vários funcionários podem ter o mesmo cargo (compartilhamento)
+- ✓ O cargo é criado antes e injetado depois
+- ✓ Se o funcionário for removido, o cargo continua existindo
+- ✓ Baixo acoplamento entre as classes
+
+### Exemplo 2: Cargo e Lista de Funcionários (Bidirecional)
+
+```java
+public class Cargo {
+    public int id;
+    public String nome;
+    public List<Funcionario> listafuncionarios;  // Agregação bidirecional
+    
+    public Cargo(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+        listafuncionarios = new ArrayList<>();  // Apenas cria a lista, não os funcionários
+    }
+}
+```
+
+**Uso com agregação bidirecional**:
+```java
+// Criando funcionários SEPARADAMENTE
+Funcionario f1 = new Funcionario(1, "Paulo");
+Funcionario f2 = new Funcionario(2, "Ana");
+
+// Criando cargo
+Cargo c = new Cargo(100, "Desenvolvedor");
+
+// Associação bidirecional
+f1.cargo = c;
+f2.cargo = c;
+c.listafuncionarios.add(f1);
+c.listafuncionarios.add(f2);
+
+// OU usando uma lista pronta (injeção)
+List<Funcionario> lista = new ArrayList<>();
+lista.add(f1);
+lista.add(f2);
+c.listafuncionarios = lista;  // Injeta a lista pronta
+```
+
+### Exemplo 3: Casamento
+
+```java
+public class Casamento {
+    public Homem homi;    // Agregação
+    public Mulher muie;   // Agregação
+    
+    public Casamento() {
+        // NÃO cria Homem nem Mulher aqui!
+    }
+}
+```
+
+```java
+// Homem e Mulher são criados ANTES e existem independentemente
+Homem h = new Homem();
+h.nome = "Sérgio";
+
+Mulher m = new Mulher();
+m.nome = "Ivone";
+
+// Casamento recebe os objetos prontos (INJEÇÃO DE DEPENDÊNCIAS)
+Casamento c = new Casamento();
+c.homi = h;  // Injeta o homem
+c.muie = m;  // Injeta a mulher
+```
+
+**Por que é agregação?**
+- ✓ Homem e Mulher existem antes do casamento
+- ✓ Se o casamento acabar, as pessoas continuam existindo (ciclo de vida independente)
+- ✓ As pessoas não são criadas pelo casamento
+- ✓ Baixo acoplamento: Casamento não controla a existência das pessoas
+
+### Exemplo 4: Pessoa e Cônjuge (Auto-relacionamento)
+
+```java
+public class Pessoa {
+    public int id;
+    public String nome;
+    public Pessoa conjuge;  // Agregação: referência a outra Pessoa
+    
+    public Pessoa(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+}
+```
+
+**Uso com auto-relacionamento**:
+```java
+Pessoa p1 = new Pessoa(1, "Ana");
+Pessoa p2 = new Pessoa(2, "Daniel");
+
+// Associação feita DEPOIS da criação (agregação)
+p1.conjuge = p2;  // Ana casa com Daniel
+p2.conjuge = p1;  // Daniel casa com Ana (bidirecional)
+```
+
+### Vantagens da Agregação
+
+✅ **Benefícios**:
+- **Alta flexibilidade**: Pode trocar objetos facilmente
+- **Reutilização**: Mesmos objetos podem ser usados em vários contextos
+- **Testabilidade**: Facilita criar testes com objetos mock
+- **Baixo acoplamento**: Classes não dependem de implementações específicas
+- **Compartilhamento**: Um objeto pode pertencer a vários "todos"
+
+❌ **Desvantagens**:
+- **Responsabilidade externa**: Cliente deve criar e gerenciar os objetos
+- **Possível inconsistência**: Objetos podem estar em estados inesperados
+- **Mais código**: Requer mais código para associar os objetos
+
+### Quando Usar Agregação?
+
+**Use Agregação quando:**
+- Os objetos têm existência independente
+- O mesmo objeto pode ser compartilhado entre várias instâncias
+- Você recebe objetos de outras partes do sistema
+- O ciclo de vida dos objetos é independente
+
+**Exemplos do mundo real:**
+- 👨‍💼 Professor ◇ Disciplina (professor pode lecionar várias disciplinas)
+- 👨‍🎓 Aluno ◇ Curso (aluno existe antes e depois do curso)
+- 🚗 Motorista ◇ Carro (motorista pode dirigir vários carros)
+- 📚 Biblioteca ◇ Livro (livros existem independentemente)
+
+---
+
+## Injeção de Dependências
+
+### O que é Injeção de Dependências?
+
+**Injeção de dependências** (Dependency Injection - DI) é o padrão usado na **agregação**, onde um objeto recebe suas dependências de fora, ao invés de criá-las internamente.
+
+É uma forma de implementar o **Princípio de Inversão de Dependências** (DIP - um dos princípios SOLID).
+
+### Conceito
+
+Ao invés de:
+```java
+// ❌ SEM injeção (composição rígida)
+public class Funcionario {
+    private Cargo cargo;
+    
+    public Funcionario() {
+        cargo = new Cargo();  // CRIA a dependência internamente
+    }
+}
+```
+
+Fazemos:
+```java
+// ✅ COM injeção (agregação flexível)
+public class Funcionario {
+    private Cargo cargo;
+    
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;  // RECEBE a dependência de fora
+    }
+}
+```
+
+### Formas de Injeção de Dependências
+
+#### 1. Injeção via Atribuição Direta (Field Injection)
+
+```java
+Funcionario f = new Funcionario();
+f.cargo = cargoExistente;  // Injeta a dependência diretamente
+```
+
+#### 2. Injeção via Setter (Setter Injection)
+
+```java
+public class Funcionario {
+    private Cargo cargo;
+    
+    // Método setter para injeção
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
+    }
+}
+
+// Uso
+Funcionario f = new Funcionario();
+f.setCargo(cargoExistente);  // Injeta via setter
+```
+
+#### 3. Injeção via Construtor (Constructor Injection) ⭐ **Boa Prática**
+
+```java
+public class Funcionario {
+    private final Cargo cargo;  // Pode ser final
+    
+    // Construtor recebe a dependência
+    public Funcionario(Cargo cargo) {
+        this.cargo = cargo;  // Injeta via construtor
+    }
+}
+
+// Uso
+Cargo c = new Cargo(100, "Programador");
+Funcionario f = new Funcionario(c);  // Injeta no momento da criação
+```
+
+### Vantagens da Injeção de Dependências
+
+1. **Flexibilidade**: Pode trocar implementações facilmente sem alterar código
+2. **Testabilidade**: Facilita criar testes unitários com objetos mock/stub
+3. **Reutilização**: Mesmos objetos podem ser usados em vários contextos
+4. **Baixo acoplamento**: Classes não dependem de implementações concretas específicas
+5. **Manutenibilidade**: Mais fácil de manter e evoluir o código
+
+### Exemplo Comparativo Completo
+
+```java
+// SEM Injeção de Dependências (Composição rígida)
+public class Pedido {
+    private ProcessadorPagamento processador;
+    
+    public Pedido() {
+        processador = new ProcessadorPagamentoCartao();  // Acoplado!
+    }
+    
+    public void processar() {
+        processador.processar();
+        // Como testar com outro processador? Difícil!
+    }
+}
+```
+
+```java
+// COM Injeção de Dependências (Agregação flexível)
+public class Pedido {
+    private ProcessadorPagamento processador;
+    
+    // Recebe qualquer ProcessadorPagamento
+    public Pedido(ProcessadorPagamento processador) {
+        this.processador = processador;  // INJETADO!
+    }
+    
+    public void processar() {
+        processador.processar();
+    }
+}
+
+// Uso - pode trocar facilmente:
+Pedido p1 = new Pedido(new ProcessadorPagamentoCartao());
+Pedido p2 = new Pedido(new ProcessadorPagamentoPix());
+Pedido p3 = new Pedido(new ProcessadorPagamentoBoleto());
+
+// Para testes:
+Pedido pTeste = new Pedido(new ProcessadorPagamentoMock());
+```
+
+### Frameworks de Injeção de Dependências
+
+Em aplicações maiores, frameworks automatizam a injeção:
+
+- **Spring Framework** (Java Enterprise)
+- **Google Guice** (Java)
+- **Dagger** (Android)
+- **CDI** (Java EE)
+
+Exemplo com Spring:
+```java
+@Component
+public class Funcionario {
+    private final Cargo cargo;
+    
+    @Autowired  // Spring injeta automaticamente
+    public Funcionario(Cargo cargo) {
+        this.cargo = cargo;
+    }
+}
+```
+
+---
+
+## Comparação: Composição vs Agregação
+
+### Quadro Comparativo
+
+| Aspecto | Composição ◆ | Agregação ◇ |
+|---------|--------------|-------------|
+| **Símbolo UML** | ◆ Losango preto (preenchido) | ◇ Losango branco (vazio) |
+| **Momento de criação** | Objetos criados juntos | Objetos criados separadamente |
+| **Responsabilidade** | Classe cria os objetos | Recebe objetos prontos (injeção) |
+| **Dependência** | Forte (tight coupling) | Fraca (loose coupling) |
+| **Ciclo de vida** | Partes morrem com o todo | Independente |
+| **Exclusividade** | Objetos exclusivos | Objetos compartilhados |
+| **Flexibilidade** | Baixa | Alta |
+| **Controle** | Total controle | Controle externo |
+| **Testabilidade** | Mais difícil | Mais fácil |
+| **Palavra-chave** | "Nasce junto, morre junto" | "Cada um na sua" |
+| **Exemplo** | Casa → Cômodos | Funcionário → Cargo |
+
+### Exemplos Lado a Lado
+
+```java
+// COMPOSIÇÃO (Casa cria os cômodos)
+public class Casa {
+    private Quarto quarto;
+    
+    public Casa() {
+        quarto = new Quarto();  // CRIA internamente
+    }
+}
+
+// Uso
+Casa casa = new Casa();  // Quarto é criado automaticamente
+
+
+// AGREGAÇÃO (Funcionário recebe o cargo)
+public class Funcionario {
+    private Cargo cargo;
+    
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;  // RECEBE de fora
+    }
+}
+
+// Uso
+Cargo c = new Cargo();          // Cria cargo primeiro
+Funcionario f = new Funcionario();
+f.setCargo(c);                  // Injeta o cargo
+```
+
+### Quando Usar Cada Um?
+
+#### Use Composição quando:
+- ✓ O objeto "parte" não faz sentido sem o "todo"
+- ✓ Você quer controle total sobre a criação
+- ✓ As partes são exclusivas e não serão compartilhadas
+- ✓ O ciclo de vida das partes depende do todo
+- ✓ **Exemplo**: Carro e seu Motor específico
+
+#### Use Agregação quando:
+- ✓ Os objetos têm existência independente
+- ✓ O mesmo objeto pode ser compartilhado
+- ✓ Você recebe objetos de outras partes do sistema
+- ✓ Quer facilitar testes (usar mocks)
+- ✓ **Exemplo**: Professor e Disciplinas que leciona
+
+### Dica Visual Rápida
+
+```
+COMPOSIÇÃO ◆
+Casa ──◆── Quarto
+   └─ "Nasce junto, morre junto"
+   └─ Casa CRIA o quarto
+   └─ Quarto pertence apenas àquela casa
+
+
+AGREGAÇÃO ◇
+Funcionário ──◇── Cargo
+   └─ "Cada um na sua"
+   └─ Funcionário RECEBE o cargo
+   └─ Cargo pode ser compartilhado
+```
 
 ---
 
@@ -2420,7 +3089,1082 @@ public void digitar() {
 
 ---
 
-# PARTE IV: RECURSOS AVANÇADOS
+# PARTE IV: INTERFACES E RECURSOS AVANÇADOS
+
+## Interfaces
+
+### O que são Interfaces?
+
+**Interface** é um recurso que define ações que devem ser obrigatoriamente implementadas pelas classes. É como um **contrato** que a classe assina, especificando **O QUE** deve ser feito, mas não **COMO** fazer.
+
+Uma interface é uma **promessa** de comportamento, um **compromisso** que a classe assume de fornecer determinadas funcionalidades.
+
+### Analogia do Mundo Real
+
+Pense em uma interface como:
+- 📋 **Contrato de trabalho**: Define responsabilidades, não como executá-las
+- 🔌 **Tomada elétrica**: Define padrão de conexão, não como a eletricidade é gerada
+- 🚗 **Manual do motorista**: Define controles (volante, pedais), não como o motor funciona
+
+### Sintaxe Básica
+
+```java
+public interface Motor {
+    void ligar();
+    void desligar();
+    void acelerar();
+    void frear();
+}
+```
+
+### Características Fundamentais
+
+1. **Apenas especificações**: Não possui implementação, apenas definições de métodos
+2. **Métodos abstratos**: Todos os métodos são implicitamente `public abstract`
+3. **Valores constantes**: Só pode ter atributos `public static final` (constantes)
+4. **Não pode ser instanciada**: Não é possível fazer `new Interface()`
+5. **Sem construtor**: Interfaces não têm métodos construtores
+6. **Múltipla implementação**: Uma classe pode implementar várias interfaces
+7. **Herança entre interfaces**: Uma interface pode estender (extends) outra interface
+
+### Exemplo Completo: Interface Fisio
+
+```java
+// Definindo a interface
+public interface Fisio {
+    void comer();    // Implicitamente public abstract
+    void beber();    // Implicitamente public abstract
+    void dormir();   // Implicitamente public abstract
+}
+
+// Implementando a interface
+public class Pessoa implements Fisio {
+    @Override
+    public void comer() {
+        System.out.println("Pessoa come");
+    }
+    
+    @Override
+    public void beber() {
+        System.out.println("Pessoa bebe");
+    }
+    
+    @Override
+    public void dormir() {
+        System.out.println("Pessoa dorme");
+    }
+}
+```
+
+### Notação UML
+
+Em diagramas UML, dizemos que uma classe **"realiza" (realizes)** uma interface:
+- Representado por uma **linha tracejada com seta triangular vazia**
+- Ou pelo estereótipo `<<interface>>` acima do nome
+
+```
+<<interface>>
+    Fisio
+      ↑
+      ┊ (linha tracejada)
+      ┊
+   Pessoa
+```
+
+### Por que Usar Interfaces?
+
+✅ **Vantagens**:
+
+1. **Padronização**: Garante que classes diferentes tenham os mesmos métodos
+2. **Polimorfismo**: Permite tratar objetos diferentes de forma uniforme
+3. **Desacoplamento**: Reduz dependências entre classes
+4. **Flexibilidade**: Fácil trocar implementações
+5. **Testabilidade**: Facilita criar mocks para testes
+6. **Múltipla herança de comportamento**: Simula herança múltipla
+
+### Exemplo: Interface Motor
+
+```java
+public interface Motor {
+    void ligar();
+    void desligar();
+    void acelerar();
+    void frear();
+}
+
+// Diferentes implementações
+public class Moto implements Motor {
+    @Override
+    public void ligar() {
+        System.out.println("Liga a moto");
+    }
+    
+    @Override
+    public void desligar() {
+        System.out.println("Desliga a moto");
+    }
+    
+    @Override
+    public void acelerar() {
+        System.out.println("Acelera a moto");
+    }
+    
+    @Override
+    public void frear() {
+        System.out.println("Freia a moto");
+    }
+}
+
+public class Aviao implements Motor {
+    @Override
+    public void ligar() {
+        System.out.println("Liga o avião");
+    }
+    
+    @Override
+    public void desligar() {
+        System.out.println("Desliga o avião");
+    }
+    
+    @Override
+    public void acelerar() {
+        System.out.println("Acelera o avião");
+    }
+    
+    @Override
+    public void frear() {
+        System.out.println("Freia o avião");
+    }
+}
+```
+
+### Regras Importantes
+
+⚠️ **Atenção**:
+
+1. **Todos os métodos devem ser implementados**: A classe concreta DEVE implementar todos os métodos da interface
+2. **Métodos são public**: Sempre devem ser declarados como `public` na implementação
+3. **Use @Override**: Boa prática usar a anotação `@Override`
+4. **Não pode ter atributos de instância**: Apenas constantes (`static final`)
+
+---
+
+## Implementação Múltipla de Interfaces
+
+### Uma Classe, Várias Interfaces
+
+Uma das grandes vantagens das interfaces é permitir que uma classe implemente múltiplas interfaces, simulando **herança múltipla de comportamento** (não permitida com classes).
+
+```java
+// Uma classe implementa TRÊS interfaces
+public class Automovel implements Motor, Turbo, Porta {
+    // Deve implementar TODOS os métodos das três interfaces
+}
+```
+
+### Exemplo Completo
+
+```java
+public interface Motor {
+    void ligar();
+    void desligar();
+    void acelerar();
+    void frear();
+}
+
+public interface Turbo {
+    void acionar();
+    void resetar();
+}
+
+public interface Porta {
+    void abrir();
+    void fechar();
+}
+
+// Automóvel implementa as três interfaces
+public class Automovel implements Motor, Turbo, Porta {
+    // Métodos de Motor
+    @Override
+    public void ligar() {
+        System.out.println("Liga o motor do automóvel");
+    }
+    
+    @Override
+    public void desligar() {
+        System.out.println("Desliga o motor do automóvel");
+    }
+    
+    @Override
+    public void acelerar() {
+        System.out.println("Acelera o motor do automóvel");
+    }
+    
+    @Override
+    public void frear() {
+        System.out.println("Freia o motor do automóvel");
+    }
+    
+    // Métodos de Turbo
+    @Override
+    public void acionar() {
+        System.out.println("Turbo do automóvel acionado");
+    }
+    
+    @Override
+    public void resetar() {
+        System.out.println("Turbo do automóvel resetado");
+    }
+    
+    // Métodos de Porta
+    @Override
+    public void abrir() {
+        System.out.println("A porta do automóvel foi aberta");
+    }
+    
+    @Override
+    public void fechar() {
+        System.out.println("A porta do automóvel foi fechada");
+    }
+}
+```
+
+### Herança entre Interfaces
+
+Uma interface pode estender (extends) outra interface, herdando seus métodos:
+
+```java
+public interface Motor {
+    void ligar();
+    void desligar();
+    void acelerar();
+    void frear();
+}
+
+// Turbo ESTENDE Motor, herdando todos os seus métodos
+public interface Turbo extends Motor {
+    void acionar();   // Método adicional
+    void resetar();   // Método adicional
+}
+```
+
+**Importante**: Quando uma classe implementa `Turbo`, ela deve implementar:
+- Todos os métodos de `Turbo` (acionar, resetar)
+- **E** todos os métodos de `Motor` (ligar, desligar, acelerar, frear)
+
+```java
+public class CarroEsportivo implements Turbo {
+    // Deve implementar 6 métodos no total:
+    // 4 de Motor + 2 de Turbo
+    
+    @Override
+    public void ligar() { /* ... */ }
+    
+    @Override
+    public void desligar() { /* ... */ }
+    
+    @Override
+    public void acelerar() { /* ... */ }
+    
+    @Override
+    public void frear() { /* ... */ }
+    
+    @Override
+    public void acionar() { /* ... */ }
+    
+    @Override
+    public void resetar() { /* ... */ }
+}
+```
+
+### Benefícios da Implementação Múltipla
+
+✅ **Composição de comportamentos**:
+```java
+// Classe pode ter múltiplas capacidades
+public class SuperCarro implements Motor, Turbo, Conversivel, GPS {
+    // Tem comportamentos de motor, turbo, conversível e GPS
+}
+```
+
+✅ **Flexibilidade**:
+```java
+// Diferentes classes podem implementar combinações diferentes
+public class Moto implements Motor {
+    // Apenas motor
+}
+
+public class Ferrari implements Motor, Turbo {
+    // Motor com turbo
+}
+
+public class JipeSafari implements Motor, Rastreavel {
+    // Motor com rastreamento
+}
+```
+
+---
+
+## Polimorfismo com Interfaces
+
+### Conceito
+
+Interfaces permitem criar **polimorfismo**, onde uma variável do tipo interface pode referenciar qualquer objeto de classe que implemente essa interface.
+
+Isso é extremamente poderoso para escrever código genérico e reutilizável.
+
+### Exemplo Básico
+
+```java
+// Diferentes classes implementam a mesma interface
+Motor m = new Moto();
+m.ligar();           // Liga a moto
+
+m = new Aviao();     // Pode trocar para outro tipo!
+m.ligar();           // Liga o avião
+
+m = new Automovel(); // Pode trocar novamente!
+m.acelerar();        // Acelera o automóvel
+```
+
+### Exemplo com Collections
+
+```java
+// Lista de objetos que implementam Motor
+List<Motor> motores = new ArrayList<>();
+motores.add(new Moto());
+motores.add(new Aviao());
+motores.add(new Automovel());
+motores.add(new Caminhao());
+
+// Polimorfismo: cada um executa seu próprio ligar()
+for (Motor m : motores) {
+    m.ligar();  // Comportamento diferente para cada tipo
+}
+```
+
+### Vantagens do Polimorfismo com Interfaces
+
+1. **Flexibilidade**: Pode trocar implementações sem mudar código cliente
+2. **Substituição**: Uma classe pode ser substituída por outra facilmente
+3. **Desacoplamento**: O código não depende de classes concretas
+4. **Extensibilidade**: Fácil adicionar novos tipos
+5. **Manutenibilidade**: Mudanças localizadas, não em cascata
+
+### Exemplo Prático: Sistema de Pagamentos
+
+```java
+public interface ProcessadorPagamento {
+    boolean processar(double valor);
+    String obterRecibo();
+}
+
+public class PagamentoCartao implements ProcessadorPagamento {
+    @Override
+    public boolean processar(double valor) {
+        System.out.println("Processando R$" + valor + " no cartão...");
+        return true;
+    }
+    
+    @Override
+    public String obterRecibo() {
+        return "Recibo de cartão de crédito";
+    }
+}
+
+public class PagamentoPix implements ProcessadorPagamento {
+    @Override
+    public boolean processar(double valor) {
+        System.out.println("Processando R$" + valor + " via PIX...");
+        return true;
+    }
+    
+    @Override
+    public String obterRecibo() {
+        return "Comprovante PIX";
+    }
+}
+
+// Uso polimórfico
+public class Caixa {
+    public void finalizarCompra(ProcessadorPagamento processador, double valor) {
+        if (processador.processar(valor)) {
+            System.out.println(processador.obterRecibo());
+        }
+    }
+}
+
+// Cliente pode escolher qualquer processador
+Caixa caixa = new Caixa();
+caixa.finalizarCompra(new PagamentoCartao(), 100.00);
+caixa.finalizarCompra(new PagamentoPix(), 50.00);
+```
+
+---
+
+## Padrão Consumer/Provider
+
+### Conceito
+
+O padrão **Consumer/Provider** (Consumidor/Provedor) é um design pattern fundamental no uso de interfaces:
+
+- **Provider (Provedor)**: Classe que **implementa** a interface e **fornece** funcionalidades
+- **Consumer (Consumidor)**: Classe/método que **usa** a interface e **consome** funcionalidades
+
+Este padrão permite **desacoplar** quem fornece o serviço de quem usa o serviço.
+
+### Visualização do Padrão
+
+```
+   Interface Fisio
+   (Contrato)
+        ↑
+        │ implementa
+        │
+   ┌────┴────┬─────────┐
+   │         │         │
+Pessoa    Animal      ET
+(Provider) (Provider) (Provider)
+   ↑         ↑         ↑
+   └─────────┼─────────┘
+             │ usa
+             │
+          Vida
+        (Consumer)
+```
+
+### Exemplo Clássico
+
+```java
+// INTERFACE - o contrato
+public interface Fisio {
+    void comer();
+    void beber();
+    void dormir();
+}
+
+// PROVIDERS - fornecem implementações
+public class Pessoa implements Fisio {
+    @Override
+    public void comer() {
+        System.out.println("Pessoa come");
+    }
+    
+    @Override
+    public void beber() {
+        System.out.println("Pessoa bebe");
+    }
+    
+    @Override
+    public void dormir() {
+        System.out.println("Pessoa dorme");
+    }
+}
+
+public class Animal implements Fisio {
+    @Override
+    public void comer() {
+        System.out.println("Animal come");
+    }
+    
+    @Override
+    public void beber() {
+        System.out.println("Animal bebe");
+    }
+    
+    @Override
+    public void dormir() {
+        System.out.println("Animal dorme");
+    }
+}
+
+// CONSUMER - consome qualquer Fisio
+public class Vida {
+    // Método genérico que aceita QUALQUER implementação de Fisio
+    public static void viver(Fisio f) {
+        f.comer();
+        f.beber();
+        f.dormir();
+    }
+}
+
+// USO
+public static void main(String[] args) {
+    Fisio f = new Pessoa();
+    Vida.viver(f);  // Consumer usa o provider Pessoa
+    
+    Fisio a = new Animal();
+    Vida.viver(a);  // Consumer usa o provider Animal (mesmo método!)
+}
+```
+
+### Benefício Principal
+
+**O Consumer (Vida) não precisa saber se está usando Pessoa, Animal ou qualquer outra implementação**. Ele só precisa saber que tem um objeto que implementa `Fisio`.
+
+### Outro Exemplo: Veículo e Motor
+
+```java
+// Consumer
+public class Veiculo {
+    // Recebe qualquer Motor (provider)
+    public static void utilizar(Motor m) {
+        m.ligar();
+        m.acelerar();
+        m.frear();
+        m.desligar();
+    }
+}
+
+// Uso
+public static void main(String[] args) {
+    Motor moto = new Moto();
+    Veiculo.utilizar(moto);  // Funciona
+    
+    Motor aviao = new Aviao();
+    Veiculo.utilizar(aviao);  // Funciona
+    
+    Turbo automovel = new Automovel();
+    Veiculo.utilizar(automovel);  // Funciona (Turbo extends Motor)
+}
+```
+
+### Vantagens do Padrão
+
+✅ **Desacoplamento**: Consumer não conhece implementações concretas
+✅ **Flexibilidade**: Fácil adicionar novos providers
+✅ **Testabilidade**: Pode criar providers mock para testes
+✅ **Reutilização**: Mesmo consumer para múltiplos providers
+✅ **Manutenibilidade**: Mudanças em providers não afetam consumer
+
+---
+
+## Interfaces vs Classes Abstratas
+
+### Comparação Detalhada
+
+| Aspecto | Interface | Classe Abstrata |
+|---------|-----------|-----------------|
+| **Métodos** | Só abstratos (Java < 8) | Abstratos e concretos |
+| **Atributos** | Só constantes (public static final) | Qualquer tipo de atributo |
+| **Herança** | Múltipla (implements várias) | Simples (extends uma) |
+| **Construtor** | Não pode ter | Pode ter |
+| **Implementação** | Nenhuma (só definição) | Pode ter implementação parcial |
+| **Palavra-chave** | `implements` | `extends` |
+| **Flexibilidade** | Menos flexível (só contrato) | Mais flexível (estado + comportamento) |
+| **Quando usar** | Contrato de comportamento | Classe base com código comum |
+| **Exemplo** | `Comparable`, `Serializable` | `Animal`, `Veiculo` |
+
+### Classes Abstratas: Mais Recursos
+
+Classes abstratas oferecem mais recursos que interfaces:
+
+```java
+public abstract class Motor {
+    // ✓ Pode ter atributos de instância (ESTADO)
+    public int codigo;
+    public String fabricante;
+    public double preco;
+    protected boolean ligado;
+    
+    // ✓ Pode ter métodos abstratos (obrigatórios para subclasses)
+    public abstract void ligar();
+    public abstract void desligar();
+    public abstract void acelerar();
+    public abstract void frear();
+    
+    // ✓ Pode ter métodos concretos (implementação pronta)
+    public void esfriar() {
+        System.out.println("Esfriando motor...");
+        ligado = false;
+    }
+    
+    public void mostrarInfo() {
+        System.out.println("Motor " + fabricante + " - R$" + preco);
+    }
+    
+    // ✓ Pode ter construtores
+    public Motor(int codigo, String fabricante, double preco) {
+        this.codigo = codigo;
+        this.fabricante = fabricante;
+        this.preco = preco;
+        this.ligado = false;
+    }
+}
+```
+
+### Interfaces: Apenas Contrato
+
+```java
+public interface Motor {
+    // ✓ Métodos abstratos (sem implementação)
+    void ligar();
+    void desligar();
+    void acelerar();
+    void frear();
+    
+    // ✓ Apenas constantes (não atributos variáveis)
+    int TEMPERATURA_MAXIMA = 120;
+    String TIPO_COMBUSTIVEL = "Gasolina";
+    
+    // ✗ NÃO pode ter atributos de instância
+    // ✗ NÃO pode ter construtores
+    // ✗ NÃO pode ter métodos com implementação (Java < 8)
+}
+```
+
+### Quando Usar Cada Uma?
+
+#### Use **Interface** quando:
+- ✓ Quer definir um contrato/capacidade puro (sem estado)
+- ✓ Precisa de herança múltipla de comportamento
+- ✓ Classes não relacionadas devem ter mesmo comportamento
+- ✓ Não precisa de atributos de instância
+- ✓ Quer máxima flexibilidade
+
+**Exemplos:**
+- `Voavel` (Pássaro, Avião, Drone - não relacionados, mas voam)
+- `Comparable` (qualquer coisa pode ser comparável)
+- `Serializable` (qualquer coisa pode ser serializada)
+
+#### Use **Classe Abstrata** quando:
+- ✓ Quer compartilhar código entre classes relacionadas
+- ✓ Tem estado (atributos) comum a compartilhar
+- ✓ Quer definir comportamento padrão (métodos concretos)
+- ✓ Precisa de construtores para inicializar estado
+- ✓ Classes formam uma hierarquia natural
+- ✓ Quer controlar a inicialização
+
+**Exemplos:**
+- `Animal` → `Mamifero` → `Cachorro` (hierarquia natural)
+- `Veiculo` → `Carro`, `Moto` (compartilham atributos)
+- `FormaGeometrica` → `Circulo`, `Quadrado` (código comum)
+
+### Podem Trabalhar Juntas
+
+Um padrão comum é usar **classe abstrata como base** e **interface para capacidades adicionais**:
+
+```java
+// Classe abstrata com estado e comportamento comum
+public abstract class Motor {
+    protected int codigo;
+    protected String fabricante;
+    protected boolean ligado;
+    
+    public Motor(int codigo, String fabricante) {
+        this.codigo = codigo;
+        this.fabricante = fabricante;
+        this.ligado = false;
+    }
+    
+    public abstract void ligar();
+    public abstract void desligar();
+    
+    public void esfriar() {
+        System.out.println("Esfriando...");
+    }
+}
+
+// Interface para capacidade adicional
+public interface Turbo {
+    void acionar();
+    void resetar();
+}
+
+// Classe concreta HERDA de Motor e IMPLEMENTA Turbo
+public class MotorTurbo extends Motor implements Turbo {
+    // Herda: codigo, fabricante, ligado, esfriar()
+    // Deve implementar: ligar(), desligar() (de Motor)
+    // Deve implementar: acionar(), resetar() (de Turbo)
+    
+    public MotorTurbo(int codigo, String fabricante) {
+        super(codigo, fabricante);
+    }
+    
+    @Override
+    public void ligar() {
+        ligado = true;
+        System.out.println("Motor turbo ligado");
+    }
+    
+    @Override
+    public void desligar() {
+        ligado = false;
+        System.out.println("Motor turbo desligado");
+    }
+    
+    @Override
+    public void acionar() {
+        System.out.println("Turbo acionado!");
+    }
+    
+    @Override
+    public void resetar() {
+        System.out.println("Turbo resetado");
+    }
+}
+```
+
+### Regra de Ouro
+
+> **"Se você precisa apenas de métodos, crie uma interface. Se precisar de mais coisas (atributos, implementações parciais, construtores), crie uma classe abstrata."**
+
+### Decisão Prática
+
+```java
+// CENÁRIO 1: Apenas comportamento → Interface
+public interface Nadador {
+    void nadar();
+}
+
+// CENÁRIO 2: Comportamento + Estado + Implementação → Classe Abstrata
+public abstract class Veiculo {
+    protected int velocidade;    // Estado
+    protected String placa;      // Estado
+    
+    public abstract void acelerar();  // Obrigatório
+    
+    public void mostrarInfo() {       // Implementação pronta
+        System.out.println("Placa: " + placa);
+    }
+}
+
+// CENÁRIO 3: Combinação (melhor dos dois mundos)
+public abstract class Carro extends Veiculo implements Nadador {
+    // Herda estado e comportamento de Veiculo
+    // Deve implementar nadar() de Nadador
+    // Carro anfíbio!
+}
+```
+
+---
+
+## Classes Internas (Inner Classes)
+
+### Conceito
+
+Uma **classe interna** é uma classe definida dentro de outra classe. Ela pode acessar membros (inclusive privados) da classe externa e é útil para encapsular lógica que só faz sentido no contexto da classe externa.
+
+### Por que Usar Classes Internas?
+
+✅ **Vantagens**:
+1. **Encapsulamento**: A classe interna só existe no contexto da externa
+2. **Acesso privilegiado**: Pode acessar membros privados da classe externa
+3. **Organização**: Agrupa classes relacionadas
+4. **Ocultação**: A classe interna não é visível fora da classe externa
+
+### Tipos Principais
+
+1. **Classe Interna Normal**: Membro da classe externa
+2. **Classe Interna Privada**: Visível apenas dentro da classe externa
+3. **Classe Interna Estática**: Não precisa de instância da classe externa
+4. **Classe Anônima**: Sem nome, usada uma única vez
+
+### Exemplo: Classe Interna Privada
+
+```java
+public class Pedido {
+    public int numero;
+    public String dataEmissao;
+    public List<Item> itens = new ArrayList<Item>();
+    
+    // Método que usa a classe interna
+    public void addItem(String produto, int quantidade, float precoUnitario) {
+        Item i = new Item();  // Cria instância da classe interna
+        i.produto = produto;
+        i.quantidade = quantidade;
+        i.precoUnitario = precoUnitario;
+        itens.add(i);
+    }
+    
+    public void mostrar() {
+        System.out.println("Pedido " + numero + " - " + dataEmissao);
+        System.out.println("Itens:");
+        for(Item item : itens) {
+            item.mostrar();  // Chama método da classe interna
+        }
+    }
+    
+    // CLASSE INTERNA PRIVADA
+    private class Item {
+        public String produto;
+        public int quantidade;
+        public float precoUnitario;
+        
+        public void mostrar() {
+            float subtotal = quantidade * precoUnitario;
+            System.out.println(produto + " - Qtd: " + quantidade + 
+                             " - R$" + precoUnitario + " - Subtotal: R$" + subtotal);
+        }
+        
+        public float calcularSubtotal() {
+            return quantidade * precoUnitario;
+        }
+    }
+}
+```
+
+### Uso Prático
+
+```java
+public static void main(String[] args) {
+    Pedido p = new Pedido();
+    p.numero = 100;
+    p.dataEmissao = "24/10/2025";
+    
+    p.addItem("Sabão em pó", 10, 14.99f);
+    p.addItem("Sabonete", 20, 2.99f);
+    p.addItem("Detergente", 5, 3.50f);
+    
+    p.mostrar();
+    
+    // Note que Item NÃO é acessível aqui!
+    // Pedido.Item i = new Pedido.Item(); // ERRO! É privada
+}
+```
+
+**Saída:**
+```
+Pedido 100 - 24/10/2025
+Itens:
+Sabão em pó - Qtd: 10 - R$14.99 - Subtotal: R$149.9
+Sabonete - Qtd: 20 - R$2.99 - Subtotal: R$59.8
+Detergente - Qtd: 5 - R$3.5 - Subtotal: R$17.5
+```
+
+### Quando Usar Classes Internas?
+
+**Use quando:**
+- ✓ Uma classe só faz sentido no contexto de outra
+- ✓ Quer implementar detalhes internos que não devem ser públicos
+- ✓ Precisa de acesso privilegiado a membros privados da classe externa
+- ✓ Quer organizar código relacionado junto
+
+**Exemplos do mundo real:**
+- 🛒 `Pedido` → `Item` (item só existe em um pedido)
+- 🏠 `Casa` → `Comodo` (cômodo só existe em uma casa)
+- 🎓 `Universidade` → `Departamento` (departamento só existe em uma universidade)
+- 📄 `Documento` → `Paragrafo` (parágrafo só existe em um documento)
+
+### Classe Interna Estática
+
+```java
+public class Calculadora {
+    // Classe interna estática (não precisa de instância da externa)
+    public static class Operacao {
+        public static double somar(double a, double b) {
+            return a + b;
+        }
+        
+        public static double subtrair(double a, double b) {
+            return a - b;
+        }
+    }
+}
+
+// Uso sem instanciar Calculadora
+double resultado = Calculadora.Operacao.somar(10, 5);
+```
+
+---
+
+## Boas Práticas com Interfaces
+
+### 1. Mantenha Interfaces Pequenas (Interface Segregation Principle)
+
+```java
+// ✅ BOM: Interface focada
+public interface Motor {
+    void ligar();
+    void desligar();
+}
+
+// ✅ BOM: Interface focada
+public interface Acelerable {
+    void acelerar();
+    void frear();
+}
+
+// ❌ RUIM: Interface com muitos métodos não relacionados (God Interface)
+public interface VeiculoCompleto {
+    void ligar();
+    void desligar();
+    void abrirPorta();
+    void fecharPorta();
+    void tocarBuzina();
+    void ajustarRetrovisor();
+    void ligarLimpador();
+    void desligarLimpador();
+    // ... muitos outros métodos não relacionados
+}
+```
+
+**Princípio**: Clientes não devem ser forçados a depender de métodos que não usam.
+
+### 2. Use Nomes Descritivos
+
+**Convenções de nomenclatura:**
+
+- **Interfaces de capacidade**: Sufixo `-avel` ou `-able`
+  ```java
+  public interface Comparavel { }
+  public interface Serializavel { }
+  public interface Executavel { }
+  ```
+
+- **Interfaces de contrato**: Nome do serviço
+  ```java
+  public interface Motor { }
+  public interface ProcessadorPagamento { }
+  public interface RepositorioUsuario { }
+  ```
+
+- **Interfaces de callback**: Sufixo `-Listener` ou `-Handler`
+  ```java
+  public interface ClickListener { }
+  public interface EventHandler { }
+  ```
+
+### 3. Cuidado ao Modificar Interfaces Existentes
+
+**IMPORTANTE**: Ao adicionar um novo método em uma interface, você deve implementá-lo em **todas** as classes que usam essa interface!
+
+```java
+// Se você adiciona um método aqui:
+public interface Motor {
+    void ligar();
+    void desligar();
+    void diagnosticar();  // ⚠️ NOVO método
+}
+
+// Todas essas classes precisam ser atualizadas:
+// - Moto         → deve implementar diagnosticar()
+// - Aviao        → deve implementar diagnosticar()
+// - Automovel    → deve implementar diagnosticar()
+// - Caminhao     → deve implementar diagnosticar()
+```
+
+**Solução (Java 8+)**: Use `default methods`:
+```java
+public interface Motor {
+    void ligar();
+    void desligar();
+    
+    // Método com implementação padrão
+    default void diagnosticar() {
+        System.out.println("Diagnóstico padrão");
+    }
+}
+```
+
+### 4. Programe para Interface, Não para Implementação
+
+```java
+// ✅ BOM: Usa a interface
+Motor m = new Moto();
+m.ligar();
+
+// ❌ EVITE (quando possível): Usa a classe concreta
+Moto m = new Moto();
+m.ligar();
+```
+
+**Por quê?**
+- Facilita trocar implementações depois
+- Torna código mais flexível e testável
+- Reduz acoplamento
+
+### 5. Use Interfaces para Injeção de Dependências
+
+```java
+// ✅ BOM: Depende de interface
+public class ServicoEmail {
+    private final Repositorio repositorio;  // Interface
+    
+    public ServicoEmail(Repositorio repositorio) {
+        this.repositorio = repositorio;
+    }
+}
+
+// ❌ EVITE: Depende de implementação concreta
+public class ServicoEmail {
+    private final RepositorioMySQL repositorio;  // Classe concreta
+    
+    public ServicoEmail() {
+        this.repositorio = new RepositorioMySQL();  // Acoplado!
+    }
+}
+```
+
+### 6. Documente o Contrato da Interface
+
+```java
+/**
+ * Interface que define operações básicas de um motor.
+ * 
+ * Implementações desta interface devem garantir que:
+ * - ligar() só funciona se o motor estiver desligado
+ * - desligar() só funciona se o motor estiver ligado
+ * - acelerar() só funciona se o motor estiver ligado
+ */
+public interface Motor {
+    /**
+     * Liga o motor.
+     * @throws IllegalStateException se o motor já estiver ligado
+     */
+    void ligar();
+    
+    /**
+     * Desliga o motor.
+     * @throws IllegalStateException se o motor já estiver desligado
+     */
+    void desligar();
+    
+    /**
+     * Acelera o motor.
+     * @throws IllegalStateException se o motor estiver desligado
+     */
+    void acelerar();
+}
+```
+
+### 7. Prefira Composição a Herança (também com Interfaces)
+
+```java
+// ✅ BOM: Composição com interfaces
+public class Carro {
+    private Motor motor;
+    private Sistema som;
+    private SistemaNavegacao gps;
+    
+    public Carro(Motor motor, SistemaAudio som, SistemaNavegacao gps) {
+        this.motor = motor;
+        this.som = som;
+        this.gps = gps;
+    }
+}
+
+// Flexível: pode trocar qualquer componente
+```
+
+### 8. Evite Interfaces Marcadoras Vazias
+
+```java
+// ❌ EVITE (era comum no passado)
+public interface Serializavel {
+    // Vazia - apenas marca a classe
+}
+
+// ✅ MELHOR (Java moderno): Use anotações
+@Serializable
+public class Produto {
+    // ...
+}
+```
+
+---
+
+# PARTE V: EXEMPLOS E REFERÊNCIAS
 
 ## Exemplos Práticos Completos
 
@@ -2808,6 +4552,7 @@ public class OtimizacaoBestPractices {
 |-------|-------------|
 | **Classe** | Modelo/blueprint para criar objetos |
 | **Objeto** | Instância concreta de uma classe |
+| **Instanciação** | Processo de criar um objeto a partir de uma classe |
 | **Atributo** | Característica/propriedade do objeto (estado) |
 | **Método** | Ação/comportamento do objeto |
 | **Encapsulamento** | Proteção de dados internos |
@@ -2817,6 +4562,9 @@ public class OtimizacaoBestPractices {
 | **this** | Referência ao objeto atual |
 | **static** | Pertence à classe, não ao objeto |
 | **final** | Valor constante, não pode ser alterado |
+| **Composição** | Relacionamento forte "todo-parte" (◆) |
+| **Agregação** | Relacionamento fraco "todo-parte" (◇) |
+| **Injeção de Dependências** | Padrão de receber objetos de fora (agregação) |
 | **Serialização** | Conversão de objeto em bytes |
 | **Thread** | Processo de execução paralela |
 | **synchronized** | Controle de acesso concorrente |
@@ -2825,8 +4573,175 @@ public class OtimizacaoBestPractices {
 | **Herança** | Classe que estende outra classe |
 | **Polimorfismo** | Múltiplas formas para mesma ação |
 | **Classe Abstrata** | Classe que não pode ser instanciada |
+| **Interface** | Contrato que define métodos obrigatórios |
+| **Provider** | Classe que implementa e fornece funcionalidades |
+| **Consumer** | Classe que usa e consome funcionalidades |
+| **Classe Interna** | Classe definida dentro de outra classe |
 | **super** | Referência à superclasse |
 | **protected** | Modificador de acesso para herança |
+| **implements** | Palavra-chave para implementar interface |
+| **extends** | Palavra-chave para herdar de classe |
+
+---
+
+## Quadro Comparativo de Conceitos
+
+### Composição vs Agregação
+
+| Critério | Composição ◆ | Agregação ◇ |
+|----------|--------------|-------------|
+| **Símbolo UML** | ◆ Losango preto | ◇ Losango branco |
+| **Relacionamento** | Forte ("todo-parte") | Fraco ("todo-parte") |
+| **Criação** | Objetos criados juntos | Objetos criados separadamente |
+| **Responsabilidade** | Classe cria os objetos | Recebe objetos prontos |
+| **Ciclo de vida** | Dependente (morrem juntos) | Independente |
+| **Compartilhamento** | Exclusivos | Podem ser compartilhados |
+| **Acoplamento** | Forte (tight coupling) | Fraco (loose coupling) |
+| **Exemplo** | Casa → Cômodos | Funcionário → Cargo |
+| **Frase-chave** | "Nasce junto, morre junto" | "Cada um na sua" |
+
+### Interface vs Classe Abstrata
+
+| Critério | Interface | Classe Abstrata |
+|----------|-----------|-----------------|
+| **Métodos** | Só abstratos (Java < 8) | Abstratos e concretos |
+| **Atributos** | Só constantes (final) | Qualquer tipo |
+| **Estado** | Não tem | Pode ter |
+| **Construtores** | Não pode ter | Pode ter |
+| **Herança** | Múltipla (implements) | Simples (extends) |
+| **Implementação** | Nenhuma | Parcial permitida |
+| **Uso** | Contrato de comportamento | Classe base com código |
+| **Flexibilidade** | Menos recursos | Mais recursos |
+| **Quando usar** | Definir capacidade | Compartilhar código |
+| **Exemplo** | `Comparable`, `Motor` | `Animal`, `Veiculo` |
+
+### Static vs Não-Static
+
+| Critério | Static | Não-Static |
+|----------|--------|------------|
+| **Pertence a** | Classe | Objeto (instância) |
+| **Quantidade** | Uma cópia única | Uma cópia por objeto |
+| **Acesso** | `Classe.membro` | `objeto.membro` |
+| **Pode acessar** | Apenas membros static | Todos os membros |
+| **Memória** | Criado ao carregar classe | Criado ao instanciar |
+| **Compartilhamento** | Compartilhado entre todos | Exclusivo do objeto |
+| **Uso comum** | Constantes, utilitários | Estado e comportamento |
+| **Exemplo** | `Math.PI`, `Arrays.sort()` | `pessoa.nome`, `carro.acelerar()` |
+
+### Encapsulamento: Público vs Privado
+
+| Critério | public | private |
+|----------|--------|---------|
+| **Visibilidade** | Irrestrita (todos) | Apenas dentro da classe |
+| **Acesso externo** | ✅ Permitido | ❌ Bloqueado |
+| **Proteção** | Nenhuma | Máxima |
+| **Alteração** | Pode ser acessado diretamente | Só via getters/setters |
+| **Uso comum** | Métodos de interface | Atributos e métodos auxiliares |
+| **Segurança** | Baixa | Alta |
+| **Exemplo** | `public void depositar()` | `private double saldo` |
+
+### Herança vs Composição
+
+| Critério | Herança (is-a) | Composição (has-a) |
+|----------|----------------|-------------------|
+| **Relacionamento** | "É um" | "Tem um" |
+| **Acoplamento** | Forte | Fraco |
+| **Flexibilidade** | Menos flexível | Mais flexível |
+| **Mudanças** | Afeta subclasses | Localizada |
+| **Reutilização** | Via herança | Via objeto |
+| **Múltipla** | Não (Java) | Sim |
+| **Quando usar** | Relacionamento natural | Adicionar funcionalidades |
+| **Exemplo** | `Cachorro extends Animal` | `Carro has Motor` |
+
+### Override vs Overload (Sobrescrita vs Sobrecarga)
+
+| Critério | Override | Overload |
+|----------|----------|----------|
+| **Definição** | Redefinir método herdado | Múltiplos métodos mesmo nome |
+| **Classe** | Subclasse | Mesma classe |
+| **Assinatura** | Mesma | Diferente |
+| **Parâmetros** | Mesmos | Diferentes |
+| **Retorno** | Mesmo tipo (ou covariante) | Pode ser diferente |
+| **Polimorfismo** | Sim (runtime) | Não (compile time) |
+| **Anotação** | `@Override` | Nenhuma |
+| **Exemplo** | `@Override void comer()` | `void somar(int a)` e `void somar(double a)` |
+
+### Modificadores de Acesso
+
+| Modificador | Classe | Pacote | Subclasse | Todos |
+|-------------|--------|--------|-----------|-------|
+| `public` | ✅ | ✅ | ✅ | ✅ |
+| `protected` | ✅ | ✅ | ✅ | ❌ |
+| `default` | ✅ | ✅ | ❌ | ❌ |
+| `private` | ✅ | ❌ | ❌ | ❌ |
+
+### Tipos de Relacionamentos UML
+
+| Relacionamento | Símbolo | Significado | Exemplo |
+|----------------|---------|-------------|---------|
+| **Herança** | ─▷ | "É um" (is-a) | Cachorro ─▷ Animal |
+| **Implementação** | ┈▷ | "Realiza" | Pessoa ┈▷ Fisio |
+| **Composição** | ◆── | "Tem um" (forte) | Casa ◆── Quarto |
+| **Agregação** | ◇── | "Tem um" (fraco) | Funcionário ◇── Cargo |
+| **Associação** | ──── | "Usa" | Professor ──── Disciplina |
+| **Dependência** | ┈> | "Depende de" | Pedido ┈> PagamentoService |
+
+### Palavras-Chave Importantes
+
+| Palavra-chave | Uso | Exemplo |
+|---------------|-----|---------|
+| `new` | Instanciar objetos | `new Pessoa()` |
+| `this` | Referência ao objeto atual | `this.nome = nome` |
+| `super` | Referência à superclasse | `super.metodo()` |
+| `extends` | Herança de classe | `class Gato extends Animal` |
+| `implements` | Implementar interface | `class Pessoa implements Fisio` |
+| `abstract` | Classe/método abstrato | `abstract class Animal` |
+| `interface` | Declarar interface | `interface Motor` |
+| `final` | Constante ou classe final | `final double PI = 3.14` |
+| `static` | Membro da classe | `static int contador` |
+| `@Override` | Sobrescrita de método | `@Override public void comer()` |
+
+---
+
+## Dicas Rápidas de Memorização
+
+### Para Composição vs Agregação
+
+**COMPOSIÇÃO** ◆:
+- 🏠 **Casa e Cômodos**: "Se a casa cai, os cômodos caem junto"
+- 🔒 **Cria dentro** do construtor
+- 💀 **Morrem juntos**
+- 🔒 **Exclusivos**
+
+**AGREGAÇÃO** ◇:
+- 👨‍💼 **Professor e Disciplina**: "Professor pode trocar de disciplina"
+- 💉 **Injeta de fora**
+- ♻️ **Vivem independentes**
+- 🔄 **Compartilháveis**
+
+### Para Interface vs Classe Abstrata
+
+**INTERFACE**:
+- 📋 Apenas **CONTRATO** (o que fazer)
+- 🚫 Sem **ESTADO** (atributos)
+- ✌️ **MÚLTIPLA** implementação
+
+**CLASSE ABSTRATA**:
+- 🏗️ **BASE** com código
+- 📦 Com **ESTADO** (atributos)
+- ☝️ **SIMPLES** herança
+
+### Para Polimorfismo
+
+**Lembre-se**: "Muitas formas, uma chamada"
+
+```java
+Animal a = new Gato();  // Polimorfismo
+a.emitirSom();          // "Miau" (comportamento do Gato)
+
+a = new Cachorro();     // Troca de forma
+a.emitirSom();          // "Au au" (comportamento do Cachorro)
+```
 
 ---
 
@@ -2845,13 +4760,6 @@ public class OtimizacaoBestPractices {
 - **Exercism**: Exercícios práticos de Java
 - **HackerRank**: Desafios de programação
 - **LeetCode**: Problemas algorítmicos
-
-### Livros Recomendados
-- "Effective Java" - Joshua Bloch
-- "Clean Code" - Robert C. Martin
-- "Head First Java" - Kathy Sierra
-
----
 
 **Documentação compilada e unificada**
 *Contém conceitos fundamentais, POO, herança e polimorfismo*
