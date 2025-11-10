@@ -1,0 +1,24 @@
+instanciar/instancia // explicar tudo sobre instancia por favor
+
+composição
+<preenchido> losango preto no diagrama de classe
+
+agregação
+< >vazio losango branco no diagrama de classe
+
+composição 
+-objetos criados ao mesmo tempo
+-responsável por criar objetos
+-forte dependência
+-objetos internos
+'Exclusivos'
+
+agregação
+-objetos criados em tempos diferentes
+-não tem a responsabilidade pela criação dos objetos
+-injeção de dependências
+-objetos recebidos externamente
+'objetos compartilhados'
+
+
+explicar melhor agregação e composição

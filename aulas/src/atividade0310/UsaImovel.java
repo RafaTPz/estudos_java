@@ -8,9 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import aula0310.MeuBotao;
-import aula0310.MeuPI;
-
 public class UsaImovel extends JFrame {
 
 	private JButton btCasa, btApartamento, btChacara;

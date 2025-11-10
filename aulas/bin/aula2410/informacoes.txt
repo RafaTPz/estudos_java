@@ -1,0 +1,25 @@
+interfaces
+recurso que define ações que devem ser, obrigatoriamente, implementadas(cada classe pode executar de forma diferente)
+um tipo de contrato firmado pela classe. a interface especifica o que deve ser implementado, mas, nao como isso deve ser feito
+em uml se diz que uma classe realiza(realizes) uma interface
+contem apenas valores constantes(final)
+não possui implementação, apenas a definição sem o corpo
+uma classe pode implementar diversas interfaces diferentes. Uma interface pode estender outra interface
+todos os métodos de uma interface são implicitamente publicos e abstratos
+não ha como fazer uma instancia de uma interface e nem como definir um método construtor
+as interfaces podem ser usadas para simular a herança multipla
+ao incluir um novo metodo em uma interface voce deve adicionala em todas as classes que tiver implementando esta interface
+
+uso de interfaces
+padronizar a forma de acesso a um serviço
+substituir uma classe por outro sem que o cliente mude
+criação de polimorfismo
+possibilidade de implementar composição em java
+reduz o acoplamento
+
+
+consumer/provider explicar
+
+
+classes abstratas com metodos abstratos com interfaces explicar
+
